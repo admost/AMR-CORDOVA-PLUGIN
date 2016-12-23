@@ -33,8 +33,8 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_INIT_AMR = "initAMR";
     private static final String ACTION_CREATE_BANNER_AD = "createBannerAd";
     private static final String ACTION_DESTROY_BANNER_AD = "destroyBannerAd";
-    private static final String ACTION_REQUEST_AD = "requestAd";
-    private static final String ACTION_SHOW_AD = "showAd";
+    private static final String ACTION_REQUEST_AD = "requestBannerAd";
+    private static final String ACTION_SHOW_AD = "showBannerAd";
     private static final String ACTION_CREATE_INTERSTITIAL_AD = "createInterstitialAd";
     private static final String ACTION_REQUEST_INTERSTITIAL_AD = "requestInterstitialAd";
     private static final String ACTION_SHOW_INTERSTITIAL_AD = "showInterstitialAd";
