@@ -90,14 +90,14 @@ function(options, successCallback, failureCallback) {
 	  );
 };
 
-amrExport.requestAd =
+amrExport.requestBannerAd =
 function(options, successCallback, failureCallback) {
 	  if(typeof options === 'undefined' || options == null) options = {};
   cordova.exec(
       successCallback,
       failureCallback,
       'Amr',
-      'requestAd',
+      'requestBannerAd',
       [ options ]
   );
 };
@@ -126,7 +126,7 @@ function(options, successCallback, failureCallback) {
   );
 };
 
-amrExport.showAd = 
+amrExport.showBannerAd = 
 function( show, successCallback, failureCallback) {
 	if (show === undefined) {
 		show = true;
@@ -136,7 +136,7 @@ function( show, successCallback, failureCallback) {
 		successCallback,
 		failureCallback, 
 		'Amr', 
-		'showAd', 
+		'showBannerAd', 
 		[ show ]
 	);
 };
