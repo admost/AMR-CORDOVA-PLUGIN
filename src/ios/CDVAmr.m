@@ -95,21 +95,21 @@
 - (void)showBannerAd:(CDVInvokedUrlCommand *)command {
     NSLog(@"AMR showBannerAd");
     
+    BOOL showBanner = YES;
+    if (command.arguments.count > 0) {
+        NSString* showValue = [command.arguments objectAtIndex:0];
+        showBanner = showValue ? [showValue boolValue] : YES;
+    }
+    
     CDVPluginResult *pluginResult;
     
     if (!self.banner)
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is not initiliazed."];
     else if (!_bannerIsAvaliable)
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is not ready."];
-    else if (_bannerIsVisible)
+    else if (_bannerIsVisible && showBanner)
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is already visible."];
     else {
-        BOOL showBanner = YES;
-        if (command.arguments.count > 0) {
-            NSString* showValue = [command.arguments objectAtIndex:0];
-            showBanner = showValue ? [showValue boolValue] : YES;
-        }
-        
         [self _showBannerAd:showBanner];
         
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
