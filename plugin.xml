@@ -80,8 +80,6 @@
     
 </platform>
 
-
-    
     <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
@@ -99,34 +97,37 @@
         <config-file target="*-Info.plist" parent="NSCalendarsUsageDescription">
             <string>Some ad content may access calendar</string>
         </config-file>
-        
+		<config-file target="*-Info.plist" parent="AppLovinSdkKey">
+            <string>LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N</string>
+        </config-file>
+
         <header-file src="src/ios/CDVAmr.h" />
         <source-file src="src/ios/CDVAmr.m" />
         
-        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 7.8" />
-        <framework src="AMRAdapterMopub" type="podspec" spec="~> 4.11" />
-        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 4.15" />
-        <framework src="AMRAdapterMobfox" type="podspec" spec="~> 2.4" />
-        <framework src="AMRAdapterRevmob" type="podspec" spec="~> 9.2" />
-        <framework src="AMRAdapterUnity" type="podspec" spec="~> 2.0" />
-        <framework src="AMRAdapterAppnext" type="podspec" spec="~> 1.7" />
-        <framework src="AMRAdapterSmaato" type="podspec" spec="~> 8.0" />
-        <framework src="AMRAdapterVungle" type="podspec" spec="~> 4.0" />
-        <framework src="AMRAdapterFlurry" type="podspec" spec="~> 7.6" />
-        <framework src="AMRAdapterInmobi" type="podspec" spec="~> 6.0" />
-        <framework src="AMRAdapterAmazon" type="podspec" spec="~> 2.2" />
-        <framework src="AMRAdapterAdcolony" type="podspec" spec="~> 2.6" />
-        <framework src="AMRAdapterTapjoy" type="podspec" spec="~> 11.8" />
-        <framework src="AMRAdapterSupersonic" type="podspec" spec="~> 6.4" />
-        <framework src="AMRAdapterLoopme" type="podspec" spec="~> 6.0" />
-        <framework src="AMRAdapterApplovin" type="podspec" spec="~> 3.4" />
-        <framework src="AMRAdapterChartboost" type="podspec" spec="~> 6.5" />
-        <framework src="AMRAdapterNexage" type="podspec" spec="~> 6.3" />
-        <framework src="AMRAdapterAdfalcon" type="podspec" spec="~> 3.2" />
-        <framework src="AMRAdapterFyber" type="podspec" spec="~> 8.6" />
-        <framework src="AMRAdapterConversant" type="podspec" spec="~> 4.5" />
-        <framework src="AMRAdapterInloco" type="podspec" spec="~> 2.2" />
-        <framework src="AMRAdapterNativex" type="podspec" spec="~> 5.5" />
-        
+		<pods-config ios-min-version="9.0" use-frameworks="true"/>
+		<pod id="AMRSDK" version="1.3"/>
+		<pod id="AMRAdapterAdcolony" version="3.3"/>
+		<pod id="AMRAdapterAdmob" version="7.31"/>
+		<pod id="AMRAdapterAdmost" version="1.0"/>
+		<pod id="AMRAdapterAmazon" version="2.2"/>
+		<pod id="AMRAdapterApplovin" version="5.0"/>
+		<pod id="AMRAdapterAppnext" version="1.8"/>
+		<pod id="AMRAdapterAvocarrot" version="4.9"/>
+		<pod id="AMRAdapterChartboost" version="7.2"/>
+		<pod id="AMRAdapterFacebook" version="4.28"/>
+		<pod id="AMRAdapterFlurry" version="8.6"/>
+		<pod id="AMRAdapterFyber" version="8.21"/>
+		<pod id="AMRAdapterInmobi" version="7.1"/>
+		<pod id="AMRAdapterIronsource" version="6.7"/>
+		<pod id="AMRAdapterLoopme" version="6.4"/>
+		<pod id="AMRAdapterMobfox" version="3.5"/>
+		<pod id="AMRAdapterMopub" version="5.0"/>
+		<pod id="AMRAdapterNexage" version="6.8"/>
+		<pod id="AMRAdapterSmaato" version="9.0"/>
+		<pod id="AMRAdapterStartapp" version="3.7"/>
+		<pod id="AMRAdapterTapjoy" version="11.12"/>
+		<pod id="AMRAdapterUnity" version="2.2"/>
+		<pod id="AMRAdapterVungle" version="6.2"/>
+
     </platform>
 </plugin>
