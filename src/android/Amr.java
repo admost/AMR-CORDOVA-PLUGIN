@@ -1,4 +1,4 @@
-package com.amr.cordova;
+package com.kokteyl.amr.cordova;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -31,6 +31,9 @@ public class Amr extends CordovaPlugin {
     /** Cordova Actions. */
     private static final String ACTION_SET_OPTIONS = "setOptions";
     private static final String ACTION_INIT_AMR = "initAMR";
+    private static final String ACTION_USER_CONSENT = "setUserConsent";
+    private static final String ACTION_SUBJECT_GDPR = "subjectToGdpr";
+    private static final String ACTION_START_TEST_SUITE = "startTestSuite";
     private static final String ACTION_CREATE_BANNER_AD = "createBannerAd";
     private static final String ACTION_DESTROY_BANNER_AD = "destroyBannerAd";
     private static final String ACTION_REQUEST_AD = "requestBannerAd";
@@ -53,7 +56,15 @@ public class Amr extends CordovaPlugin {
     private static final String OPT_OFFSET_TOPBAR = "offsetTopBar";
     private static final String OPT_AUTO_SHOW_INTERSTITIAL = "autoShowInterstitial";
     private static final String OPT_AUTO_SHOW_VIDEO = "autoShowVideo";
-
+    private static final String OPT_SUBJECT_TO_GDPR = "subjectToGdpr";
+    private static final String OPT_CONSENT = "userConsent";
+    
+    /** gdpr **/
+    private boolean subjectToGdpr;
+    private boolean consent;
+   /* OPT_SUBJECT_TO_GDPR
+    OPT_CONSENT
+*/
     /** Interstitial Responses **/
     private static String onDismissInterstitialAd = "onDismissInterstitialAd";
     private static String onReceiveInterstitialAd = "onReceiveInterstitialAd";
@@ -130,8 +141,20 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_INIT_AMR.equals(action)) {
             JSONObject options = inputs.optJSONObject(0);
             result = executeInitAmr(options, callbackContext);
+        
+        }else if (ACTION_USER_CONSENT.equals(action)){
+            JSONObject options = inputs.optJSONObject(0);
+            result = executeUserConsent(options,callbackContext);
 
-        } else if (ACTION_CREATE_INTERSTITIAL_AD.equals(action)) {
+        } else if (ACTION_SUBJECT_GDPR.equals(action)){
+            JSONObject options = inputs.optJSONObject(0);
+            result = executeSubjectToGdpr(options, callbackContext);
+            
+        }else if (ACTION_START_TEST_SUITE.equals(action)) {
+            JSONObject options = inputs.optJSONObject(0);
+            result = executeTestSuite(options, callbackContext);
+            
+        }else if (ACTION_CREATE_INTERSTITIAL_AD.equals(action)) {
             JSONObject options = inputs.optJSONObject(0);
             result = executeCreateInterstitialView(options, callbackContext);
 
@@ -195,6 +218,9 @@ public class Amr extends CordovaPlugin {
         if(options.has(OPT_BANNER_ZONE_ID)) this.amrBannerZoneId = options.optString( OPT_BANNER_ZONE_ID );
         if(options.has(OPT_VIDEO_ZONE_ID)) this.amrVideoZoneId = options.optString( OPT_VIDEO_ZONE_ID );
         if(options.has(OPT_AD_SIZE)) this.adSize = options.optInt( OPT_AD_SIZE );
+        
+        if(options.has(OPT_CONSENT)) this.consent = options.optBoolean(OPT_CONSENT);
+        if(options.has(OPT_SUBJECT_TO_GDPR)) this.subjectToGdpr = options.optBoolean(OPT_SUBJECT_TO_GDPR);
 
         if(options.has(OPT_BANNER_AT_TOP)) this.bannerAtTop = options.optBoolean( OPT_BANNER_AT_TOP );
         if(options.has(OPT_OVERLAP)) this.bannerOverlap = options.optBoolean( OPT_OVERLAP );
@@ -214,8 +240,8 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable(){
             @Override
             public void run() {
-
-                if (!AdMost.getInstance().isInited()) {
+                //TODO: started or completed
+                if (!AdMost.getInstance().isInitCompleted()) {
                     AdMostConfiguration.Builder configuration = new AdMostConfiguration.Builder(cordova.getActivity(), Amr.this.amrAppId);
                     AdMost.getInstance().init(configuration.build());
                     Log.w(LOGTAG, "Init Called");
@@ -227,6 +253,36 @@ public class Amr extends CordovaPlugin {
 
         return null;
     }
+    
+    private PluginResult executeUserConsent(JSONObject options,final CallbackContext callbackContext){
+        this.setOptions( options );
+        
+        cordova.getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                configuration.setUserConsent(Amr.this.consent);
+                
+            });
+            
+        }
+        return null;
+        
+    }
+                                            
+                                            
+    private PluginResult executeSubjectToGdpr (JSONObject options, final CallbackContext callbackContext){
+            this.setOptions( options );
+            cordova.getActivity().runOnUiThread(new Runnable(){
+                @Override
+                public void run() {
+                    configuration.setSubjectToGDPR(Amr.this.subjectToGdpr);
+                    
+                });
+                
+            }
+            return null;
+        }
+                                            
 
     private PluginResult executeCreateBannerView(JSONObject options, final CallbackContext callbackContext) {
 
@@ -240,24 +296,54 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable(){
             @Override
             public void run() {
+                
+                final AdMostViewBinder binder =  new AdMostViewBinder.Builder(R.layout.custom_layout_allgoals)
+                .titleId(R.id.cardTitle)
+                .textId(R.id.cardDetailText)
+                .callToActionId(R.id.CallToActionTextView)
+                .iconImageId(R.id.cardIcon)
+                .mainImageId(R.id.cardImage)
+                .attributionId(R.id.cardAttribution)
+                .build();
 
                 adView = new AdMostView(cordova.getActivity(), Amr.this.amrBannerZoneId, adSize, new AdMostViewListener() {
                     @Override
                     public void onLoad(String network, int position) {
-                        if (network.equals(AdMostAdNetwork.NO_NETWORK)) {
-                            sendResponseToListener(onFailedToReceiveBannerAd, String.format("{ 'error': %d, 'reason':'%s' }",-1, "No Fill"));
-                        } else {
-                            sendResponseToListener(onReceiveBannerAd, null);
-                        }
+                        
                     }
-                }, null);
+                    @Override
+                    public void onReady(String network, View adView) {
+                      
+                    
+                    }
+                    
+                    @Override
+                    public void onFail(int errorCode) {
+                
+                    }
 
+                }, binder);
+                
+                adView.load();
                 executeShowAd(true, null);
 
                 callbackContext.success();
             }
         });
 
+        return null;
+    }
+    
+    private PluginResult executeTestSuite(JSONObject options, final CallbackContext callbackContext){
+                
+             this.setOptions( options );
+                
+        cordova.getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                AdMost.getInstance().startTestSuite(new String[]{this.amrBannerZoneId, this.amrInterstitialZoneId, this.amrVideoZoneId});
+                  });
+                
         return null;
     }
 
@@ -296,6 +382,38 @@ public class Amr extends CordovaPlugin {
                 Log.w(LOGTAG, "interstitial ad started : " + Amr.this.amrInterstitialZoneId);
                 interstitialAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrInterstitialZoneId, new AdMostAdListener() {
                     @Override
+                    public void onDismiss(String message) {
+                        
+                    }
+                    @Override
+                    public void onFail(int errorCode) {
+                        
+                    }
+                    @Override
+                    public void onReady(String network) {
+                       
+                    }
+                    @Override
+                    public void onShown(String network) {
+                        
+                    }
+                    @Override
+                    public void onClicked(String s) {
+                        
+                       
+                    }
+                    @Override
+                    public void onComplete(String s) {
+                       
+                    }
+                    @Override
+                    public void onAction(int i) {
+                        // This method has been deprecated. Kept because of backward compatibility.
+                    }
+                    
+                });
+                    
+                  /*  @Override
                     public void onAction(int actionType) {
                         switch (actionType) {
                             case AdMostAdListener.LOADED:
@@ -328,7 +446,7 @@ public class Amr extends CordovaPlugin {
                     public void onClicked(String s) {
                         super.onClicked(s);
                     }
-                });
+                });*/
                 executeRequestInterstitialAd(options, callbackContext);
                 callbackContext.success();
 
@@ -350,6 +468,35 @@ public class Amr extends CordovaPlugin {
                 Log.w(LOGTAG, "interstitial ad started : " + Amr.this.amrVideoZoneId);
                 videoAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrVideoZoneId, new AdMostAdListener() {
                     @Override
+                    public void onReady(String network) {
+                        // Ad Loaded
+                    }
+                    @Override
+                    public void onFail(int errorCode) {
+                        // Ad Failed
+                    }
+                    @Override
+                    public void onDismiss(String message) {
+                        // Ad Dismiss
+                    }
+                    @Override
+                    public void onComplete(String network) {
+                        // Video Ad Completed
+                    }
+                    @Override
+                    public void onShown(String network) {
+                        //Ad Shown
+                    }
+                    @Override
+                    public void onClicked(String s) {
+                        //Ad Clicked
+                    }
+                    @Override
+                    public void onAction(int i) {
+                        // This method has been deprecated. Kept because of backward compatibility.
+                    }
+                });
+                    /*@Override
                     public void onAction(int actionType) {
                         switch (actionType) {
                             case AdMostAdListener.LOADED:
@@ -388,7 +535,7 @@ public class Amr extends CordovaPlugin {
                         super.onRewarded(i);
                         sendResponseToListener(onRewardVideoAd, null);
                     }
-                });
+                });*/
                 executeRequestVideoAd(options, callbackContext);
                 callbackContext.success();
 
