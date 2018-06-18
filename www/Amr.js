@@ -43,6 +43,40 @@ function(options, successCallback, failureCallback) {
       [ options ]
   );
 };
+
+amrExport.setUserConsent =
+function(options, successCallback, failureCallback) {
+    cordova.exec(
+                 successCallback,
+                 failureCallback,
+                 'Amr',
+                 'setUserConsent',
+                 [ options ]
+                 );
+};
+
+amrExport.subjectToGdpr =
+function(options, successCallback, failureCallback) {
+    cordova.exec(
+                 successCallback,
+                 failureCallback,
+                 'Amr',
+                 'subjectToGdpr',
+                 [ options ]
+                 );
+};
+
+amrExport.startTestSuite =
+function(options, successCallback, failureCallback) {
+    cordova.exec(
+                 successCallback,
+                 failureCallback,
+                 'Amr',
+                 'startTestSuite',
+                 [ options ]
+                 );
+};
+
 	
 amrExport.createBannerAd =
 function(options, successCallback, failureCallback) {
