@@ -1,0 +1,54 @@
+{
+  "name": "cordova-plugin-amr",
+  "version": "1.1.0",
+  "description": "Admost Mediation Router plugin.",
+  "cordova": {
+    "id": "amr-cordova-plugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/admost/AMR-CORDOVA-PLUGIN.git"
+  },
+  "keywords": [
+    "admob",
+    "google",
+    "cordova-ios",
+    "cordova-android",
+    "ecosystem:cordova",
+    "android",
+    "ios",
+    "money",
+    "monetization",
+    "play",
+    "win",
+    "earn",
+    "publicity",
+    "advertisment",
+    "advertising",
+    "ads",
+    "ad",
+    "eclipse",
+    "android studio",
+    "cordova-amr",
+    "amr",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0"
+    }
+  ],
+  "author": "Kokteyl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/admost/AMR-CORDOVA-PLUGIN/issues"
+  },
+  "homepage": "https://github.com/admost/AMR-CORDOVA-PLUGIN#readme"
+}

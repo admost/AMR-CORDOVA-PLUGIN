@@ -2,16 +2,16 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	id="cordova-plugin-amr"
-	version="0.0.1">
+	id="amr-cordova-plugin"
+	version="1.1.0">
       
-    <name>Cordova AMR Plugin</name>
+    <name>AMR Cordova Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
 	<author>Kokteyl</author>
 	<license></license>
 	<keywords>admob, google, cordova-ios, cordova-android, ecosystem:cordova, android, ios, money, monetization, play, win, earn, publicity, advertisment, advertising, ads, ad, eclipse, android studio, cordova-amr, amr</keywords>
-    <repo>https://github.com/cemcatikkas/cordova-plugin-amr.git</repo>
-    <issue>https://github.com/cemcatikkas/cordova-plugin-amr/issues</issue>
+    <repo>https://github.com/admost/AMR-CORDOVA-PLUGIN.git</repo>
+    <issue>https://github.com/admost/AMR-CORDOVA-PLUGIN/issues</issue>
 
 	<engines>
 	    <engine name="cordova" version=">=3.0" />

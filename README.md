@@ -1,1 +1,1 @@
-# cordova-plugin-amr
+# amr-cordova-plugin
