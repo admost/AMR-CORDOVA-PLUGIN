@@ -1,4 +1,4 @@
-package com.kokteyl.amr.cordova;
+package com.amr.cordova;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -29,23 +29,22 @@ public class Amr extends CordovaPlugin {
     private static final boolean CORDOVA_MIN_4 = Integer.valueOf(CordovaWebView.CORDOVA_VERSION.split("\\.")[0]) >= 4;
 
     /** Cordova Actions. */
-    private static final String ACTION_SET_OPTIONS = "setOptions";
-    private static final String ACTION_INIT_AMR = "initAMR";
-    private static final String ACTION_USER_CONSENT = "setUserConsent";
-    private static final String ACTION_SUBJECT_GDPR = "subjectToGdpr";
+    private static final String ACTION_SET_CONFIG = "AMRSdkConfig";
+    private static final String ACTION_START_WITH_CONFIG = "startWithConfig";
     private static final String ACTION_START_TEST_SUITE = "startTestSuite";
-    private static final String ACTION_CREATE_BANNER_AD = "createBannerAd";
-    private static final String ACTION_DESTROY_BANNER_AD = "destroyBannerAd";
-    private static final String ACTION_REQUEST_AD = "requestBannerAd";
-    private static final String ACTION_SHOW_AD = "showBannerAd";
-    private static final String ACTION_CREATE_INTERSTITIAL_AD = "createInterstitialAd";
-    private static final String ACTION_REQUEST_INTERSTITIAL_AD = "requestInterstitialAd";
-    private static final String ACTION_SHOW_INTERSTITIAL_AD = "showInterstitialAd";
-    private static final String ACTION_CREATE_VIDEO_AD = "createVideoAd";
-    private static final String ACTION_REQUEST_VIDEO_AD = "requestVideoAd";
-    private static final String ACTION_SHOW_VIDEO_AD = "showVideoAd";
+    private static final String ACTION_LOAD_BANNER = "loadBanner";
+    private static final String ACTION_HIDE_BANNER = "hideBanner";
+    private static final String ACTION_DESTROY_BANNER = "destroyBanner";
 
-    /** options **/
+    private static final String ACTION_LOAD_INTERSTITIAL = "loadInterstitial";
+    //TODO: load interstitial'a yedir private static final String ACTION_REQUEST_INTERSTITIAL_AD = "requestInterstitialAd";
+    private static final String ACTION_SHOW_INTERSTITIAL = "showInterstitial";
+    private static final String ACTION_LOAD_REWARDED_VIDEO = "loadRewardedVideo";
+    //load video'ya yedir private static final String ACTION_REQUEST_VIDEO_AD = "requestVideoAd";
+    private static final String ACTION_SHOW_REWARDED_VIDEO = "showRewardedVideo";
+    private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
+
+    /** config **/
     private static final String OPT_AMR_APP_ID = "amrAppId";
     private static final String OPT_INTERSTITIAL_ZONE_ID = "amrInterstitialZoneId";
     private static final String OPT_BANNER_ZONE_ID = "amrBannerZoneId";
@@ -58,10 +57,14 @@ public class Amr extends CordovaPlugin {
     private static final String OPT_AUTO_SHOW_VIDEO = "autoShowVideo";
     private static final String OPT_SUBJECT_TO_GDPR = "subjectToGdpr";
     private static final String OPT_CONSENT = "userConsent";
-    
+
+    /**track purchase **/
+    private static final String PRODUCT_RECEIPT = "productReceipt";
+    private static final String PRODUCT_LOCALIZED_PRICE = "productLocalizedPrice";
+    private static final String PRODUCT_ISO_CURRENCY_CODE = "productISOCurrencyCode";
     /** gdpr **/
-    private boolean subjectToGdpr;
-    private boolean consent;
+    private String subjectToGdpr="-1";
+    private String consent = "-1";
    /* OPT_SUBJECT_TO_GDPR
     OPT_CONSENT
 */
@@ -94,6 +97,9 @@ public class Amr extends CordovaPlugin {
     private AdMostInterstitial interstitialAd;
     private AdMostInterstitial videoAd;
 
+    private String productReceipt = "";
+    private String productLocalizedPrice = "";
+    private String productIsoCurrencyCode = "";
     private String amrAppId = "";
     private String amrInterstitialZoneId = "";
     private String amrBannerZoneId = "";
@@ -134,62 +140,59 @@ public class Amr extends CordovaPlugin {
     public boolean execute(String action, JSONArray inputs, CallbackContext callbackContext) throws JSONException {
         PluginResult result = null;
 
-        if (ACTION_SET_OPTIONS.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeSetOptions(options, callbackContext);
+        if (ACTION_SET_CONFIG.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeAMRSdkConfig(config, callbackContext);
 
-        } else if (ACTION_INIT_AMR.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeInitAmr(options, callbackContext);
-        
-        }else if (ACTION_USER_CONSENT.equals(action)){
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeUserConsent(options,callbackContext);
+        } else if (ACTION_START_WITH_CONFIG.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeStartWithConfig(config, callbackContext);
 
-        } else if (ACTION_SUBJECT_GDPR.equals(action)){
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeSubjectToGdpr(options, callbackContext);
-            
         }else if (ACTION_START_TEST_SUITE.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeTestSuite(options, callbackContext);
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeTestSuite(config, callbackContext);
             
-        }else if (ACTION_CREATE_INTERSTITIAL_AD.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeCreateInterstitialView(options, callbackContext);
+        }else if (ACTION_LOAD_INTERSTITIAL.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeLoadInterstitial(config, callbackContext);
 
-        } else if (ACTION_REQUEST_INTERSTITIAL_AD.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeRequestInterstitialAd(options, callbackContext);
+        } /*else if (ACTION_REQUEST_INTERSTITIAL_AD.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeRequestInterstitialAd(config, callbackContext);
 
-        } else if (ACTION_SHOW_INTERSTITIAL_AD.equals(action)) {
-            result = executeShowInterstitialAd(callbackContext);
+        }*/ else if (ACTION_SHOW_INTERSTITIAL.equals(action)) {
+            result = executeShowInterstitial(callbackContext);
 
-        } else if (ACTION_CREATE_VIDEO_AD.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeCreateVideoView(options, callbackContext);
+        } else if (ACTION_LOAD_REWARDED_VIDEO.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeLoadRewardedVideo(config, callbackContext);
 
-        } else if (ACTION_REQUEST_VIDEO_AD.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeRequestVideoAd(options, callbackContext);
+        }/* else if (ACTION_REQUEST_VIDEO_AD.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeRequestVideoAd(config, callbackContext);
 
-        } else if (ACTION_SHOW_VIDEO_AD.equals(action)) {
-            result = executeShowVideoAd(callbackContext);
+        }*/ else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
+            result = executeShowRewardedVideo(callbackContext);
 
-        } else if (ACTION_REQUEST_AD.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeRequestAd(options, callbackContext);
+        }/* else if (ACTION_REQUEST_AD.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeRequestAd(config, callbackContext);
 
-        } else if (ACTION_CREATE_BANNER_AD.equals(action)) {
-            JSONObject options = inputs.optJSONObject(0);
-            result = executeCreateBannerView(options, callbackContext);
+        }*/ else if (ACTION_LOAD_BANNER.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeLoadBanner(config, callbackContext);
 
-        } else if (ACTION_SHOW_AD.equals(action)) {
+        } else if (ACTION_HIDE_BANNER.equals(action)) {
             boolean show = inputs.optBoolean(0);
-            result = executeShowAd(show, callbackContext);
+            result = executeHideBanner(show, callbackContext);
 
-        } else if (ACTION_DESTROY_BANNER_AD.equals(action)) {
-            result = executeDestroyBannerView( callbackContext);
+        } else if (ACTION_DESTROY_BANNER.equals(action)) {
+
+            result = executeDestroyBanner( callbackContext);
+        } else if (ACTION_TRACK_PURCHASE_FOR_ANDROID.equals(action)) {
+            //TODO:products inside inputs?
+            JSONObject product = inputs.optJSONObject(0);
+            result = executeTrackPurchaseForAndroid(product ,callbackContext);
 
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
@@ -201,37 +204,45 @@ public class Amr extends CordovaPlugin {
         return true;
     }
 
-    private PluginResult executeSetOptions(JSONObject options, CallbackContext callbackContext) {
-        Log.w(LOGTAG, "executeSetOptions");
+    private PluginResult executeAMRSdkConfig(JSONObject config, CallbackContext callbackContext) {
+        Log.w(LOGTAG, "executeAMRSdkConfig");
 
-        this.setOptions( options );
+        this.AMRSdkConfig( config );
 
         callbackContext.success();
         return null;
     }
 
-    private void setOptions( JSONObject options ) {
-        if(options == null) return;
+    private void AMRSdkConfig( JSONObject config ) {
+        if(config == null) return;
 
-        if(options.has(OPT_AMR_APP_ID)) this.amrAppId = options.optString(OPT_AMR_APP_ID );
-        if(options.has(OPT_INTERSTITIAL_ZONE_ID)) this.amrInterstitialZoneId = options.optString(OPT_INTERSTITIAL_ZONE_ID);
-        if(options.has(OPT_BANNER_ZONE_ID)) this.amrBannerZoneId = options.optString( OPT_BANNER_ZONE_ID );
-        if(options.has(OPT_VIDEO_ZONE_ID)) this.amrVideoZoneId = options.optString( OPT_VIDEO_ZONE_ID );
-        if(options.has(OPT_AD_SIZE)) this.adSize = options.optInt( OPT_AD_SIZE );
+        if(config.has(OPT_AMR_APP_ID)) this.amrAppId = config.optString(OPT_AMR_APP_ID );
+        if(config.has(OPT_INTERSTITIAL_ZONE_ID)) this.amrInterstitialZoneId = config.optString(OPT_INTERSTITIAL_ZONE_ID);
+        if(config.has(OPT_BANNER_ZONE_ID)) this.amrBannerZoneId = config.optString( OPT_BANNER_ZONE_ID );
+        if(config.has(OPT_VIDEO_ZONE_ID)) this.amrVideoZoneId = config.optString( OPT_VIDEO_ZONE_ID );
+        if(config.has(OPT_AD_SIZE)) this.adSize = config.optInt( OPT_AD_SIZE );
         
-        if(options.has(OPT_CONSENT)) this.consent = options.optBoolean(OPT_CONSENT);
-        if(options.has(OPT_SUBJECT_TO_GDPR)) this.subjectToGdpr = options.optBoolean(OPT_SUBJECT_TO_GDPR);
+        if(config.has(OPT_CONSENT)) this.consent = config.optString(OPT_CONSENT);
+        if(config.has(OPT_SUBJECT_TO_GDPR)) this.subjectToGdpr = config.optString(OPT_SUBJECT_TO_GDPR);
 
-        if(options.has(OPT_BANNER_AT_TOP)) this.bannerAtTop = options.optBoolean( OPT_BANNER_AT_TOP );
-        if(options.has(OPT_OVERLAP)) this.bannerOverlap = options.optBoolean( OPT_OVERLAP );
-        if(options.has(OPT_OFFSET_TOPBAR)) this.offsetTopBar = options.optBoolean( OPT_OFFSET_TOPBAR );
-        if(options.has(OPT_AUTO_SHOW_INTERSTITIAL)) this.autoShowInterstitial  = options.optBoolean( OPT_AUTO_SHOW_INTERSTITIAL );
-        if(options.has(OPT_AUTO_SHOW_VIDEO)) this.autoShowVideo  = options.optBoolean( OPT_AUTO_SHOW_VIDEO );
+        if(config.has(OPT_BANNER_AT_TOP)) this.bannerAtTop = config.optBoolean( OPT_BANNER_AT_TOP );
+        if(config.has(OPT_OVERLAP)) this.bannerOverlap = config.optBoolean( OPT_OVERLAP );
+        if(config.has(OPT_OFFSET_TOPBAR)) this.offsetTopBar = config.optBoolean( OPT_OFFSET_TOPBAR );
+        if(config.has(OPT_AUTO_SHOW_INTERSTITIAL)) this.autoShowInterstitial  = config.optBoolean( OPT_AUTO_SHOW_INTERSTITIAL );
+        if(config.has(OPT_AUTO_SHOW_VIDEO)) this.autoShowVideo  = config.optBoolean( OPT_AUTO_SHOW_VIDEO );
     }
 
-    private PluginResult executeInitAmr(JSONObject options, final CallbackContext callbackContext) {
+    private void trackPurchaseConfig( JSONObject product ) {
+        if(product == null) return;
 
-        this.setOptions( options );
+        if(product.has(PRODUCT_RECEIPT)) this.productReceipt =product.optString( PRODUCT_RECEIPT );
+        if(product.has(PRODUCT_LOCALIZED_PRICE)) this.productLocalizedPrice = product.optString( PRODUCT_LOCALIZED_PRICE );
+        if(product.has(PRODUCT_ISO_CURRENCY_CODE)) this.productIsoCurrencyCode = product.optString( PRODUCT_ISO_CURRENCY_CODE );
+         }
+
+    private PluginResult executeStartWithConfig(JSONObject config, final CallbackContext callbackContext) {
+
+        this.AMRSdkConfig( config );
 
         if(this.amrAppId.length() < 5){
             Log.e(LOGTAG, "Please set amrAppId parameter.");
@@ -240,9 +251,14 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable(){
             @Override
             public void run() {
-                //TODO: started or completed
-                if (!AdMost.getInstance().isInitCompleted()) {
+
+                if (!AdMost.getInstance().isInitStarted()) {
                     AdMostConfiguration.Builder configuration = new AdMostConfiguration.Builder(cordova.getActivity(), Amr.this.amrAppId);
+                    if (Amr.this.consent != "-1")
+                        configuration.setUserConsent(Amr.this.consent == "1");
+
+                    if (Amr.this.subjectToGdpr != "-1")
+                        configuration.setSubjectToGDPR(Amr.this.subjectToGdpr == "1");
                     AdMost.getInstance().init(configuration.build());
                     Log.w(LOGTAG, "Init Called");
                 }
@@ -253,40 +269,10 @@ public class Amr extends CordovaPlugin {
 
         return null;
     }
-    
-    private PluginResult executeUserConsent(JSONObject options,final CallbackContext callbackContext){
-        this.setOptions( options );
-        
-        cordova.getActivity().runOnUiThread(new Runnable(){
-            @Override
-            public void run() {
-                configuration.setUserConsent(Amr.this.consent);
-                
-            });
-            
-        }
-        return null;
-        
-    }
-                                            
-                                            
-    private PluginResult executeSubjectToGdpr (JSONObject options, final CallbackContext callbackContext){
-            this.setOptions( options );
-            cordova.getActivity().runOnUiThread(new Runnable(){
-                @Override
-                public void run() {
-                    configuration.setSubjectToGDPR(Amr.this.subjectToGdpr);
-                    
-                });
-                
-            }
-            return null;
-        }
-                                            
 
-    private PluginResult executeCreateBannerView(JSONObject options, final CallbackContext callbackContext) {
+    private PluginResult executeLoadBanner(JSONObject config, final CallbackContext callbackContext) {
 
-        this.setOptions( options );
+        this.AMRSdkConfig( config );
 
         if(this.amrBannerZoneId.length() < 5){
             Log.e(LOGTAG, "Please set amrBannerZoneId parameter.");
@@ -297,15 +283,6 @@ public class Amr extends CordovaPlugin {
             @Override
             public void run() {
                 
-                final AdMostViewBinder binder =  new AdMostViewBinder.Builder(R.layout.custom_layout_allgoals)
-                .titleId(R.id.cardTitle)
-                .textId(R.id.cardDetailText)
-                .callToActionId(R.id.CallToActionTextView)
-                .iconImageId(R.id.cardIcon)
-                .mainImageId(R.id.cardImage)
-                .attributionId(R.id.cardAttribution)
-                .build();
-
                 adView = new AdMostView(cordova.getActivity(), Amr.this.amrBannerZoneId, adSize, new AdMostViewListener() {
                     @Override
                     public void onLoad(String network, int position) {
@@ -322,10 +299,10 @@ public class Amr extends CordovaPlugin {
                 
                     }
 
-                }, binder);
+                }, null);
                 
                 adView.load();
-                executeShowAd(true, null);
+                executeHideBanner(true, null);
 
                 callbackContext.success();
             }
@@ -334,21 +311,23 @@ public class Amr extends CordovaPlugin {
         return null;
     }
     
-    private PluginResult executeTestSuite(JSONObject options, final CallbackContext callbackContext){
+    private PluginResult executeTestSuite(JSONObject config, final CallbackContext callbackContext){
                 
-             this.setOptions( options );
+             this.AMRSdkConfig( config );
                 
-        cordova.getActivity().runOnUiThread(new Runnable(){
+        cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AdMost.getInstance().startTestSuite(new String[]{this.amrBannerZoneId, this.amrInterstitialZoneId, this.amrVideoZoneId});
-                  });
+                AdMost.getInstance().startTestSuite(new String[]{Amr.this.amrBannerZoneId, Amr.this.amrInterstitialZoneId, Amr.this.amrVideoZoneId});
+            }
+
+        });
                 
         return null;
     }
 
-    private PluginResult executeDestroyBannerView(final CallbackContext callbackContext) {
-        Log.w(LOGTAG, "executeDestroyBannerView");
+    private PluginResult executeDestroyBanner(final CallbackContext callbackContext) {
+        Log.w(LOGTAG, "executeDestroyBanner");
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -369,11 +348,28 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeCreateInterstitialView(final JSONObject options, final CallbackContext callbackContext) {
-        this.setOptions( options );
+    private PluginResult executeTrackPurchaseForAndroid(JSONObject product, final CallbackContext callbackContext){
+
+        this.trackPurchaseConfig(product);
+
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AdMost.getInstance().trackPurchase(Amr.this.productReceipt,Amr.this.productLocalizedPrice, Amr.this.productIsoCurrencyCode);
+            }
+
+        });
+
+        return null;
+    }
+
+
+
+    private PluginResult executeLoadInterstitial(final JSONObject config, final CallbackContext callbackContext) {
+        this.AMRSdkConfig( config );
 
         if(this.amrInterstitialZoneId.length() < 5){
-            Log.e(LOGTAG, "Please put your interstitialZoeId into the javascript code.");
+            Log.e(LOGTAG, "Please put your interstitialZoneId into the javascript code.");
             return null;
         }
         cordova.getActivity().runOnUiThread(new Runnable(){
@@ -412,6 +408,10 @@ public class Amr extends CordovaPlugin {
                     }
                     
                 });
+            } });
+        executeRequestInterstitial(config, callbackContext);
+
+                                            
                     
                   /*  @Override
                     public void onAction(int actionType) {
@@ -419,9 +419,9 @@ public class Amr extends CordovaPlugin {
                             case AdMostAdListener.LOADED:
                                 sendResponseToListener(onReceiveInterstitialAd, null);
                                 if(autoShowInterstitial) {
-                                    executeShowInterstitialAd(null);
+                                    executeShowInterstitial(null);
                                 }else if(autoShowInterstitialTemp){
-                                    executeShowInterstitialAd(null);
+                                    executeShowInterstitial(null);
                                     autoShowInterstitialTemp = false;
                                 }
                                 break;
@@ -446,26 +446,27 @@ public class Amr extends CordovaPlugin {
                     public void onClicked(String s) {
                         super.onClicked(s);
                     }
-                });*/
-                executeRequestInterstitialAd(options, callbackContext);
+                });
+                executeRequestInterstitialAd(config, callbackContext);
                 callbackContext.success();
 
             }
-        });
+        });*/
+
         return null;
     }
 
-    private PluginResult executeCreateVideoView(final JSONObject options, final CallbackContext callbackContext) {
-        this.setOptions( options );
+    private PluginResult executeLoadRewardedVideo(final JSONObject config, final CallbackContext callbackContext) {
+        this.AMRSdkConfig( config );
 
         if(this.amrVideoZoneId.length() < 5){
-            Log.e(LOGTAG, "Please put your interstitialZoeId into the javascript code.");
+            Log.e(LOGTAG, "Please put your VideoZoneId into the javascript code.");
             return null;
         }
         cordova.getActivity().runOnUiThread(new Runnable(){
             @Override
             public void run() {
-                Log.w(LOGTAG, "interstitial ad started : " + Amr.this.amrVideoZoneId);
+                Log.w(LOGTAG, "Video ad started : " + Amr.this.amrVideoZoneId);
                 videoAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrVideoZoneId, new AdMostAdListener() {
                     @Override
                     public void onReady(String network) {
@@ -502,9 +503,9 @@ public class Amr extends CordovaPlugin {
                             case AdMostAdListener.LOADED:
                                 sendResponseToListener(onReceiveVideoAd, null);
                                 if(autoShowVideo) {
-                                    executeShowVideoAd(null);
+                                    executeShowRewardedVideo(null);
                                 }else if(autoShowVideoTemp){
-                                    executeShowVideoAd(null);
+                                    executeShowRewardedVideo(null);
                                     autoShowVideoTemp = false;
                                 }
                                 break;
@@ -536,7 +537,7 @@ public class Amr extends CordovaPlugin {
                         sendResponseToListener(onRewardVideoAd, null);
                     }
                 });*/
-                executeRequestVideoAd(options, callbackContext);
+                executeRequestVideoAd(config, callbackContext);
                 callbackContext.success();
 
             }
@@ -544,8 +545,8 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeRequestAd(JSONObject options, final CallbackContext callbackContext) {
-        this.setOptions( options );
+    private PluginResult executeRequestAd(JSONObject config, final CallbackContext callbackContext) {
+        this.AMRSdkConfig( config );
 
         if(adView == null) {
             callbackContext.error("adView is null, call createBannerView first");
@@ -563,8 +564,8 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeRequestInterstitialAd(JSONObject options, final CallbackContext callbackContext) {
-        this.setOptions( options );
+    private PluginResult executeRequestInterstitial(JSONObject config, final CallbackContext callbackContext) {
+        this.AMRSdkConfig( config );
 
         if(interstitialAd == null) {
             callbackContext.error("interstitialAd is null, call createInterstitialView first");
@@ -582,8 +583,8 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeRequestVideoAd(JSONObject options, final CallbackContext callbackContext) {
-        this.setOptions( options );
+    private PluginResult executeRequestVideoAd(JSONObject config, final CallbackContext callbackContext) {
+        this.AMRSdkConfig( config );
 
         if(videoAd == null) {
             callbackContext.error("videoAd is null, call createVideoAd first");
@@ -601,7 +602,7 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeShowAd(boolean showAd, final CallbackContext callbackContext) {
+    private PluginResult executeHideBanner(boolean showAd, final CallbackContext callbackContext) {
 
         if(adView == null) {
             return new PluginResult(Status.ERROR, "adView is null, call createBannerView first.");
@@ -681,7 +682,9 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeShowInterstitialAd(final CallbackContext callbackContext) {
+    private PluginResult executeShowInterstitial(final CallbackContext callbackContext) {
+        
+        Log.e(LOGTAG, "Show Interstital Ad");
 
         if(interstitialAd == null) {
             return new PluginResult(Status.ERROR, "interstitialAd is null, call createInterstitialView first.");
@@ -692,6 +695,7 @@ public class Amr extends CordovaPlugin {
             public void run() {
 
                 if(interstitialAd.isLoaded()) {
+                    Log.e(LOGTAG, "Interstital is loaded");
                     interstitialAd.show();
                 } else {
                     Log.e(LOGTAG, "Interstital not ready yet, temporarily setting autoshow.");
@@ -705,8 +709,8 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeShowVideoAd(final CallbackContext callbackContext) {
-
+    private PluginResult executeShowRewardedVideo(final CallbackContext callbackContext) {
+         Log.v(LOGTAG, "Show Video Ad");
         if(videoAd == null) {
             return new PluginResult(Status.ERROR, "VideoAd is null, call createVideoView first.");
         }
@@ -734,7 +738,7 @@ public class Amr extends CordovaPlugin {
         if (adView != null) {
             adView.pause();
         }
-        if (AdMost.getInstance().isInited())
+        if (AdMost.getInstance().isInitStarted())
             AdMost.getInstance().onPause(cordova.getActivity());
         super.onPause(multitasking);
     }
@@ -743,7 +747,7 @@ public class Amr extends CordovaPlugin {
     public void onResume(boolean multitasking) {
         super.onResume(multitasking);
         isGpsAvailable = (GooglePlayServicesUtil.isGooglePlayServicesAvailable(cordova.getActivity()) == ConnectionResult.SUCCESS);
-        if (AdMost.getInstance().isInited())
+        if (AdMost.getInstance().isInitStarted())
             AdMost.getInstance().onResume(cordova.getActivity());
         if (adView != null) {
             adView.resume();
@@ -769,7 +773,7 @@ public class Amr extends CordovaPlugin {
         if (videoAd != null) {
             videoAd.destroy();
         }
-        if (AdMost.getInstance().isInited())
+        if (AdMost.getInstance().isInitStarted())
             AdMost.getInstance().onDestroy(cordova.getActivity());
         super.onDestroy();
     }

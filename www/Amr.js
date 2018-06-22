@@ -1,4 +1,5 @@
-var argscheck = require('cordova/argscheck'),
+
+var argscheck = require ('cordova/argscheck'),
     exec = require('cordova/exec');
 
 var amrExport = {};
@@ -14,168 +15,103 @@ amrExport.AD_SIZE = {
   MEDIUM_RECTANGLE: 250
 };
 
-amrExport.setOptions =
-	function(options, successCallback, failureCallback) {
-	  if(typeof options === 'object' 
-		  && typeof options.amrAppId === 'string'
-	      && options.amrAppId.length > 0) {
+amrExport.AMRSdkConfig =
+	function(config, successCallback, failureCallback) {
+	  if(typeof config === 'object' 
+		  && typeof config.amrAppId === 'string'
+	      && config.amrAppId.length > 0) {
 		  cordova.exec(
 			      successCallback,
 			      failureCallback,
 			      'Amr',
-			      'setOptions',
-			      [options]
+			      'AMRSdkConfig',
+			      [config]
 			  );
 	  } else {
 		  if(typeof failureCallback === 'function') {
-			  failureCallback('options.amrAppId should be specified.')
+			  failureCallback('config.amrAppId should be specified.')
 		  }
 	  }
 	};
 	
-amrExport.initAMR =
-function(options, successCallback, failureCallback) {
+amrExport.startWithConfig =
+function(config, successCallback, failureCallback) {
   cordova.exec(
       successCallback,
       failureCallback,
       'Amr',
-      'initAMR',
-      [ options ]
+      'startWithConfig',
+      [ config ]
   );
 };
 
-amrExport.setUserConsent =
-function(options, successCallback, failureCallback) {
-    cordova.exec(
-                 successCallback,
-                 failureCallback,
-                 'Amr',
-                 'setUserConsent',
-                 [ options ]
-                 );
-};
-
-amrExport.subjectToGdpr =
-function(options, successCallback, failureCallback) {
-    cordova.exec(
-                 successCallback,
-                 failureCallback,
-                 'Amr',
-                 'subjectToGdpr',
-                 [ options ]
-                 );
-};
-
 amrExport.startTestSuite =
-function(options, successCallback, failureCallback) {
+function(config, successCallback, failureCallback) {
     cordova.exec(
                  successCallback,
                  failureCallback,
                  'Amr',
                  'startTestSuite',
-                 [ options ]
+                 [ config ]
                  );
 };
 
 	
-amrExport.createBannerAd =
-function(options, successCallback, failureCallback) {
-  if(typeof options === 'undefined' || options == null) options = {};
+amrExport.loadBanner =
+function(config, successCallback, failureCallback) {
+  if(typeof config === 'undefined' || config == null) config = {};
   cordova.exec(
       successCallback,
       failureCallback,
       'Amr',
-      'createBannerAd',
-      [ options ]
+      'loadBanner',
+      [ config ]
   );
 };
 
-amrExport.createInterstitialAd =
-function(options, successCallback, failureCallback) {
-  cordova.exec(
-      successCallback,
-      failureCallback,
-      'Amr',
-      'createInterstitialAd',
-      [ options ]
-  );
-};
 
-amrExport.createVideoAd =
-function(options, successCallback, failureCallback) {
-  cordova.exec(
-      successCallback,
-      failureCallback,
-      'Amr',
-      'createVideoAd',
-      [ options ]
-  );
-};
-
-amrExport.destroyBannerAd =
-function(options, successCallback, failureCallback) {
-  if(typeof options === 'undefined' || options == null) options = {};
-  cordova.exec(
-	      successCallback,
-	      failureCallback,
-	      'Amr',
-	      'destroyBannerAd',
-	      []
-	  );
-};
-
-amrExport.requestBannerAd =
-function(options, successCallback, failureCallback) {
-	  if(typeof options === 'undefined' || options == null) options = {};
-  cordova.exec(
-      successCallback,
-      failureCallback,
-      'Amr',
-      'requestBannerAd',
-      [ options ]
-  );
-};
-
-amrExport.requestInterstitialAd =
-function(options, successCallback, failureCallback) {
-	  if(typeof options === 'undefined' || options == null) options = {};
-  cordova.exec(
-      successCallback,
-      failureCallback,
-      'Amr',
-      'requestInterstitialAd',
-      [ options ]
-  );
-};
-
-amrExport.requestVideoAd =
-function(options, successCallback, failureCallback) {
-	  if(typeof options === 'undefined' || options == null) options = {};
-  cordova.exec(
-      successCallback,
-      failureCallback,
-      'Amr',
-      'requestVideoAd',
-      [ options ]
-  );
-};
-
-amrExport.showBannerAd = 
+amrExport.hideBanner =
 function( show, successCallback, failureCallback) {
-	if (show === undefined) {
-		show = true;
+	if (hide === undefined) {
+		hide = true;
 	}
 
 	cordova.exec(
 		successCallback,
 		failureCallback, 
 		'Amr', 
-		'showBannerAd', 
-		[ show ]
+		'hideBanner', 
+		[ hide ]
 	);
 };
 
-amrExport.showInterstitialAd = 
+
+amrExport.destroyBanner =
+function(config, successCallback, failureCallback) {
+  if(typeof config === 'undefined' || config == null) config = {};
+  cordova.exec(
+	      successCallback,
+	      failureCallback,
+	      'Amr',
+	      'destroyBanner',
+	      []
+	  );
+};
+
+
+amrExport.loadInterstitial =
+function(config, successCallback, failureCallback) {
+	  if(typeof config === 'undefined' || config == null) config = {};
+  cordova.exec(
+      successCallback,
+      failureCallback,
+      'Amr',
+      'loadInterstitial',
+      [ config ]
+  );
+};
+
+amrExport.showInterstitial = 
 	function( show, successCallback, failureCallback) {
 		if (show === undefined) {
 			show = true;
@@ -185,12 +121,25 @@ amrExport.showInterstitialAd =
 			successCallback,
 			failureCallback, 
 			'Amr', 
-			'showInterstitialAd', 
+			'showInterstitial', 
 			[ show ]
 		);
 	};
 
-amrExport.showVideoAd = 
+
+amrExport.loadRewardedVideo =
+function(config, successCallback, failureCallback) {
+	  if(typeof config === 'undefined' || config == null) config = {};
+  cordova.exec(
+      successCallback,
+      failureCallback,
+      'Amr',
+      'loadRewardedVideo',
+      [ config ]
+  );
+};
+
+amrExport.showRewardedVideo = 
 	function( show, successCallback, failureCallback) {
 		if (show === undefined) {
 			show = true;
@@ -200,9 +149,49 @@ amrExport.showVideoAd =
 			successCallback,
 			failureCallback, 
 			'Amr', 
-			'showVideoAd', 
+			'showRewardedVideo', 
 			[ show ]
+		);
+};	
+
+amrExport.trackPurchaseForAndroid = 
+	function( product, successCallback, failureCallback) {
+    if(typeof product === 'undefined' || product == null) product = {};
+		cordova.exec(
+			successCallback,
+			failureCallback, 
+			'Amr', 
+			'trackPurchaseForAndroid', 
+			[ product ]
 		);
 	};	
 
+amrExport.trackPurchaseForIOS = 
+	function( product, successCallback, failureCallback) {
+    if(typeof product === 'undefined' || product == null) product = {};
+		cordova.exec(
+			successCallback,
+			failureCallback, 
+			'Amr', 
+			'trackPurchaseForIOS', 
+			[ product ]
+		);
+	};	
+
+amrExport.setUserId = 
+	function( applicationUserId, successCallback, failureCallback) {
+    if(typeof applicationUserId === 'undefined' || applicationUserId == null) applicationUserId = {};
+		cordova.exec(
+			successCallback,
+			failureCallback, 
+			'Amr', 
+			'setUserId', 
+			[applicationUserId ]
+		);
+	};	
+
+
+
 module.exports = amrExport;
+
+

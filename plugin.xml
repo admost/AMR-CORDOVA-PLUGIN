@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	id="amr-cordova-plugin"
-	version="1.1.0">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        id="cordova-plugin-amr"
+        version="0.0.1">
       
-    <name>AMR Cordova Plugin</name>
+    <name>Cordova AMR Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
 	<author>Kokteyl</author>
 	<license></license>
 	<keywords>admob, google, cordova-ios, cordova-android, ecosystem:cordova, android, ios, money, monetization, play, win, earn, publicity, advertisment, advertising, ads, ad, eclipse, android studio, cordova-amr, amr</keywords>
-    <repo>https://github.com/admost/AMR-CORDOVA-PLUGIN.git</repo>
-    <issue>https://github.com/admost/AMR-CORDOVA-PLUGIN/issues</issue>
+    <repo>https://github.com/cemcatikkas/cordova-plugin-amr.git</repo>
+    <issue>https://github.com/cemcatikkas/cordova-plugin-amr/issues</issue>
 
 	<engines>
-	    <engine name="cordova" version=">=3.0" />
+	    <engine name="cordova" version=">=4.0.0" />
 	</engines>
 
     <js-module src="www/Amr.js" name="Amr">
@@ -23,63 +24,59 @@
 
 	
     <!-- android -->
+    <!-- android, now build with gradle instead of ant -->
     <platform name="android">
-    <config-file target="res/xml/config.xml" parent="/*">
-        <feature name="Amr">
-            <param name="android-package" value="com.kokteyl.amr.cordova.Amr"/>
-        </feature>
-    </config-file>
-    <source-file src="src/android/Amr.java" target-dir="src/com/kokteyl/amr/cordova" />
-    
-    <config-file target="AndroidManifest.xml" parent="/manifest/application">
-        <service
-            android:name='com.evernote.android.job.gcm.PlatformGcmService'
-            android:enabled='true'
-            android:exported='true'
-            tools:replace='android:enabled' >
-            <intent-filter>
-                <action android:name='com.google.android.gms.gcm.ACTION_TASK_READY' />
-            </intent-filter>
-        </service>
-        <receiver
-            android:name="com.inmobi.commons.core.utilities.uid.ImIdShareBroadCastReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.inmobi.share.id"/>
-            </intent-filter>
-        </receiver>
+        <framework src="com.android.volley:volley:1.0.0"/>
+        <framework src="com.admost.sdk:amr:1.6.7" />
+        <framework src="com.google.android.gms:play-services-base:15.0.1"/>
+        <framework src="com.google.android.gms:play-services-ads:15.0.1"/>
+        <framework src="com.admost.sdk:applovin:8.0.1"/>
+        <framework src="com.admost.sdk:chartboost:7.2.0"/>
+        <framework src="com.admost.sdk:facebook:4.28.2"/>
+        <framework src="com.android.support:recyclerview-v7:27.1.1"/>
+        <framework src="com.admost.sdk:ironsource:6.7.9"/>
+        <framework src="com.admost.sdk:tapjoy:11.12.2"/>
+        <framework src="com.admost.sdk:unity:2.2.1"/>
+        <framework src="com.github.vungle:vungle-android-sdk:6.2.5"/>
+        <framework src="com.google.android.exoplayer:exoplayer:r2.0.0"/>
+        <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />
         
-        <meta-data android:name="applovin.sdk.key"
-        android:value="LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N"  />
-        
-        
-    </config-file>
-    
-    <config-file target="AndroidManifest.xml" parent="/*">
-        <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"/>
-        
-    </config-file>
-    
-    <framework src="com.android.volley:volley:1.0.0"/>
-    <framework src="com.admost.sdk:amr:1.6.7" />
-    <framework src="com.google.android.gms:play-services-base:15.0.1"/>
-    <framework src="com.google.android.gms:play-services-ads:15.0.1"/>
-    <framework src="com.admost.sdk:applovin:8.0.1"/>
-    <framework src="com.admost.sdk:chartboost:7.2.0"/>
-    <framework src="com.admost.sdk:facebook:4.28.2"/>
-    <framework src="com.android.support:recyclerview-v7:27.1.1"/>
-    <framework src="com.admost.sdk:ironsource:6.7.9"/>
-    <framework src="com.admost.sdk:tapjoy:11.12.2"/>
-    <framework src="com.admost.sdk:unity:2.2.1"/>
-    <framework src="com.github.vungle:vungle-android-sdk:6.2.5"/>
-    
-    <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />
-    
-</platform>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            
+                <service
+                    android:name='com.evernote.android.job.gcm.PlatformGcmService'
+                    android:enabled='true'
+                    android:exported='true'
+                    tools:replace='android:enabled' >
+                    <intent-filter>
+                        <action android:name='com.google.android.gms.gcm.ACTION_TASK_READY' />
+                    </intent-filter>
+                </service>
+                
+                <meta-data android:name="applovin.sdk.key"
+                android:value="LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N"  />
+        </config-file>
+		
+		<config-file target="AndroidManifest.xml" parent="/*">
+		    <uses-permission android:name="android.permission.INTERNET"/>
+		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+             <uses-permission android:name="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"/>
+		  </config-file>
 
+		<config-file target="res/xml/config.xml" parent="/*">
+		    <feature name="Amr">
+			<param name="android-package" value="com.amr.cordova.Amr"/>
+			<param name="onload" value="true" />
+		    </feature>
+		</config-file>
+		<source-file src="src/android/Amr.java" target-dir="src/com/amr/cordova" />
+
+        <!-- cordova CLI using gradle and it's working well 
+        <framework src="com.google.android.gms:play-services-ads:+" /> -->
+        <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
+        <!-- dependency id="cordova-plugin-googleplayservices"/ -->
+     </platform>
+    
     <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
@@ -97,37 +94,34 @@
         <config-file target="*-Info.plist" parent="NSCalendarsUsageDescription">
             <string>Some ad content may access calendar</string>
         </config-file>
-		<config-file target="*-Info.plist" parent="AppLovinSdkKey">
-            <string>LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N</string>
-        </config-file>
-
+        
         <header-file src="src/ios/CDVAmr.h" />
         <source-file src="src/ios/CDVAmr.m" />
         
-		<pods-config ios-min-version="9.0" use-frameworks="true"/>
-		<pod id="AMRSDK" version="1.3"/>
-		<pod id="AMRAdapterAdcolony" version="3.3"/>
-		<pod id="AMRAdapterAdmob" version="7.31"/>
-		<pod id="AMRAdapterAdmost" version="1.0"/>
-		<pod id="AMRAdapterAmazon" version="2.2"/>
-		<pod id="AMRAdapterApplovin" version="5.0"/>
-		<pod id="AMRAdapterAppnext" version="1.8"/>
-		<pod id="AMRAdapterAvocarrot" version="4.9"/>
-		<pod id="AMRAdapterChartboost" version="7.2"/>
-		<pod id="AMRAdapterFacebook" version="4.28"/>
-		<pod id="AMRAdapterFlurry" version="8.6"/>
-		<pod id="AMRAdapterFyber" version="8.21"/>
-		<pod id="AMRAdapterInmobi" version="7.1"/>
-		<pod id="AMRAdapterIronsource" version="6.7"/>
-		<pod id="AMRAdapterLoopme" version="6.4"/>
-		<pod id="AMRAdapterMobfox" version="3.5"/>
-		<pod id="AMRAdapterMopub" version="5.0"/>
-		<pod id="AMRAdapterNexage" version="6.8"/>
-		<pod id="AMRAdapterSmaato" version="9.0"/>
-		<pod id="AMRAdapterStartapp" version="3.7"/>
-		<pod id="AMRAdapterTapjoy" version="11.12"/>
-		<pod id="AMRAdapterUnity" version="2.2"/>
-		<pod id="AMRAdapterVungle" version="6.2"/>
-
+        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 7.8" />
+        <framework src="AMRAdapterMopub" type="podspec" spec="~> 4.11" />
+        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 4.15" />
+        <framework src="AMRAdapterMobfox" type="podspec" spec="~> 2.4" />
+        <framework src="AMRAdapterRevmob" type="podspec" spec="~> 9.2" />
+        <framework src="AMRAdapterUnity" type="podspec" spec="~> 2.0" />
+        <framework src="AMRAdapterAppnext" type="podspec" spec="~> 1.7" />
+        <framework src="AMRAdapterSmaato" type="podspec" spec="~> 8.0" />
+        <framework src="AMRAdapterVungle" type="podspec" spec="~> 4.0" />
+        <framework src="AMRAdapterFlurry" type="podspec" spec="~> 7.6" />
+        <framework src="AMRAdapterInmobi" type="podspec" spec="~> 6.0" />
+        <framework src="AMRAdapterAmazon" type="podspec" spec="~> 2.2" />
+        <framework src="AMRAdapterAdcolony" type="podspec" spec="~> 2.6" />
+        <framework src="AMRAdapterTapjoy" type="podspec" spec="~> 11.8" />
+        <framework src="AMRAdapterSupersonic" type="podspec" spec="~> 6.4" />
+        <framework src="AMRAdapterLoopme" type="podspec" spec="~> 6.0" />
+        <framework src="AMRAdapterApplovin" type="podspec" spec="~> 3.4" />
+        <framework src="AMRAdapterChartboost" type="podspec" spec="~> 6.5" />
+        <framework src="AMRAdapterNexage" type="podspec" spec="~> 6.3" />
+        <framework src="AMRAdapterAdfalcon" type="podspec" spec="~> 3.2" />
+        <framework src="AMRAdapterFyber" type="podspec" spec="~> 8.6" />
+        <framework src="AMRAdapterConversant" type="podspec" spec="~> 4.5" />
+        <framework src="AMRAdapterInloco" type="podspec" spec="~> 2.2" />
+        <framework src="AMRAdapterNativex" type="podspec" spec="~> 5.5" />
+        
     </platform>
 </plugin>
