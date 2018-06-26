@@ -37,11 +37,13 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_DESTROY_BANNER = "destroyBanner";
 
     private static final String ACTION_LOAD_INTERSTITIAL = "loadInterstitial";
-    //TODO: load interstitial'a yedir private static final String ACTION_REQUEST_INTERSTITIAL_AD = "requestInterstitialAd";
     private static final String ACTION_SHOW_INTERSTITIAL = "showInterstitial";
+    private static final String ACTION_DESTROY_INTERSTITIAL = "destroyInterstitial";
+    
     private static final String ACTION_LOAD_REWARDED_VIDEO = "loadRewardedVideo";
-    //load video'ya yedir private static final String ACTION_REQUEST_VIDEO_AD = "requestVideoAd";
     private static final String ACTION_SHOW_REWARDED_VIDEO = "showRewardedVideo";
+    private static final String ACTION_DESTROY_REWARDED_VIDEO = "destroyRewardedVideo";
+    
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
 
     /** config **/
@@ -158,23 +160,21 @@ public class Amr extends CordovaPlugin {
             JSONObject config = inputs.optJSONObject(0);
             result = executeLoadInterstitial(config, callbackContext);
 
-        } /*else if (ACTION_REQUEST_INTERSTITIAL_AD.equals(action)) {
-            JSONObject config = inputs.optJSONObject(0);
-            result = executeRequestInterstitialAd(config, callbackContext);
-
-        }*/ else if (ACTION_SHOW_INTERSTITIAL.equals(action)) {
+        }else if (ACTION_SHOW_INTERSTITIAL.equals(action)) {
             result = executeShowInterstitial(callbackContext);
 
-        } else if (ACTION_LOAD_REWARDED_VIDEO.equals(action)) {
+        }else if (ACTION_DESTROY_INTERSTITIAL.equals(action)) {
+            result = executeDestroyInterstitial(callbackContext);
+
+        }else if (ACTION_LOAD_REWARDED_VIDEO.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeLoadRewardedVideo(config, callbackContext);
 
-        }/* else if (ACTION_REQUEST_VIDEO_AD.equals(action)) {
-            JSONObject config = inputs.optJSONObject(0);
-            result = executeRequestVideoAd(config, callbackContext);
-
-        }*/ else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
+        } else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
             result = executeShowRewardedVideo(callbackContext);
+
+        }else if (ACTION_DESTROY_REWARDED_VIDEO.equals(action)) {
+            result = executeDestroyRewardedVideo(callbackContext);
 
         }/* else if (ACTION_REQUEST_AD.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
@@ -724,6 +724,34 @@ public class Amr extends CordovaPlugin {
 
         return null;
     }
+    
+    private PluginResult executeDestroyInterstitial(final CallbackContext callbackContext) {
+        
+        
+        cordova.getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                
+                interstitialAd.destroy();
+                
+        });
+
+        return null;
+    }
+    
+                                            
+    private PluginResult executeDestroyRewardedVideo(final CallbackContext callbackContext) {
+        cordova.getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                
+                interstitialAd.destroy();
+                
+        });
+
+        return null;
+    }
+
 
     private PluginResult executeShowRewardedVideo(final CallbackContext callbackContext) {
          Log.v(LOGTAG, "Show Video Ad");

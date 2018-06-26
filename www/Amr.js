@@ -123,6 +123,18 @@ amrExport.showInterstitial =
 		);
 	};
 
+amrExport.destroyInterstitial = 
+	function(successCallback, failureCallback) {
+		
+		cordova.exec(
+			successCallback,
+			failureCallback, 
+			'Amr', 
+			'destroyInterstitial', 
+			[ ]
+        );
+};
+
 
 amrExport.loadRewardedVideo =
 function(config, successCallback, failureCallback) {
@@ -148,6 +160,17 @@ amrExport.showRewardedVideo =
 			'Amr', 
 			'showRewardedVideo', 
 			[ show ]
+		);
+};	
+amrExport.destroyRewardedVideo = 
+	function(successCallback, failureCallback) {
+		
+		cordova.exec(
+			successCallback,
+			failureCallback, 
+			'Amr', 
+			'destroyRewardedVideo', 
+			[  ]
 		);
 };	
 
