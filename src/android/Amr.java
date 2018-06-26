@@ -69,22 +69,24 @@ public class Amr extends CordovaPlugin {
     OPT_CONSENT
 */
     /** Interstitial Responses **/
-    private static String onDismissInterstitialAd = "onDismissInterstitialAd";
-    private static String onReceiveInterstitialAd = "onReceiveInterstitialAd";
-    private static String onFailedToReceiveInterstitialAd = "onFailedToReceiveInterstitialAd";
-    private static String onShownInterstitialAd = "onShownInterstitialAd";
+    private static String onInterstitialDismiss = "onInterstitialDismiss";
+    private static String onInterstitialReady = "onInterstitialReady";
+    private static String onInterstitialFail = "onInterstitialFail";
+    private static String onInterstitialShown = "onInterstitialShown";
 
     /** Video Responses **/
-    private static String onDismissVideoAd = "onDismissVideoAd";
-    private static String onReceiveVideoAd = "onReceiveVideoAd";
-    private static String onFailedToReceiveVideoAd = "onFailedToReceiveVideoAd";
-    private static String onShownVideoAd = "onShownVideoAd";
-    private static String onRewardVideoAd = "onRewardVideoAd";
+    private static String onVideoDismiss = "onVideoDismiss";
+    private static String onVideoReady = "onVideoReady";
+    private static String onVideoFail = "onVideoFail";
+    private static String onVideoShown = "onVideoShown";
+    private static String onVideoReward = "onVideoReward";
 
     /** Banner Responses **/
-    private static String onShownBannerAd = "onShownBannerAd";
-    private static String onFailedToReceiveBannerAd = "onFailedToReceiveBannerAd";
-    private static String onReceiveBannerAd = "onReceiveBannerAd";
+    private static String onBannerShown = "onBannerShown";
+    private static String onBannerHide = "onBannerHide";
+    private static String onBannerFail = "onBannerFail";
+    private static String onBannerReady = "onBannerReady";
+    private static String onBannerLoad = "onBannerLoad";
 
     private ViewGroup parentView;
 
@@ -183,8 +185,7 @@ public class Amr extends CordovaPlugin {
             result = executeLoadBanner(config, callbackContext);
 
         } else if (ACTION_HIDE_BANNER.equals(action)) {
-            boolean show = inputs.optBoolean(0);
-            result = executeHideBanner(show, callbackContext);
+            result = executeHideBanner(callbackContext);
 
         } else if (ACTION_DESTROY_BANNER.equals(action)) {
 
@@ -212,6 +213,7 @@ public class Amr extends CordovaPlugin {
         callbackContext.success();
         return null;
     }
+    
 
     private void AMRSdkConfig( JSONObject config ) {
         if(config == null) return;
@@ -286,23 +288,24 @@ public class Amr extends CordovaPlugin {
                 adView = new AdMostView(cordova.getActivity(), Amr.this.amrBannerZoneId, adSize, new AdMostViewListener() {
                     @Override
                     public void onLoad(String network, int position) {
+                        sendResponseToListener(onBannerLoad, null);
                         
                     }
                     @Override
                     public void onReady(String network, View adView) {
-                      
+                        sendResponseToListener(onBannerReady, null);
                     
                     }
                     
                     @Override
                     public void onFail(int errorCode) {
-                
+                        sendResponseToListener(onBannerFail, String.format("{ 'error': %d }", errorCode));
                     }
 
                 }, null);
                 
                 adView.load();
-                executeHideBanner(true, null);
+                executeShowBanner(true, null);
 
                 callbackContext.success();
             }
@@ -379,19 +382,20 @@ public class Amr extends CordovaPlugin {
                 interstitialAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrInterstitialZoneId, new AdMostAdListener() {
                     @Override
                     public void onDismiss(String message) {
-                        
+                        sendResponseToListener(onInterstitialDismiss, null);   
                     }
                     @Override
                     public void onFail(int errorCode) {
+                        sendResponseToListener(onInterstitialFail, String.format("{ 'error': %d }", errorCode));
                         
                     }
                     @Override
                     public void onReady(String network) {
-                       
+                        sendResponseToListener(onInterstitialReady, null);
                     }
                     @Override
                     public void onShown(String network) {
-                        
+                        sendResponseToListener(onInterstitialShown, null);                
                     }
                     @Override
                     public void onClicked(String s) {
@@ -417,7 +421,7 @@ public class Amr extends CordovaPlugin {
                     public void onAction(int actionType) {
                         switch (actionType) {
                             case AdMostAdListener.LOADED:
-                                sendResponseToListener(onReceiveInterstitialAd, null);
+                                sendResponseToListener(onInterstitialReady, null);
                                 if(autoShowInterstitial) {
                                     executeShowInterstitial(null);
                                 }else if(autoShowInterstitialTemp){
@@ -426,12 +430,12 @@ public class Amr extends CordovaPlugin {
                                 }
                                 break;
                             case AdMostAdListener.FAILED:
-                                sendResponseToListener(onFailedToReceiveInterstitialAd, String.format("{ 'error': %d, 'reason':'%s' }",-1, "No Fill"));
+                                sendResponseToListener(onInterstitialFail, String.format("{ 'error': %d, 'reason':'%s' }",-1, "No Fill"));
                                 break;
                             case AdMostAdListener.COMPLETED:
                                 break;
                             case AdMostAdListener.CLOSED:
-                                sendResponseToListener(onDismissInterstitialAd, null);
+                                sendResponseToListener(onInterstitialDismissAd, null);
                                 interstitialAd.destroy();
                         }
                     }
@@ -439,7 +443,7 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onShown(String s) {
                         super.onShown(s);
-                        sendResponseToListener(onShownInterstitialAd, null);
+                        sendResponseToListener(onInterstitialShown, null);
                     }
 
                     @Override
@@ -470,23 +474,24 @@ public class Amr extends CordovaPlugin {
                 videoAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrVideoZoneId, new AdMostAdListener() {
                     @Override
                     public void onReady(String network) {
-                        // Ad Loaded
+                        sendResponseToListener(onVideoReady, null);
+                        
                     }
                     @Override
                     public void onFail(int errorCode) {
-                        // Ad Failed
+                        sendResponseToListener(onVideoFail, String.format("{ 'error': %d }", errorCode));
                     }
                     @Override
                     public void onDismiss(String message) {
-                        // Ad Dismiss
+                        sendResponseToListener(onVideoDismiss, null);
                     }
                     @Override
                     public void onComplete(String network) {
-                        // Video Ad Completed
+                        sendResponseToListener(onVideoReward, null);
                     }
                     @Override
                     public void onShown(String network) {
-                        //Ad Shown
+                        sendResponseToListener(onVideoShown, null);
                     }
                     @Override
                     public void onClicked(String s) {
@@ -501,7 +506,7 @@ public class Amr extends CordovaPlugin {
                     public void onAction(int actionType) {
                         switch (actionType) {
                             case AdMostAdListener.LOADED:
-                                sendResponseToListener(onReceiveVideoAd, null);
+                                sendResponseToListener(onVideoReady, null);
                                 if(autoShowVideo) {
                                     executeShowRewardedVideo(null);
                                 }else if(autoShowVideoTemp){
@@ -510,12 +515,12 @@ public class Amr extends CordovaPlugin {
                                 }
                                 break;
                             case AdMostAdListener.FAILED:
-                                sendResponseToListener(onFailedToReceiveVideoAd, String.format("{ 'error': %d, 'reason':'%s' }",-1, "No Fill"));
+                                sendResponseToListener(onVideoFail, String.format("{ 'error': %d, 'reason':'%s' }",-1, "No Fill"));
                                 break;
                             case AdMostAdListener.COMPLETED:
                                 break;
                             case AdMostAdListener.CLOSED:
-                                sendResponseToListener(onDismissVideoAd, null);
+                                sendResponseToListener(onVideoDismiss, null);
                                 videoAd.destroy();
                         }
                     }
@@ -523,7 +528,7 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onShown(String s) {
                         super.onShown(s);
-                        sendResponseToListener(onShownVideoAd, null);
+                        sendResponseToListener(onVideoShown, null);
                     }
 
                     @Override
@@ -534,7 +539,7 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onRewarded(int i) {
                         super.onRewarded(i);
-                        sendResponseToListener(onRewardVideoAd, null);
+                        sendResponseToListener(onVideoReward, null);
                     }
                 });*/
                 executeRequestVideoAd(config, callbackContext);
@@ -601,8 +606,8 @@ public class Amr extends CordovaPlugin {
 
         return null;
     }
-
-    private PluginResult executeHideBanner(boolean showAd, final CallbackContext callbackContext) {
+    
+    private PluginResult executeShowBanner(boolean showAd, final CallbackContext callbackContext) {
 
         if(adView == null) {
             return new PluginResult(Status.ERROR, "adView is null, call createBannerView first.");
@@ -667,8 +672,13 @@ public class Amr extends CordovaPlugin {
 
                     adView.getView().setVisibility( View.VISIBLE );
                     bannerVisible = true;
-
-                    sendResponseToListener(onShownBannerAd, null);
+                    if(bannerShow == true){
+                        sendResponseToListener(onBannerShown, null);
+                    }else{
+                        sendResponseToListener(onBannerHide, null);
+                        
+                    }
+                    
 
                 } else {
                     adView.getView().setVisibility( View.GONE );
@@ -682,10 +692,16 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
+
+    private PluginResult executeHideBanner(final CallbackContext callbackContext) {
+
+        executeShowBanner(false,null);
+        return null;
+    }
+
     private PluginResult executeShowInterstitial(final CallbackContext callbackContext) {
         
-        Log.e(LOGTAG, "Show Interstital Ad");
-
+        
         if(interstitialAd == null) {
             return new PluginResult(Status.ERROR, "interstitialAd is null, call createInterstitialView first.");
         }
@@ -695,7 +711,7 @@ public class Amr extends CordovaPlugin {
             public void run() {
 
                 if(interstitialAd.isLoaded()) {
-                    Log.e(LOGTAG, "Interstital is loaded");
+                    Log.v(LOGTAG, "Interstital is loaded");
                     interstitialAd.show();
                 } else {
                     Log.e(LOGTAG, "Interstital not ready yet, temporarily setting autoshow.");
@@ -722,7 +738,7 @@ public class Amr extends CordovaPlugin {
                 if(videoAd.isLoaded()) {
                     videoAd.show();
                 } else {
-                    Log.e(LOGTAG, "VideoAd not ready yet, temporarily setting autoshow.");
+                    Log.e(LOGTAG, "VideoAd is not ready yet, temporarily setting autoshow.");
                     autoShowVideoTemp = true;
                 }
 

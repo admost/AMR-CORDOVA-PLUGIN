@@ -71,17 +71,14 @@ function(config, successCallback, failureCallback) {
 
 
 amrExport.hideBanner =
-function( show, successCallback, failureCallback) {
-	if (hide === undefined) {
-		hide = true;
-	}
-
+function(successCallback, failureCallback) {
 	cordova.exec(
 		successCallback,
 		failureCallback, 
 		'Amr', 
 		'hideBanner', 
-		[ hide ]
+        []
+		
 	);
 };
 

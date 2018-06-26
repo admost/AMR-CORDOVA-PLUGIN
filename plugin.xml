@@ -37,22 +37,11 @@
         <framework src="com.admost.sdk:ironsource:6.7.9"/>
         <framework src="com.admost.sdk:tapjoy:11.12.2"/>
         <framework src="com.admost.sdk:unity:2.2.1"/>
-        <framework src="com.github.vungle:vungle-android-sdk:6.2.5"/>
         <framework src="com.google.android.exoplayer:exoplayer:r2.0.0"/>
         <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            
-                <service
-                    android:name='com.evernote.android.job.gcm.PlatformGcmService'
-                    android:enabled='true'
-                    android:exported='true'
-                    tools:replace='android:enabled' >
-                    <intent-filter>
-                        <action android:name='com.google.android.gms.gcm.ACTION_TASK_READY' />
-                    </intent-filter>
-                </service>
-                
+        
                 <meta-data android:name="applovin.sdk.key"
                 android:value="LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N"  />
         </config-file>
