@@ -30,10 +30,11 @@
         <framework src="com.admost.sdk:amr:1.6.8" target="libs/admost-sdk.1.6.8.aar" />
         <framework src="com.google.android.gms:play-services-base:15.0.1"/>
         <framework src="com.google.android.gms:play-services-ads:15.0.1"/>
+        <framework src="com.android.support:recyclerview-v7:27.1.1"/>
         <framework src="com.admost.sdk:applovin:8.0.1"/>
         <framework src="com.admost.sdk:chartboost:7.2.0"/>
-       <!-- <framework src="com.admost.sdk:facebook:4.28.2"/>
-        <framework src="com.android.support:recyclerview-v7:27.1.1"/>
+        <!--<framework src="com.admost.sdk:facebook:4.28.2"/>
+        
         <framework src="com.admost.sdk:ironsource:6.7.9"/>
         <framework src="com.admost.sdk:tapjoy:11.12.2"/>
         <framework src="com.admost.sdk:unity:2.2.1"/>-->
