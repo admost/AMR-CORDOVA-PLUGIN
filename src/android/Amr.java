@@ -734,7 +734,7 @@ public class Amr extends CordovaPlugin {
                 
                 interstitialAd.destroy();
                 
-        });
+        }});
 
         return null;
     }
@@ -747,7 +747,7 @@ public class Amr extends CordovaPlugin {
                 
                 interstitialAd.destroy();
                 
-        });
+        }});
 
         return null;
     }
