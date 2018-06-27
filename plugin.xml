@@ -27,7 +27,7 @@
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
         <framework src="com.android.volley:volley:1.0.0"/>
-        <framework src="com.admost.sdk:amr:1.6.7" />
+        <framework src="com.admost.sdk:amr:1.6.8" target="libs/admost-sdk.1.6.8.aar" />
         <framework src="com.google.android.gms:play-services-base:15.0.1"/>
         <framework src="com.google.android.gms:play-services-ads:15.0.1"/>
         <framework src="com.admost.sdk:applovin:8.0.1"/>

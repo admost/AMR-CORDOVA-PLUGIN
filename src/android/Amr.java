@@ -285,6 +285,8 @@ public class Amr extends CordovaPlugin {
             @Override
             public void run() {
                 
+                
+                
                 adView = new AdMostView(cordova.getActivity(), Amr.this.amrBannerZoneId, adSize, new AdMostViewListener() {
                     @Override
                     public void onLoad(String network, int position) {
@@ -292,7 +294,7 @@ public class Amr extends CordovaPlugin {
                         
                     }
                     @Override
-                    public void onReady(String network, View adView) {
+                    public void onReady(String network,int ecpm, View adView) {
                         sendResponseToListener(onBannerReady, null);
                     
                     }
@@ -390,7 +392,7 @@ public class Amr extends CordovaPlugin {
                         
                     }
                     @Override
-                    public void onReady(String network) {
+                    public void onReady(String network, int ecpm) {
                         sendResponseToListener(onInterstitialReady, null);
                     }
                     @Override
@@ -473,7 +475,7 @@ public class Amr extends CordovaPlugin {
                 Log.w(LOGTAG, "Video ad started : " + Amr.this.amrVideoZoneId);
                 videoAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrVideoZoneId, new AdMostAdListener() {
                     @Override
-                    public void onReady(String network) {
+                    public void onReady(String network, int ecpm) {
                         sendResponseToListener(onVideoReady, null);
                         
                     }
