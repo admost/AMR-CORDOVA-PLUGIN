@@ -47,10 +47,10 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
 
     /** config **/
-    private static final String OPT_AMR_APP_ID = "amrAppId";
-    private static final String OPT_INTERSTITIAL_ZONE_ID = "amrInterstitialZoneId";
-    private static final String OPT_BANNER_ZONE_ID = "amrBannerZoneId";
-    private static final String OPT_VIDEO_ZONE_ID = "amrVideoZoneId";
+    private static final String OPT_AMR_APP_ID = "applicationIdAndroid";
+    private static final String OPT_INTERSTITIAL_ZONE_ID = "interstitialIdAndroid";
+    private static final String OPT_BANNER_ZONE_ID = "bannerIdAndroid";
+    private static final String OPT_VIDEO_ZONE_ID = "videoIdAndroid";
     private static final String OPT_AD_SIZE = "adSize";
     private static final String OPT_BANNER_AT_TOP = "bannerAtTop";
     private static final String OPT_OVERLAP = "overlap";
