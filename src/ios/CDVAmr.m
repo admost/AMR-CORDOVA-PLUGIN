@@ -333,7 +333,7 @@
 }
 
 - (void)didShowRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
-    [self fireEvent:@"onVideoShow" withData:jsonData];
+    [self fireEvent:@"onVideoShow" withData:nil];
 }
 
 - (void)didDismissRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
