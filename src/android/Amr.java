@@ -118,9 +118,9 @@ public class Amr extends CordovaPlugin {
     private boolean bannerShow = true;
     private boolean autoShow = true;
 
-    private boolean autoShowInterstitial = true;
+    private boolean autoShowInterstitial = false;
     private boolean autoShowInterstitialTemp = false;		//if people call it when it's not ready
-    private boolean autoShowVideo = true;
+    private boolean autoShowVideo = false;
     private boolean autoShowVideoTemp = false;		        //if people call it when it's not ready
 
     private boolean bannerVisible = false;
@@ -323,7 +323,7 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AdMost.getInstance().startTestSuite(new String[]{Amr.this.amrBannerZoneId, Amr.this.amrInterstitialZoneId, Amr.this.amrVideoZoneId});
+                AdMost.getInstance().startTestSuite();
             }
 
         });
@@ -394,6 +394,9 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onReady(String network, int ecpm) {
                         sendResponseToListener(onInterstitialReady, null);
+                        if (autoShowInterstitial == true){
+                            executeShowInterstitial(callbackContext);
+                        }
                     }
                     @Override
                     public void onShown(String network) {
@@ -476,8 +479,10 @@ public class Amr extends CordovaPlugin {
                 videoAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrVideoZoneId, new AdMostAdListener() {
                     @Override
                     public void onReady(String network, int ecpm) {
-                        sendResponseToListener(onVideoReady, null);
-                        
+                        sendResponseToListener(onVideoReady, null); 
+                        if (autoShowVideo == true){
+                            executeShowRewardedVideo(callbackContext);
+                        }
                     }
                     @Override
                     public void onFail(int errorCode) {
