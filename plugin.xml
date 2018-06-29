@@ -32,7 +32,7 @@
         <framework src="com.google.android.gms:play-services-ads:15.0.1"/>
         <framework src="com.android.support:recyclerview-v7:27.1.1"/>
         <framework src="com.admost.sdk:applovin:8.0.1"/>
-        <framework src="com.admost.sdk:chartboost:7.2.0"/>
+        <framework src="com.mopub:mopub-sdk:5.1.0@aar"/>
         <framework src="com.android.support:multidex:1.0.3"/>
         <framework src="com.admost.sdk:facebook:4.28.2"/>
         <framework src="com.admost.sdk:ironsource:6.7.9"/>

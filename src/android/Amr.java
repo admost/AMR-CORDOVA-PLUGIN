@@ -59,11 +59,9 @@ public class Amr extends CordovaPlugin {
     private static final String OPT_AUTO_SHOW_VIDEO = "autoShowVideo";
     private static final String OPT_SUBJECT_TO_GDPR = "subjectToGdpr";
     private static final String OPT_CONSENT = "userConsent";
+    private static final String OPT_AUTO_SHOW_BANNER = "autoShowBanner";
 
-    /**track purchase **/
-    private static final String PRODUCT_RECEIPT = "productReceipt";
-    private static final String PRODUCT_LOCALIZED_PRICE = "productLocalizedPrice";
-    private static final String PRODUCT_ISO_CURRENCY_CODE = "productISOCurrencyCode";
+
     /** gdpr **/
     private String subjectToGdpr="-1";
     private String consent = "-1";
@@ -74,17 +72,17 @@ public class Amr extends CordovaPlugin {
     private static String onInterstitialDismiss = "onInterstitialDismiss";
     private static String onInterstitialReady = "onInterstitialReady";
     private static String onInterstitialFail = "onInterstitialFail";
-    private static String onInterstitialShown = "onInterstitialShown";
+    private static String onInterstitialShow = "onInterstitialShow";
 
     /** Video Responses **/
     private static String onVideoDismiss = "onVideoDismiss";
     private static String onVideoReady = "onVideoReady";
     private static String onVideoFail = "onVideoFail";
-    private static String onVideoShown = "onVideoShown";
-    private static String onVideoReward = "onVideoReward";
+    private static String onVideoShow = "onVideoShow";
+    private static String onVideoComplete = "onVideoComplete";
 
     /** Banner Responses **/
-    private static String onBannerShown = "onBannerShown";
+    private static String onBannerShown = "onBannerShow";
     private static String onBannerHide = "onBannerHide";
     private static String onBannerFail = "onBannerFail";
     private static String onBannerReady = "onBannerReady";
@@ -118,9 +116,9 @@ public class Amr extends CordovaPlugin {
     private boolean bannerShow = true;
     private boolean autoShow = true;
 
-    private boolean autoShowInterstitial = false;
+    private boolean autoShowInterstitial = true;
     private boolean autoShowInterstitialTemp = false;		//if people call it when it's not ready
-    private boolean autoShowVideo = false;
+    private boolean autoShowVideo = true;
     private boolean autoShowVideoTemp = false;		        //if people call it when it's not ready
 
     private boolean bannerVisible = false;
@@ -353,20 +351,6 @@ public class Amr extends CordovaPlugin {
         return null;
     }
 
-    private PluginResult executeTrackPurchaseForAndroid(JSONObject product, final CallbackContext callbackContext){
-
-        this.trackPurchaseConfig(product);
-
-        cordova.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AdMost.getInstance().trackPurchase(Amr.this.productReceipt,Amr.this.productLocalizedPrice, Amr.this.productIsoCurrencyCode);
-            }
-
-        });
-
-        return null;
-    }
 
 
 
@@ -384,7 +368,8 @@ public class Amr extends CordovaPlugin {
                 interstitialAd = new AdMostInterstitial(cordova.getActivity(), Amr.this.amrInterstitialZoneId, new AdMostAdListener() {
                     @Override
                     public void onDismiss(String message) {
-                        sendResponseToListener(onInterstitialDismiss, null);   
+                        sendResponseToListener(onInterstitialDismiss, null);
+                        interstitialAd.destroy();
                     }
                     @Override
                     public void onFail(int errorCode) {
@@ -400,7 +385,7 @@ public class Amr extends CordovaPlugin {
                     }
                     @Override
                     public void onShown(String network) {
-                        sendResponseToListener(onInterstitialShown, null);                
+                        sendResponseToListener(onInterstitialShow, null);                
                     }
                     @Override
                     public void onClicked(String s) {
@@ -448,7 +433,7 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onShown(String s) {
                         super.onShown(s);
-                        sendResponseToListener(onInterstitialShown, null);
+                        sendResponseToListener(onInterstitialShow, null);
                     }
 
                     @Override
@@ -491,14 +476,15 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onDismiss(String message) {
                         sendResponseToListener(onVideoDismiss, null);
+                        videoAd.destroy();
                     }
                     @Override
                     public void onComplete(String network) {
-                        sendResponseToListener(onVideoReward, null);
+                        sendResponseToListener(onVideoComplete, null);
                     }
                     @Override
                     public void onShown(String network) {
-                        sendResponseToListener(onVideoShown, null);
+                        sendResponseToListener(onVideoShow, null);
                     }
                     @Override
                     public void onClicked(String s) {
@@ -509,46 +495,7 @@ public class Amr extends CordovaPlugin {
                         // This method has been deprecated. Kept because of backward compatibility.
                     }
                 });
-                    /*@Override
-                    public void onAction(int actionType) {
-                        switch (actionType) {
-                            case AdMostAdListener.LOADED:
-                                sendResponseToListener(onVideoReady, null);
-                                if(autoShowVideo) {
-                                    executeShowRewardedVideo(null);
-                                }else if(autoShowVideoTemp){
-                                    executeShowRewardedVideo(null);
-                                    autoShowVideoTemp = false;
-                                }
-                                break;
-                            case AdMostAdListener.FAILED:
-                                sendResponseToListener(onVideoFail, String.format("{ 'error': %d, 'reason':'%s' }",-1, "No Fill"));
-                                break;
-                            case AdMostAdListener.COMPLETED:
-                                break;
-                            case AdMostAdListener.CLOSED:
-                                sendResponseToListener(onVideoDismiss, null);
-                                videoAd.destroy();
-                        }
-                    }
-
-                    @Override
-                    public void onShown(String s) {
-                        super.onShown(s);
-                        sendResponseToListener(onVideoShown, null);
-                    }
-
-                    @Override
-                    public void onClicked(String s) {
-                        super.onClicked(s);
-                    }
-
-                    @Override
-                    public void onRewarded(int i) {
-                        super.onRewarded(i);
-                        sendResponseToListener(onVideoReward, null);
-                    }
-                });*/
+        
                 executeRequestVideoAd(config, callbackContext);
                 callbackContext.success();
 
@@ -561,7 +508,7 @@ public class Amr extends CordovaPlugin {
         this.AMRSdkConfig( config );
 
         if(adView == null) {
-            callbackContext.error("adView is null, call createBannerView first");
+            callbackContext.error("adView is null, call loadBanner first");
             return null;
         }
 
@@ -732,33 +679,7 @@ public class Amr extends CordovaPlugin {
         return null;
     }
     
-    private PluginResult executeDestroyInterstitial(final CallbackContext callbackContext) {
-        
-        
-        cordova.getActivity().runOnUiThread(new Runnable(){
-            @Override
-            public void run() {
-                
-                interstitialAd.destroy();
-                
-        }});
-
-        return null;
-    }
     
-                                            
-    private PluginResult executeDestroyRewardedVideo(final CallbackContext callbackContext) {
-        cordova.getActivity().runOnUiThread(new Runnable(){
-            @Override
-            public void run() {
-                
-                interstitialAd.destroy();
-                
-        }});
-
-        return null;
-    }
-
 
     private PluginResult executeShowRewardedVideo(final CallbackContext callbackContext) {
          Log.v(LOGTAG, "Show Video Ad");
