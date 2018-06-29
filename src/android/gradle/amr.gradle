@@ -12,7 +12,11 @@ repositories {
     google()
 }
 
-
+dependencies{
+    compile('com.mopub:mopub-sdk:5.1.0@aar') {
+        transitive = true
+    }
+}
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"

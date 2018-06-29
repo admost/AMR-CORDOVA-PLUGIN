@@ -144,21 +144,6 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
--(void)createInterstitialAd:(CDVInvokedUrlCommand *)command {
-    NSLog(@"AMR createInterstitialAd");
-    
-    if (command.arguments.count > 0) {
-        NSDictionary* params = [command argumentAtIndex:0 withDefault:[NSNull null]];
-        [self __setOptions:params];
-    }
-    
-    if (!_interstitial)
-        [self _createInterstitialAd];
-    
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
 - (void)loadInterstitial:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> loadInterstitial");
     
@@ -186,21 +171,6 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
     
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-}
-
--(void)createVideoAd:(CDVInvokedUrlCommand *)command {
-    NSLog(@"AMR createVideoAd");
-    
-    if (command.arguments.count > 0) {
-        NSDictionary* params = [command argumentAtIndex:0 withDefault:[NSNull null]];
-        [self __setOptions:params];
-    }
-    
-    if (!_rewardedVideo)
-        [self _createRewardedVideoAd];
-    
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
