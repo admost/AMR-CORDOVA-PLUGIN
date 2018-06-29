@@ -15,7 +15,7 @@
     <issue>https://github.com/admost/AMR-CORDOVA-PLUGIN/issues</issue>
 
 	<engines>
-	    <engine name="cordova" version=">=4.0.0" />
+	    <engine name="cordova" version=">=8.0.0" />
 	</engines>
 
     <js-module src="www/Amr.js" name="Amr">
@@ -90,7 +90,7 @@
         </config-file>
 
         <config-file target="*-Info.plist" parent="AppLovinSdkKey">
-            <string>LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N</string>
+            <string>YOUR_KEY</string>
         </config-file>
         
         <header-file src="src/ios/CDVAmr.h" />

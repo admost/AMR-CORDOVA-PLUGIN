@@ -365,13 +365,13 @@
     str = [options objectForKey:@"amrAppId"];
     if(str && [str length]>0) _appId = str;
     
-    str = [options objectForKey:@"amrBannerZoneId"];
+    str = [options objectForKey:@"bannerIdIOS"];
     if(str && [str length]>0) _bannerZoneId = str;
     
-    str = [options objectForKey:@"amrInterstitialZoneId"];
+    str = [options objectForKey:@"interstitialIdIOS"];
     if(str && [str length]>0) _interstitialZoneId = str;
     
-    str = [options objectForKey:@"amrVideoZoneId"];
+    str = [options objectForKey:@"videoIdIOS"];
     if(str && [str length]>0) _videoZoneId = str;
     
     str = [options objectForKey:@"bannerWidth"];
