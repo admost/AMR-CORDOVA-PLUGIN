@@ -161,9 +161,6 @@ public class Amr extends CordovaPlugin {
         }else if (ACTION_SHOW_INTERSTITIAL.equals(action)) {
             result = executeShowInterstitial(callbackContext);
 
-        }else if (ACTION_DESTROY_INTERSTITIAL.equals(action)) {
-            result = executeDestroyInterstitial(callbackContext);
-
         }else if (ACTION_LOAD_REWARDED_VIDEO.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeLoadRewardedVideo(config, callbackContext);
@@ -171,14 +168,7 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
             result = executeShowRewardedVideo(callbackContext);
 
-        }else if (ACTION_DESTROY_REWARDED_VIDEO.equals(action)) {
-            result = executeDestroyRewardedVideo(callbackContext);
-
-        }/* else if (ACTION_REQUEST_AD.equals(action)) {
-            JSONObject config = inputs.optJSONObject(0);
-            result = executeRequestAd(config, callbackContext);
-
-        }*/ else if (ACTION_LOAD_BANNER.equals(action)) {
+        }else if (ACTION_LOAD_BANNER.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeLoadBanner(config, callbackContext);
 
@@ -188,11 +178,6 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_DESTROY_BANNER.equals(action)) {
 
             result = executeDestroyBanner( callbackContext);
-        } else if (ACTION_TRACK_PURCHASE_FOR_ANDROID.equals(action)) {
-            //TODO:products inside inputs?
-            JSONObject product = inputs.optJSONObject(0);
-            result = executeTrackPurchaseForAndroid(product ,callbackContext);
-
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
             result = new PluginResult(Status.INVALID_ACTION);
@@ -231,14 +216,6 @@ public class Amr extends CordovaPlugin {
         if(config.has(OPT_AUTO_SHOW_INTERSTITIAL)) this.autoShowInterstitial  = config.optBoolean( OPT_AUTO_SHOW_INTERSTITIAL );
         if(config.has(OPT_AUTO_SHOW_VIDEO)) this.autoShowVideo  = config.optBoolean( OPT_AUTO_SHOW_VIDEO );
     }
-
-    private void trackPurchaseConfig( JSONObject product ) {
-        if(product == null) return;
-
-        if(product.has(PRODUCT_RECEIPT)) this.productReceipt =product.optString( PRODUCT_RECEIPT );
-        if(product.has(PRODUCT_LOCALIZED_PRICE)) this.productLocalizedPrice = product.optString( PRODUCT_LOCALIZED_PRICE );
-        if(product.has(PRODUCT_ISO_CURRENCY_CODE)) this.productIsoCurrencyCode = product.optString( PRODUCT_ISO_CURRENCY_CODE );
-         }
 
     private PluginResult executeStartWithConfig(JSONObject config, final CallbackContext callbackContext) {
 
