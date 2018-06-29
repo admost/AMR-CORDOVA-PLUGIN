@@ -13,6 +13,9 @@
 @property (nonatomic, retain) NSString *interstitialZoneId;
 @property (nonatomic, retain) NSString *videoZoneId;
 
+@property (nonatomic, retain) NSString *userConsent;
+@property (nonatomic, retain) NSString *subjectToGdpr;
+
 @property (assign) float bannerWidth;
 @property (assign) BOOL bannerAtTop;
 @property (assign) BOOL offsetTopBar;
@@ -28,23 +31,19 @@
 @property (assign) BOOL rewardedVideoIsAvaliable;
 
 
-- (void)setOptions:(CDVInvokedUrlCommand*)command;
-- (void)initAMR:(CDVInvokedUrlCommand*)command;
+- (void)AMRSdkConfig:(CDVInvokedUrlCommand*)command;
+- (void)startWithConfig:(CDVInvokedUrlCommand*)command;
+- (void)startTestSuite:(CDVInvokedUrlCommand*)command;
 
+- (void)loadBanner:(CDVInvokedUrlCommand*)command;
+- (void)hideBanner:(CDVInvokedUrlCommand*)command;
+- (void)showBanner:(CDVInvokedUrlCommand*)command;
+- (void)destroyBanner:(CDVInvokedUrlCommand*)command;
 
-- (void)createBannerAd:(CDVInvokedUrlCommand*)command;
-- (void)requestBannerAd:(CDVInvokedUrlCommand*)command;
-- (void)showBannerAd:(CDVInvokedUrlCommand*)command;
-- (void)destroyBannerAd:(CDVInvokedUrlCommand*)command;
+- (void)loadInterstitial:(CDVInvokedUrlCommand*)command;
+- (void)showInterstitial:(CDVInvokedUrlCommand*)command;
 
-
-- (void)createInterstitialAd:(CDVInvokedUrlCommand*)command;
-- (void)requestInterstitialAd:(CDVInvokedUrlCommand*)command;
-- (void)showInterstitialAd:(CDVInvokedUrlCommand*)command;
-
-
-- (void)createVideoAd:(CDVInvokedUrlCommand*)command;
-- (void)requestVideoAd:(CDVInvokedUrlCommand*)command;
-- (void)showVideoAd:(CDVInvokedUrlCommand*)command;
+- (void)loadRewardedVideo:(CDVInvokedUrlCommand*)command;
+- (void)showRewardedVideo:(CDVInvokedUrlCommand*)command;
 
 @end

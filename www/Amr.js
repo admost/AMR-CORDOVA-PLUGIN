@@ -123,19 +123,6 @@ amrExport.showInterstitial =
 		);
 	};
 
-amrExport.destroyInterstitial = 
-	function(successCallback, failureCallback) {
-		
-		cordova.exec(
-			successCallback,
-			failureCallback, 
-			'Amr', 
-			'destroyInterstitial', 
-			[ ]
-        );
-};
-
-
 amrExport.loadRewardedVideo =
 function(config, successCallback, failureCallback) {
 	  if(typeof config === 'undefined' || config == null) config = {};
@@ -161,56 +148,7 @@ amrExport.showRewardedVideo =
 			'showRewardedVideo', 
 			[ show ]
 		);
-};	
-amrExport.destroyRewardedVideo = 
-	function(successCallback, failureCallback) {
-		
-		cordova.exec(
-			successCallback,
-			failureCallback, 
-			'Amr', 
-			'destroyRewardedVideo', 
-			[  ]
-		);
-};	
-
-amrExport.trackPurchaseForAndroid = 
-	function( product, successCallback, failureCallback) {
-    if(typeof product === 'undefined' || product == null) product = {};
-		cordova.exec(
-			successCallback,
-			failureCallback, 
-			'Amr', 
-			'trackPurchaseForAndroid', 
-			[ product ]
-		);
-	};	
-
-amrExport.trackPurchaseForIOS = 
-	function( product, successCallback, failureCallback) {
-    if(typeof product === 'undefined' || product == null) product = {};
-		cordova.exec(
-			successCallback,
-			failureCallback, 
-			'Amr', 
-			'trackPurchaseForIOS', 
-			[ product ]
-		);
-	};	
-
-amrExport.setUserId = 
-	function( applicationUserId, successCallback, failureCallback) {
-    if(typeof applicationUserId === 'undefined' || applicationUserId == null) applicationUserId = {};
-		cordova.exec(
-			successCallback,
-			failureCallback, 
-			'Amr', 
-			'setUserId', 
-			[applicationUserId ]
-		);
-	};	
-
-
+};			
 
 module.exports = amrExport;
 

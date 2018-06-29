@@ -4,15 +4,15 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         id="cordova-plugin-amr"
-        version="0.0.1">
+        version="1.0.0">
       
     <name>Cordova AMR Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
 	<author>Kokteyl</author>
 	<license></license>
 	<keywords>admob, google, cordova-ios, cordova-android, ecosystem:cordova, android, ios, money, monetization, play, win, earn, publicity, advertisment, advertising, ads, ad, eclipse, android studio, cordova-amr, amr</keywords>
-    <repo>https://github.com/cemcatikkas/cordova-plugin-amr.git</repo>
-    <issue>https://github.com/cemcatikkas/cordova-plugin-amr/issues</issue>
+    <repo>https://github.com/admost/AMR-CORDOVA-PLUGIN.git</repo>
+    <issue>https://github.com/admost/AMR-CORDOVA-PLUGIN/issues</issue>
 
 	<engines>
 	    <engine name="cordova" version=">=4.0.0" />
@@ -71,7 +71,7 @@
         <!-- dependency id="cordova-plugin-googleplayservices"/ -->
      </platform>
     
-    <!-- ios
+    <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="Amr">
@@ -88,35 +88,20 @@
         <config-file target="*-Info.plist" parent="NSCalendarsUsageDescription">
             <string>Some ad content may access calendar</string>
         </config-file>
+
+        <config-file target="*-Info.plist" parent="AppLovinSdkKey">
+            <string>LN_kr2mUpK0zI5JgqhgM2IW5FkVtb0pxOpeDsPifkic1owhcbM-efUlwDEnpFZkdNNrDnTtVFUW2ODe_ZceD6N</string>
+        </config-file>
         
         <header-file src="src/ios/CDVAmr.h" />
         <source-file src="src/ios/CDVAmr.m" />
         
-        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 7.8" />
-        <framework src="AMRAdapterMopub" type="podspec" spec="~> 4.11" />
-        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 4.15" />
-        <framework src="AMRAdapterMobfox" type="podspec" spec="~> 2.4" />
-        <framework src="AMRAdapterRevmob" type="podspec" spec="~> 9.2" />
-        <framework src="AMRAdapterUnity" type="podspec" spec="~> 2.0" />
-        <framework src="AMRAdapterAppnext" type="podspec" spec="~> 1.7" />
-        <framework src="AMRAdapterSmaato" type="podspec" spec="~> 8.0" />
-        <framework src="AMRAdapterVungle" type="podspec" spec="~> 4.0" />
-        <framework src="AMRAdapterFlurry" type="podspec" spec="~> 7.6" />
-        <framework src="AMRAdapterInmobi" type="podspec" spec="~> 6.0" />
-        <framework src="AMRAdapterAmazon" type="podspec" spec="~> 2.2" />
-        <framework src="AMRAdapterAdcolony" type="podspec" spec="~> 2.6" />
-        <framework src="AMRAdapterTapjoy" type="podspec" spec="~> 11.8" />
-        <framework src="AMRAdapterSupersonic" type="podspec" spec="~> 6.4" />
-        <framework src="AMRAdapterLoopme" type="podspec" spec="~> 6.0" />
-        <framework src="AMRAdapterApplovin" type="podspec" spec="~> 3.4" />
-        <framework src="AMRAdapterChartboost" type="podspec" spec="~> 6.5" />
-        <framework src="AMRAdapterNexage" type="podspec" spec="~> 6.3" />
-        <framework src="AMRAdapterAdfalcon" type="podspec" spec="~> 3.2" />
-        <framework src="AMRAdapterFyber" type="podspec" spec="~> 8.6" />
-        <framework src="AMRAdapterConversant" type="podspec" spec="~> 4.5" />
-        <framework src="AMRAdapterInloco" type="podspec" spec="~> 2.2" />
-        <framework src="AMRAdapterNativex" type="podspec" spec="~> 5.5" />
-        
+        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 7.31" />
+        <framework src="AMRAdapterApplovin" type="podspec" spec="~> 5.0" />
+        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 4.28" />
+        <framework src="AMRAdapterMopub" type="podspec" spec="~> 5.0" />
+        <framework src="AMRAdapterIronsource" type="podspec" spec="~> 6.7" />
+        <framework src="AMRAdapterTapjoy" type="podspec" spec="~> 11.12" />
+        <framework src="AMRAdapterUnity" type="podspec" spec="~> 2.2" />        
     </platform>
-     -->
 </plugin>
