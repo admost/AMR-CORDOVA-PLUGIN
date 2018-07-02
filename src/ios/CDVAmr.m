@@ -362,7 +362,7 @@
     
     NSString* str = nil;
     
-    str = [options objectForKey:@"amrAppId"];
+    str = [options objectForKey:@"applicationIdIOS"];
     if(str && [str length]>0) _appId = str;
     
     str = [options objectForKey:@"bannerIdIOS"];
