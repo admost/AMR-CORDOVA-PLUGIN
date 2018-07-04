@@ -36,7 +36,7 @@
         <framework src="com.android.support:multidex:1.0.3"/>
         <framework src="com.admost.sdk:facebook:4.28.2"/>
         <framework src="com.admost.sdk:ironsource:6.7.9"/>
-        <framework src="com.admost.sdk:tapjoy:11.12.2"/>
+        <framework src="com.tapjoy:tapjoy-android-sdk:11.12.2@aar"/>
         <framework src="com.admost.sdk:unity:2.2.1"/>
         <framework src="com.google.android.exoplayer:exoplayer:r2.0.0"/>
         <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />

@@ -9,6 +9,7 @@ repositories {
     maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist/" }
     maven { url 'http://repo.admost.com:8081/artifactory/amr' }
     maven { url 'https://jitpack.io' }
+    maven { url "https://tapjoy.bintray.com/maven" }
     google()
 }
 
