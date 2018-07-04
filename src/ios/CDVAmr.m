@@ -147,6 +147,11 @@
 - (void)loadInterstitial:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> loadInterstitial");
     
+    if (command.arguments.count > 0) {
+        NSDictionary* params = [command argumentAtIndex:0 withDefault:[NSNull null]];
+        [self __setOptions:params];
+    }
+    
     if (!_interstitial)
         [self _loadInterstitial];
     else
@@ -176,6 +181,11 @@
 
 -(void)loadRewardedVideo:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> loadRewardedVideo");
+    
+    if (command.arguments.count > 0) {
+        NSDictionary* params = [command argumentAtIndex:0 withDefault:[NSNull null]];
+        [self __setOptions:params];
+    }
     
     if (!_rewardedVideo)
         [self _loadRewardedVideo];
@@ -362,7 +372,7 @@
     
     NSString* str = nil;
     
-    str = [options objectForKey:@"amrAppId"];
+    str = [options objectForKey:@"applicationIdIOS"];
     if(str && [str length]>0) _appId = str;
     
     str = [options objectForKey:@"bannerIdIOS"];

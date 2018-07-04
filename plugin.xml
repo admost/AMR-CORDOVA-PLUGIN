@@ -4,7 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         id="cordova-plugin-amr"
-        version="1.0.0">
+        version="1.0.1">
       
     <name>Cordova AMR Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
@@ -99,7 +99,7 @@
         <framework src="AMRAdapterAdmob" type="podspec" spec="~> 7.31" />
         <framework src="AMRAdapterApplovin" type="podspec" spec="~> 5.0" />
         <framework src="AMRAdapterFacebook" type="podspec" spec="~> 4.28" />
-        <framework src="AMRAdapterMopub" type="podspec" spec="~> 5.0" />
+        <framework src="AMRAdapterMopub" type="podspec" spec="~> 5.1" />
         <framework src="AMRAdapterIronsource" type="podspec" spec="~> 6.7" />
         <framework src="AMRAdapterTapjoy" type="podspec" spec="~> 11.12" />
         <framework src="AMRAdapterUnity" type="podspec" spec="~> 2.2" />        
