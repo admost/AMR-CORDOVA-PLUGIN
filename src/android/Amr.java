@@ -160,6 +160,9 @@ public class Amr extends CordovaPlugin {
 
         }else if (ACTION_SHOW_INTERSTITIAL.equals(action)) {
             result = executeShowInterstitial(callbackContext);
+        
+        }else if (ACTION_DESTROY_INTERSTITIAL.equals(action)) {
+            result = executeDestroyInterstitial(callbackContext);
 
         }else if (ACTION_LOAD_REWARDED_VIDEO.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
@@ -167,6 +170,10 @@ public class Amr extends CordovaPlugin {
 
         } else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
             result = executeShowRewardedVideo(callbackContext);
+        
+        }else if (ACTION_DESTROY_REWARDED_VIDEO.equals(action)) {
+            result = executeDestroyRewardedVideo(callbackContext);
+
 
         }else if (ACTION_LOAD_BANNER.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
@@ -656,6 +663,37 @@ public class Amr extends CordovaPlugin {
         return null;
     }
     
+    private PluginResult executeDestroyRewardedVideo(final CallbackContext callbackContext) {
+         
+        cordova.getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                if(videoAd != null) {
+                    videoAd.destroy();
+                }
+                
+            }
+        });
+
+        return null;
+    }
+    
+    private PluginResult executeDestroyInterstitial(final CallbackContext callbackContext) {
+         
+        cordova.getActivity().runOnUiThread(new Runnable(){
+            @Override
+            public void run() {
+                if(interstitialAd != null) {
+                
+                    interstitialAd.destroy();
+                }
+                
+            }
+        });
+
+        return null;
+    }
+
     
 
     private PluginResult executeShowRewardedVideo(final CallbackContext callbackContext) {

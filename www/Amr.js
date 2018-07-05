@@ -95,6 +95,30 @@ function(config, successCallback, failureCallback) {
 	  );
 };
 
+amrExport.destroyInterstitial =
+function(config, successCallback, failureCallback) {
+  if(typeof config === 'undefined' || config == null) config = {};
+  cordova.exec(
+	      successCallback,
+	      failureCallback,
+	      'Amr',
+	      'destroyInterstitial',
+	      []
+	  );
+};
+
+amrExport.destroyRewardedVideo =
+function(config, successCallback, failureCallback) {
+  if(typeof config === 'undefined' || config == null) config = {};
+  cordova.exec(
+	      successCallback,
+	      failureCallback,
+	      'Amr',
+	      'destroyRewardedVideo',
+	      []
+	  );
+};
+
 
 amrExport.loadInterstitial =
 function(config, successCallback, failureCallback) {
