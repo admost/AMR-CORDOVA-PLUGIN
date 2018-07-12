@@ -271,11 +271,6 @@ public class Amr extends CordovaPlugin {
                 
                 adView = new AdMostView(cordova.getActivity(), Amr.this.amrBannerZoneId, adSize, new AdMostViewListener() {
                     @Override
-                    public void onLoad(String network, int position) {
-                        sendResponseToListener(onBannerLoad, null);
-                        
-                    }
-                    @Override
                     public void onReady(String network,int ecpm, View adView) {
                         sendResponseToListener(onBannerReady, null);
                     
@@ -380,10 +375,6 @@ public class Amr extends CordovaPlugin {
                     public void onComplete(String s) {
                        
                     }
-                    @Override
-                    public void onAction(int i) {
-                        // This method has been deprecated. Kept because of backward compatibility.
-                    }
                     
                 });
             } });
@@ -474,10 +465,7 @@ public class Amr extends CordovaPlugin {
                     public void onClicked(String s) {
                         //Ad Clicked
                     }
-                    @Override
-                    public void onAction(int i) {
-                        // This method has been deprecated. Kept because of backward compatibility.
-                    }
+                   
                 });
         
                 executeRequestVideoAd(config, callbackContext);

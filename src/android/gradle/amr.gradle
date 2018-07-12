@@ -7,16 +7,32 @@ repositories {
     maven { url "http://dl.appnext.com/" }
     maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist/" }
-    maven { url 'http://repo.admost.com:8081/artifactory/amr' }
+    maven { url 'http://repo.admost.com:8081/artifactory/admost' }
     maven { url 'https://jitpack.io' }
     maven { url "https://tapjoy.bintray.com/maven" }
     google()
 }
 
 dependencies{
-    compile('com.mopub:mopub-sdk:5.1.0@aar') {
-        transitive = true
+
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.admost.sdk:amr:1.7.0'
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.admost.sdk:applovin:8.0.2'
+    implementation 'com.admost.sdk:facebook:4.28.2'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.admost.sdk:ironsource:6.7.9'
+    implementation('com.mopub:mopub-sdk:5.1.0@aar') {
+    transitive = true
     }
+    implementation 'com.admost.sdk:mopub-adapter:5.1.0'
+    implementation 'com.admost.sdk:tapjoy:12.0.0'
+    implementation 'com.admost.sdk:unity:2.2.1'
+    implementation 'com.google.android.exoplayer:exoplayer:r2.0.0'
+
+
 }
 android {
     compileSdkVersion 26

@@ -26,26 +26,10 @@
     <!-- android -->
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
-        <framework src="com.android.volley:volley:1.0.0"/>
-        <framework src="com.admost.sdk:amr:1.6.8" target="libs/admost-sdk.1.6.8.aar" />
-        <framework src="com.google.android.gms:play-services-base:15.0.1"/>
-        <framework src="com.google.android.gms:play-services-ads:15.0.1"/>
-        <framework src="com.android.support:recyclerview-v7:27.1.1"/>
-        <framework src="com.admost.sdk:applovin:8.0.1"/>
-        <framework src="com.mopub:mopub-sdk:5.1.0@aar"/>
-        <framework src="com.android.support:multidex:1.0.3"/>
-        <framework src="com.admost.sdk:facebook:4.28.2"/>
-        <framework src="com.admost.sdk:ironsource:6.7.9"/>
-        <framework src="com.tapjoy:tapjoy-android-sdk:11.12.2@aar"/>
-        <framework src="com.admost.sdk:unity:2.2.1"/>
-        <framework src="com.google.android.exoplayer:exoplayer:r2.0.0"/>
+        
         <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />
         
-        <application
-            android:name="android.support.multidex.MultiDexApplication" >
-        </application>
-        
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application" >
         
                 <meta-data android:name="applovin.sdk.key"
                 android:value="rrHrVw6oQRRWJBoH5M_4GkBPhapSzMToCqchlkT99vgS5SlAqkE4SQU80Ibzf8mszNXh50sFwXh0_QAp9PucrM"  />
