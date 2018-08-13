@@ -229,7 +229,7 @@ public class Amr extends CordovaPlugin {
         this.AMRSdkConfig( config );
 
         if(this.amrAppId.length() < 5){
-            Log.e(LOGTAG, "Please set amrAppId parameter.");
+            Log.e(LOGTAG, "Please set applicationIdAndroid parameter.");
             return null;
         }
         cordova.getActivity().runOnUiThread(new Runnable(){
@@ -259,7 +259,7 @@ public class Amr extends CordovaPlugin {
         this.AMRSdkConfig( config );
 
         if(this.amrBannerZoneId.length() < 5){
-            Log.e(LOGTAG, "Please set amrBannerZoneId parameter.");
+            Log.e(LOGTAG, "Please set bannerIdAndroid parameter.");
             return null;
         }
 
@@ -337,7 +337,7 @@ public class Amr extends CordovaPlugin {
         this.AMRSdkConfig( config );
 
         if(this.amrInterstitialZoneId.length() < 5){
-            Log.e(LOGTAG, "Please put your interstitialZoneId into the javascript code.");
+            Log.e(LOGTAG, "Please set interstitialIdAndroid parameter.");
             return null;
         }
         cordova.getActivity().runOnUiThread(new Runnable(){
@@ -429,7 +429,7 @@ public class Amr extends CordovaPlugin {
         this.AMRSdkConfig( config );
 
         if(this.amrVideoZoneId.length() < 5){
-            Log.e(LOGTAG, "Please put your VideoZoneId into the javascript code.");
+            Log.e(LOGTAG, "Please set videoIdAndroid parameter.");
             return null;
         }
         cordova.getActivity().runOnUiThread(new Runnable(){
