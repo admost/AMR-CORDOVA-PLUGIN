@@ -23,13 +23,14 @@ dependencies{
     implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
     implementation 'com.admost.sdk:applovin:8.1.4.a6'
+    implementation 'com.admost.sdk:facebook:5.1.0.a6'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.admost.sdk:ironsource:6.7.12.a6'
     implementation('com.mopub:mopub-sdk:5.2.0@aar') {
     transitive = true
     }
     implementation 'com.admost.sdk:mopub-adapter:5.2.0.a6'
     implementation 'com.admost.sdk:unity:2.3.0.a6'
-
 
 }
 android {
