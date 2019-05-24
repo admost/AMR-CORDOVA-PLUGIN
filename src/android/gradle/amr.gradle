@@ -1,14 +1,12 @@
 repositories {
-    jcenter()
-    flatDir {
-        dirs 'libs'
-    }
     maven { url 'https://maven.google.com' }
     maven { url "http://dl.appnext.com/" }
     maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist/" }
     maven { url 'http://repo.admost.com:8081/artifactory/admost' }
     maven { url 'https://jitpack.io' }
+    jcenter()
+    flatDir {dirs 'libs'}
     google()
 }
 
@@ -19,19 +17,17 @@ dependencies{
     //implementation 'com.google.android.exoplayer:exoplayer:r2.0.0'
 
     implementation 'com.android.volley:volley:1.1.0'
-    implementation 'com.admost.sdk:amr:1.8.7'
+    implementation 'com.admost.sdk:amr:1.9.0'
     implementation 'com.admost.sdk:admost:0.0.2.a10'
     implementation 'com.google.android.gms:play-services-base:15.0.1'
     implementation 'com.google.android.gms:play-services-ads:15.0.1'
-    implementation 'com.admost.sdk:applovin:9.2.1.a10'
-    implementation 'com.admost.sdk:facebook:5.1.0.a10'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.admost.sdk:ironsource:6.8.1.a10'
-    implementation('com.mopub:mopub-sdk:5.5.0@aar') {
-    transitive = true
-    }
-    implementation 'com.admost.sdk:mopub-adapter:5.5.0.a10'
-    implementation 'com.admost.sdk:unity:3.0.1.a10'
+    implementation 'com.admost.sdk:applovin:9.5.4.a10'
+    implementation 'com.admost.sdk:ironsource:6.8.2.a10'
+    implementation 'com.admost.sdk:tapjoy:12.2.1.a10'
+    implementation 'com.admost.sdk:unity:3.0.3.a10'
+    implementation 'com.github.vungle:vungle-android-sdk:6.3.24'
+    implementation 'com.admost.sdk:vungle-adapter:6.3.24.a10'
+    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
 
 }
 android {

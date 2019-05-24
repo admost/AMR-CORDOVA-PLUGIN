@@ -280,6 +280,10 @@ public class Amr extends CordovaPlugin {
                     public void onFail(int errorCode) {
                         sendResponseToListener(onBannerFail, String.format("{ 'error': %d }", errorCode));
                     }
+                    @Override
+                    public void onClick(String network) {
+                        
+                    }
 
                 }, null);
                 
