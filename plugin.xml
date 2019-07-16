@@ -74,7 +74,7 @@
         </config-file>
 
         <config-file target="*-Info.plist" parent="AppLovinSdkKey">
-            <string>YOUR_KEY</string>
+            <string>rrHrVw6oQRRWJBoH5M_4GkBPhapSzMToCqchlkT99vgS5SlAqkE4SQU80Ibzf8mszNXh50sFwXh0_QAp9PucrM</string>
         </config-file>
         
         <header-file src="src/ios/CDVAmr.h" />
