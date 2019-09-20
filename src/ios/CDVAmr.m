@@ -2,7 +2,7 @@
 #import <Cordova/CDV.h>
 
 @implementation CDVAmr
-
+    
 -(void)pluginInitialize {
     [super pluginInitialize];
     
@@ -12,7 +12,7 @@
     _videoZoneId = nil;
     
     _bannerWidth = 0;
-    _bannerAtTop = YES;
+    _bannerAtTop = NO;
     _offsetTopBar = NO;
     _overlap = NO;
     
@@ -26,7 +26,7 @@
     _interstitialIsAvaliable = NO;
     _rewardedVideoIsAvaliable = NO;
 }
-
+    
 - (void)dealloc {
     _banner.delegate = nil;
     _banner = nil;
@@ -37,7 +37,7 @@
     _rewardedVideo.delegate = nil;
     _rewardedVideo = nil;
 }
-
+    
 - (void)AMRSdkConfig:(CDVInvokedUrlCommand*)command {
     NSLog(@"<AMRSDK> setOptions");
     
@@ -49,7 +49,7 @@
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 - (void)startWithConfig:(CDVInvokedUrlCommand*)command {
     NSLog(@"<AMRSDK> startWithConfig");
     
@@ -63,11 +63,11 @@
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     
     if (!_appId || _appId.length == 0)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 - (void)startTestSuite:(CDVInvokedUrlCommand*)command {
     NSLog(@"<AMRSDK> startTestSuite");
     
@@ -79,11 +79,11 @@
     [AMRSDK startTestSuiteWithZones:@[_bannerZoneId, _interstitialZoneId, _videoZoneId]];
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-
+    
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
-
+    
+    
 - (void)loadBanner:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> loadBanner");
     
@@ -101,7 +101,7 @@
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 - (void)showBanner:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> showBanner");
     
@@ -114,11 +114,11 @@
     CDVPluginResult *pluginResult;
     
     if (!self.banner)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is not initiliazed."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is not initiliazed."];
     else if (!_bannerIsAvaliable)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is not ready."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is not ready."];
     else if (_bannerIsVisible && showBanner)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is already visible."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"banner is already visible."];
     else {
         [self _showBanner:showBanner];
         
@@ -127,7 +127,7 @@
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 -(void)destroyBanner:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> destroyBanner");
     
@@ -143,7 +143,7 @@
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 - (void)loadInterstitial:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> loadInterstitial");
     
@@ -153,23 +153,23 @@
     }
     
     if (!_interstitial)
-        [self _loadInterstitial];
+    [self _loadInterstitial];
     else
-        [_interstitial loadInterstitial];
+    [_interstitial loadInterstitial];
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 - (void)showInterstitial:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> showInterstitial");
     
     CDVPluginResult *pluginResult;
     
     if (!_interstitial)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"interstitial is not initiliazed."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"interstitial is not initiliazed."];
     else if (!_interstitialIsAvaliable)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"interstitial is not ready."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"interstitial is not ready."];
     else {
         [self _showInterstitial];
         
@@ -178,7 +178,7 @@
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 -(void)loadRewardedVideo:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> loadRewardedVideo");
     
@@ -188,23 +188,23 @@
     }
     
     if (!_rewardedVideo)
-        [self _loadRewardedVideo];
+    [self _loadRewardedVideo];
     else
-        [_rewardedVideo loadRewardedVideo];
+    [_rewardedVideo loadRewardedVideo];
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 -(void)showRewardedVideo:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> showRewardedVideo");
     
     CDVPluginResult *pluginResult;
     
     if (!_rewardedVideo)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"video is not initiliazed."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"video is not initiliazed."];
     else if (!_rewardedVideoIsAvaliable)
-        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"video is not ready."];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"video is not ready."];
     else {
         [self _showRewardedVideo];
         
@@ -213,23 +213,23 @@
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
-
+    
 #pragma mark - Local
-
+    
 - (void)_loadBanner {
     NSLog(@"AMR _loadBanner");
     
     _banner = [AMRBanner bannerForZoneId:_bannerZoneId];
     
     if (_bannerWidth != 0)
-        _banner.bannerWidth = _bannerWidth;
+    _banner.bannerWidth = _bannerWidth;
     
     _banner.delegate = self;
     _bannerIsAvaliable = NO;
     _bannerIsVisible = NO;
     [_banner loadBanner];
 }
-
+    
 - (void)_showBanner:(BOOL)show {
     NSLog(@"AMR _showBanner");
     
@@ -250,7 +250,7 @@
     
     [self resizeContent];
 }
-
+    
 - (void)_loadInterstitial {
     NSLog(@"AMR _loadInterstitial");
     
@@ -258,7 +258,7 @@
     _interstitial.delegate = self;
     [_interstitial loadInterstitial];
 }
-
+    
 - (void)_showInterstitial {
     NSLog(@"AMR _showInterstitial");
     
@@ -266,7 +266,7 @@
         [_interstitial showFromViewController:self.viewController];
     }
 }
-
+    
 - (void)_loadRewardedVideo {
     NSLog(@"AMR _loadRewardedVideo");
     
@@ -274,7 +274,7 @@
     _rewardedVideo.delegate = self;
     [_rewardedVideo loadRewardedVideo];
 }
-
+    
 - (void)_showRewardedVideo {
     NSLog(@"AMR _showRewardedVideo");
     
@@ -282,26 +282,27 @@
         [_rewardedVideo showFromViewController:self.viewController];
     }
 }
-
+    
 #pragma mark - AMRBannerDelegate
-
+    
 -(void)didReceiveBanner:(AMRBanner *)banner {
     _bannerIsAvaliable = YES;
+    _bannerIsVisible = NO;
     
     if (_autoShowBanner)
     [self _showBanner:YES];
     
     [self fireEvent:@"onBannerReady" withData:nil];
 }
-
+    
 -(void)didFailToReceiveBanner:(AMRBanner *)banner error:(AMRError *)error {
     NSString* jsonData = [NSString stringWithFormat:@"{'error': '%@'}", error.errorDescription];
     
     [self fireEvent:@"onBannerFail" withData:jsonData];
 }
-
+    
 #pragma mark - AMRInterstitialDelegate
-
+    
 -(void)didReceiveInterstitial:(AMRInterstitial *)interstitial {
     _interstitialIsAvaliable = YES;
     
@@ -310,23 +311,23 @@
     
     [self fireEvent:@"onInterstitialReady" withData:nil];
 }
-
+    
 -(void)didFailToReceiveInterstitial:(AMRInterstitial *)interstitial error:(AMRError *)error {
     NSString* jsonData = [NSString stringWithFormat:@"{'error': '%@'}", error.errorDescription];
     
     [self fireEvent:@"onInterstitialFail" withData:jsonData];
 }
-
+    
 - (void)didShowInterstitial:(AMRInterstitial *)interstitial {
     [self fireEvent:@"onInterstitialShow" withData:nil];
 }
-
+    
 -(void)didDismissInterstitial:(AMRInterstitial *)interstitial {
     [self fireEvent:@"onInterstitialDismiss" withData:nil];
 }
-
+    
 #pragma mark - AMRRewardedVideoDelegate
-
+    
 - (void)didReceiveRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
     _rewardedVideoIsAvaliable = YES;
     
@@ -335,25 +336,25 @@
     
     [self fireEvent:@"onVideoReady" withData:nil];
 }
-
+    
 - (void)didFailToReceiveRewardedVideo:(AMRRewardedVideo *)rewardedVideo error:(AMRError *)error {
     NSString* jsonData = [NSString stringWithFormat:@"{'error': '%@'}", error.errorDescription];
     
     [self fireEvent:@"onVideoFail" withData:jsonData];
 }
-
+    
 - (void)didShowRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
     [self fireEvent:@"onVideoShow" withData:nil];
 }
-
+    
 - (void)didDismissRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
     [self fireEvent:@"onVideoDismiss" withData:nil];
 }
-
+    
 - (void)didCompleteRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
     [self fireEvent:@"onVideoComplete" withData:nil];
 }
-
+    
 #pragma mark - Util
 - (void) fireEvent:(NSString *)eventName withData:(NSString *)jsonData {
     NSString* event;
@@ -366,7 +367,7 @@
     [self.commandDelegate evalJs:event];
     
 }
-
+    
 - (void) __setOptions:(NSDictionary*) options{
     if ((NSNull *)options == [NSNull null]) return;
     
@@ -411,7 +412,7 @@
     str = [options objectForKey:@"subjectToGdpr"];
     if(str && [str length]>0) _subjectToGdpr = str;
 }
-
+    
 - (void)resizeContent {
     CGRect pr = self.webView.superview.bounds, wf = pr;
     
@@ -455,8 +456,8 @@
     }
     self.webView.frame = wf;
 }
-
-
-
-
-@end
+    
+    
+    
+    
+    @end
