@@ -1,13 +1,14 @@
 repositories {
+    google()
+    jcenter()
     maven { url 'https://maven.google.com' }
     maven { url "http://dl.appnext.com/" }
     maven { url "https://s3.amazonaws.com/moat-sdk-builds" }
     maven { url "https://s3.amazonaws.com/avocarrot-android-builds/dist/" }
     maven { url 'http://repo.admost.com:8081/artifactory/admost' }
     maven { url 'https://jitpack.io' }
-    jcenter()
     flatDir {dirs 'libs'}
-    google()
+
 }
 
 dependencies{
@@ -15,20 +16,22 @@ dependencies{
     implementation 'com.android.support:multidex:1.0.3'
 
     //implementation 'com.google.android.exoplayer:exoplayer:r2.0.0'
-    
-    implementation 'com.android.volley:volley:1.1.0' 
-    implementation 'com.admost.sdk:amr:1.9.5' 
-    implementation 'com.admost.sdk:admost:0.0.3.a11' 
-    implementation 'com.google.android.gms:play-services-base:15.0.1' 
-    implementation 'com.google.android.gms:play-services-ads:15.0.1' 
-    implementation 'com.admost.sdk:applovin:9.7.2.a11' 
-    implementation 'com.admost.sdk:ironsource:6.8.5.a11' 
-    implementation 'com.admost.sdk:tapjoy:12.3.1.a11' 
-    implementation 'com.admost.sdk:unity:3.1.0.a11' 
-    implementation 'com.github.vungle:vungle-android-sdk:6.4.8' 
-    implementation 'com.admost.sdk:vungle-adapter:6.4.8.a11' 
-    implementation 'com.google.android.gms:play-services-gcm:15.0.1' 
-    
+
+    implementation 'com.android.volley:volley:1.1.0'
+    implementation 'com.admost.sdk:amr:1.9.7'
+    implementation 'com.admost.sdk:admost:0.0.3.a12'
+    implementation 'com.google.android.gms:play-services-base:15.0.1'
+    implementation 'com.google.android.gms:play-services-ads:15.0.1'
+    implementation 'com.admost.sdk:applovin:9.8.4.a12'
+    implementation 'com.admost.sdk:ironsource:6.9.1.a12'
+    implementation 'com.admost.sdk:tapjoy:12.3.1.a12'
+    implementation 'com.admost.sdk:unity:3.2.0.a12'
+    implementation 'com.vungle:publisher-sdk-android:6.4.11'
+    implementation 'com.admost.sdk:vungle-adapter:6.4.11.a12'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
+
+
 
 }
 android {
