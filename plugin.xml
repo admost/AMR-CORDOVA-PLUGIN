@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         id="cordova-plugin-amr"
         version="1.1.1">
-      
+
     <name>Cordova AMR Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
 	<author>Kokteyl</author>
@@ -22,41 +22,29 @@
         <clobbers target="window.plugins.Amr" />
     </js-module>
 
-	
+
     <!-- android -->
-    <!-- android, now build with gradle instead of ant -->
     <platform name="android">
-        
+
         <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />
-        
-        <config-file target="AndroidManifest.xml" parent="/manifest/application" >
-        
-                <meta-data android:name="applovin.sdk.key"
-                android:value="rrHrVw6oQRRWJBoH5M_4GkBPhapSzMToCqchlkT99vgS5SlAqkE4SQU80Ibzf8mszNXh50sFwXh0_QAp9PucrM"  />
-                <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="YOUR_KEY"  />
-        </config-file>
-		
-		<config-file target="AndroidManifest.xml" parent="/*">
-		    <uses-permission android:name="android.permission.INTERNET"/>
-		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-             <uses-permission android:name="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"/>
-		  </config-file>
 
-		<config-file target="res/xml/config.xml" parent="/*">
-		    <feature name="Amr">
-			<param name="android-package" value="com.amr.cordova.Amr"/>
-			<param name="onload" value="true" />
-		    </feature>
-		</config-file>
-		<source-file src="src/android/Amr.java" target-dir="src/com/amr/cordova" />
+    		<config-file target="AndroidManifest.xml" parent="/*">
+    		    <uses-permission android:name="android.permission.INTERNET"/>
+    		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"/>
+    		  </config-file>
 
-        <!-- cordova CLI using gradle and it's working well 
-        <framework src="com.google.android.gms:play-services-ads:+" /> -->
-        <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
-        <!-- dependency id="cordova-plugin-googleplayservices"/ -->
+    		<config-file target="config.xml" parent="/*">
+    		    <feature name="Amr">
+        			<param name="android-package" value="com.amr.cordova.Amr"/>
+        			<param name="onload" value="true" />
+    		    </feature>
+    		</config-file>
+
+    		<source-file src="src/android/com/amr/cordova/Amr.java" target-dir="app/src/main/java/com/amr/cordova" />
+
      </platform>
-    
+
     <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
@@ -64,7 +52,7 @@
                 <param name="ios-package" value="CDVAmr" />
             </feature>
         </config-file>
-        
+
         <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
             <dict>
                 <key>NSAllowsArbitraryLoads</key>
@@ -78,14 +66,14 @@
         <config-file target="*-Info.plist" parent="AppLovinSdkKey">
             <string>YOUR_KEY</string>
         </config-file>
-        
+
         <config-file target="*-Info.plist" parent="GADApplicationIdentifier">
             <string>YOUR_KEY</string>
         </config-file>
-        
+
         <header-file src="src/ios/CDVAmr.h" />
         <source-file src="src/ios/CDVAmr.m" />
-        
+
         <framework src="AMRAdapterAdcolony" type="podspec" spec="~> 3.3" />
         <framework src="AMRAdapterAdmob" type="podspec" spec="~> 7.49" />
         <framework src="AMRAdapterAdmost" type="podspec" spec="~> 1.2" />
@@ -98,6 +86,6 @@
         <framework src="AMRAdapterVungle" type="podspec" spec="~> 6.3" />
         <framework src="AMRAdapterYandex" type="podspec" spec="~> 2.13" />
         <framework src="AMRAdapterYouappi" type="podspec" spec="~> 4.4" />
-        
+
     </platform>
 </plugin>
