@@ -58,12 +58,14 @@
         [self __setOptions:params];
     }
     
-    [AMRSDK startWithAppId:_appId];
+    CDVPluginResult *pluginResult;
     
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    
-    if (!_appId || _appId.length == 0)
-    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
+    if (!_appId || _appId.length == 0) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [AMRSDK startWithAppId:_appId];
+    }
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
@@ -76,10 +78,15 @@
         [self __setOptions:params];
     }
     
-    [AMRSDK startTestSuiteWithZones:@[_bannerZoneId, _interstitialZoneId, _videoZoneId]];
+    CDVPluginResult *pluginResult;
     
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-    
+    if (!_appId || _appId.length == 0) {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
+    } else {
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        [AMRSDK startTestSuiteWithAppId:_appId];
+    }
+        
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
     
@@ -356,7 +363,7 @@
 }
     
 #pragma mark - Util
-- (void) fireEvent:(NSString *)eventName withData:(NSString *)jsonData {
+- (void)fireEvent:(NSString *)eventName withData:(NSString *)jsonData {
     NSString* event;
     
     if(jsonData && [jsonData length]>0)
@@ -368,7 +375,7 @@
     
 }
     
-- (void) __setOptions:(NSDictionary*) options{
+- (void)__setOptions:(NSDictionary*) options{
     if ((NSNull *)options == [NSNull null]) return;
     
     NSString* str = nil;
@@ -457,7 +464,4 @@
     self.webView.frame = wf;
 }
     
-    
-    
-    
-    @end
+@end
