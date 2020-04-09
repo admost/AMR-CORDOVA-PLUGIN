@@ -108,6 +108,20 @@
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
+
+- (void)hideBanner:(CDVInvokedUrlCommand*)command {
+    NSLog(@"<AMRSDK> hideBanner");
+       
+       if(_banner) {
+           [_banner.bannerView removeFromSuperview];
+           _bannerIsVisible = NO;
+           
+           [self resizeContent];
+       }
+       
+       CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+       [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
     
 - (void)showBanner:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> showBanner");
