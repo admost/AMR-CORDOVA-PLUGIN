@@ -13,7 +13,7 @@ repositories {
 dependencies{
 
     // Base( Required)
-    implementation 'com.android.support:multidex:1.0.3'
+    //implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.admost.sdk:amr:2.0.8'
     implementation 'com.admost.sdk:admost:0.0.6.a16'
@@ -32,6 +32,8 @@ dependencies{
     implementation 'com.admost.sdk:ogury:4.3.7.a16'
     implementation 'com.admost.sdk:tapjoy:12.4.2.a16'
     implementation 'com.admost.sdk:unity:3.4.0.a16'
+    implementation 'com.admost.sdk:kidoz:0.8.8.5.a16'
+    implementation 'org.greenrobot:eventbus:3.0.0'
 
 
 
