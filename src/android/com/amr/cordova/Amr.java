@@ -585,10 +585,11 @@ public class Amr extends CordovaPlugin {
             }
 
         } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.ON_FAIL) {
+            String errorCode = String.valueOf(intent.getIntExtra("ERROR_CODE",-1));
             if (intent.getBooleanExtra("IS_REWARDED", false)) {
-                sendResponseToListener(onVideoFail, null);
+                sendResponseToListener(onVideoFail, String.format("{ 'error': %d }", errorCode));
             } else {
-                sendResponseToListener(onInterstitialFail, null);
+                sendResponseToListener(onInterstitialFail, String.format("{ 'error': %d }", errorCode));
             }
         }
     }
