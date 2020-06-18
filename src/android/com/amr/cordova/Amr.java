@@ -528,7 +528,7 @@ public class Amr extends CordovaPlugin {
                     return;
                 Intent i = new Intent(activity, AmrAdActivity.class);
                 i.putExtra("ZONE_ID", amrVideoZoneId);
-                i.putExtra("IS_REWARDED", false);
+                i.putExtra("IS_REWARDED", true);
                 i.putExtra("APP_ID", amrAppId);
                 i.putExtra("CONSENT", consent);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
