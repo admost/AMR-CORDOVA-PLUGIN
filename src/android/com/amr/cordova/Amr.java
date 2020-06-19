@@ -80,6 +80,8 @@ public class Amr extends CordovaPlugin {
     private static final String OPT_SUBJECT_TO_GDPR = "subjectToGdpr";
     private static final String OPT_CONSENT = "userConsent";
     private static final String OPT_AUTO_SHOW_BANNER = "autoShowBanner";
+    private static final String OPT_AUTOSHOW_VIDEO_WITH_ACTIVITY_TIMEOUT = "autoshowVideoWithActivityTimeout";
+    private static final String OPT_AUTOSHOW_INTERSTITIAL_WITH_TIMEOUT = "autoshowInterstitialWithActivityTimeout";
 
 
     /**
@@ -165,6 +167,9 @@ public class Amr extends CordovaPlugin {
 
     SharedPreferences settings;
     SharedPreferences.Editor editor;
+
+    private int timeoutForAutoShowWithActivityVideo = 10000;
+    private int timeoutForAutoShowWithActivityInterstitial = 10000;
 
     private volatile static Amr instance;
 
@@ -274,6 +279,10 @@ public class Amr extends CordovaPlugin {
             this.autoShowInterstitial = config.optBoolean(OPT_AUTO_SHOW_INTERSTITIAL);
         if (config.has(OPT_AUTO_SHOW_VIDEO))
             this.autoShowVideo = config.optBoolean(OPT_AUTO_SHOW_VIDEO);
+        if (config.has(OPT_AUTOSHOW_INTERSTITIAL_WITH_TIMEOUT))
+            this.timeoutForAutoShowWithActivityInterstitial = config.optInt(OPT_AUTOSHOW_INTERSTITIAL_WITH_TIMEOUT, 10000);
+        if (config.has(OPT_AUTOSHOW_VIDEO_WITH_ACTIVITY_TIMEOUT))
+            this.timeoutForAutoShowWithActivityVideo = config.optInt(OPT_AUTOSHOW_VIDEO_WITH_ACTIVITY_TIMEOUT, 10000);
     }
 
     private PluginResult executeStartWithConfig(JSONObject config, final CallbackContext callbackContext) {
@@ -532,6 +541,7 @@ public class Amr extends CordovaPlugin {
                 i.putExtra("APP_ID", amrAppId);
                 i.putExtra("CONSENT", consent);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
+                i.putExtra("TIMEOUT", timeoutForAutoShowWithActivityVideo);
                 //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // do not use this
                 cordova.startActivityForResult((CordovaPlugin) Amr.this, i, LAUNCH_AD_ACTIVITY);
                 callbackContext.success();
@@ -560,6 +570,7 @@ public class Amr extends CordovaPlugin {
                 i.putExtra("APP_ID", amrAppId);
                 i.putExtra("CONSENT", consent);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
+                i.putExtra("TIMEOUT", timeoutForAutoShowWithActivityInterstitial);
                 //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // do not use this
                 activity.startActivityForResult(i, LAUNCH_AD_ACTIVITY);
                 callbackContext.success();
