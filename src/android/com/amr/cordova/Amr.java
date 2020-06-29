@@ -1,6 +1,8 @@
 package com.amr.cordova;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -41,7 +44,6 @@ public class Amr extends CordovaPlugin {
      */
     private static final String LOGTAG = "AmrCordova";
     private static final boolean CORDOVA_MIN_4 = Integer.valueOf(CordovaWebView.CORDOVA_VERSION.split("\\.")[0]) >= 4;
-    public static final int LAUNCH_AD_ACTIVITY = 2020;
     /**
      * Cordova Actions.
      */
@@ -171,12 +173,12 @@ public class Amr extends CordovaPlugin {
     private int timeoutForAutoShowWithActivityVideo = 10000;
     private int timeoutForAutoShowWithActivityInterstitial = 10000;
 
-    private volatile static Amr instance;
+    volatile static Amr instance;
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-
+        instance = this;
         settings = PreferenceManager.getDefaultSharedPreferences(this.cordova.getActivity().getApplicationContext());
         editor = settings.edit();
 
@@ -542,8 +544,8 @@ public class Amr extends CordovaPlugin {
                 i.putExtra("CONSENT", consent);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
                 i.putExtra("TIMEOUT", timeoutForAutoShowWithActivityVideo);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // do not use this
-                cordova.startActivityForResult((CordovaPlugin) Amr.this, i, LAUNCH_AD_ACTIVITY);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(i);
                 callbackContext.success();
             }
         });
@@ -571,39 +573,14 @@ public class Amr extends CordovaPlugin {
                 i.putExtra("CONSENT", consent);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
                 i.putExtra("TIMEOUT", timeoutForAutoShowWithActivityInterstitial);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // do not use this
-                activity.startActivityForResult(i, LAUNCH_AD_ACTIVITY);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(i);
                 callbackContext.success();
             }
         });
         return null;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode != LAUNCH_AD_ACTIVITY || resultCode != Activity.RESULT_OK || intent == null)
-            return;
-        Log.d(LOGTAG, "onActivityResult: " + (intent == null ? "" : intent.getIntExtra("RESULT", -1)));
-        if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.COMPLETED) {
-            sendResponseToListener(onVideoComplete, null);
-            sendResponseToListener(onVideoDismiss, null);
-        } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.DISMISS) {
-            if (intent.getBooleanExtra("IS_REWARDED", false)) {
-                sendResponseToListener(onVideoDismiss, null);
-            } else {
-                sendResponseToListener(onInterstitialDismiss, null);
-            }
-
-        } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.ON_FAIL) {
-            int errorCode = intent.getIntExtra("ERROR_CODE",-1);
-            if (intent.getBooleanExtra("IS_REWARDED", false)) {
-                sendResponseToListener(onVideoFail, String.format("{ 'error': %d }", errorCode));
-            } else {
-                sendResponseToListener(onInterstitialFail, String.format("{ 'error': %d }", errorCode));
-            }
-        }
-    }
 
     private PluginResult executeRequestAd(JSONObject config, final CallbackContext callbackContext) {
         this.AMRSdkConfig(config);
@@ -893,6 +870,41 @@ public class Amr extends CordovaPlugin {
         Log.i(LOGTAG, event);
         if (webView != null && webView.isInitialized())
             webView.loadUrl("javascript:cordova.fireDocumentEvent('" + event + "'" + (extra == null ? "" : "," + extra) + ");");
+    }
+
+    public static class EventListener extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(LOGTAG , "EventListener intent received");
+            if(intent.getAction() == null || !intent.getAction().equals("com.amr.plugin.cordova.CALLBACK") || Amr.instance == null){
+                Log.e(LOGTAG, "intent.getAction() == null || !intent.getAction().equals(\"com.amr.plugin.cordova.CALLBACK\") || Amr.instance == null");
+                return;
+            }
+            if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.COMPLETED) {
+                instance.sendResponseToListener(onVideoComplete, null);
+                instance.sendResponseToListener(onVideoDismiss, null);
+            } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.ON_READY) {
+                instance.sendResponseToListener(onVideoReady, null);
+            } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.ON_SHOWN) {
+                instance.sendResponseToListener(onVideoShow, null);
+            } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.DISMISS) {
+                if (intent.getBooleanExtra("IS_REWARDED", false)) {
+                    instance.sendResponseToListener(onVideoDismiss, null);
+                } else {
+                    instance.sendResponseToListener(onInterstitialDismiss, null);
+                }
+
+            } else if (intent.getIntExtra("RESULT", -1) == AmrAdActivity.ON_FAIL) {
+                int errorCode = intent.getIntExtra("ERROR_CODE",-1);
+                if (intent.getBooleanExtra("IS_REWARDED", false)) {
+                    instance.sendResponseToListener(onVideoFail, String.format("{ 'error': %d }", errorCode));
+                } else {
+                    instance.sendResponseToListener(onInterstitialFail, String.format("{ 'error': %d }", errorCode));
+                }
+            }
+
+        }
     }
 
 }

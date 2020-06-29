@@ -1,6 +1,6 @@
 {
   "name": "Cordova-Plugin-AMR",
-  "version": "1.2.2",
+  "version": "1.2.8",
   "description": "Admost Mediation Router plugin.",
   "cordova": {
     "id": "cordova-plugin-amr",
