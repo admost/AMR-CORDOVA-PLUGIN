@@ -4,7 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         id="cordova-plugin-amr"
-        version="1.2.8">
+        version="1.2.9">
 
     <name>Cordova AMR Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
@@ -47,6 +47,11 @@
                         <action android:name="com.amr.plugin.cordova.CALLBACK" />
                     </intent-filter>
                 </receiver>
+            </config-file>
+            <config-file target="AndroidManifest.xml" parent="/manifest/application">
+                <meta-data
+                    android:name="com.google.android.gms.ads.APPLICATION_ID"
+                    android:value="[ADMOB_APP_ID]"/>
             </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
