@@ -48,11 +48,7 @@
                     </intent-filter>
                 </receiver>
             </config-file>
-            <config-file target="AndroidManifest.xml" parent="/manifest/application">
-                <meta-data
-                    android:name="com.google.android.gms.ads.APPLICATION_ID"
-                    android:value="[ADMOB_APP_ID]"/>
-            </config-file>
+            
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity
