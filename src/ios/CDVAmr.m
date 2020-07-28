@@ -11,6 +11,10 @@
     _interstitialZoneId = nil;
     _videoZoneId = nil;
     
+    _userConsent = nil;
+    _subjectToGdpr = nil;
+    _subjectToCCPA = nil;
+    
     _bannerWidth = 0;
     _bannerAtTop = NO;
     _offsetTopBar = NO;
@@ -63,6 +67,21 @@
     if (!_appId || _appId.length == 0) {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
     } else {
+        if (_userConsent != nil) {
+            BOOL consent = [_userConsent isEqualToString:@"1"] ? YES:NO;
+            [AMRSDK setUserConsent:consent];
+        }
+        
+        if (_subjectToGdpr != nil) {
+            BOOL gdpr = [_subjectToGdpr isEqualToString:@"1"] ? YES:NO;
+            [AMRSDK subjectToGDPR:gdpr];
+        }
+        
+        if (_subjectToCCPA != nil) {
+            BOOL ccpa = [_subjectToCCPA isEqualToString:@"1"] ? YES:NO;
+            [AMRSDK subjectToCCPA:ccpa];
+        }
+        
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [AMRSDK startWithAppId:_appId];
     }
@@ -346,6 +365,11 @@
 -(void)didDismissInterstitial:(AMRInterstitial *)interstitial {
     [self fireEvent:@"onInterstitialDismiss" withData:nil];
 }
+
+- (void)didInterstitialStateChanged:(AMRInterstitial *)interstitial state:(AMRAdState)state {
+    NSString* jsonData = [NSString stringWithFormat:@"{'status': '%@'}", @(state)];
+    [self fireEvent:@"onInterstitialStatusChanged" withData:jsonData];
+}
     
 #pragma mark - AMRRewardedVideoDelegate
     
@@ -374,6 +398,11 @@
     
 - (void)didCompleteRewardedVideo:(AMRRewardedVideo *)rewardedVideo {
     [self fireEvent:@"onVideoComplete" withData:nil];
+}
+
+- (void)didRewardedVideoStateChanged:(AMRRewardedVideo *)rewardedVideo state:(AMRAdState)state {
+    NSString* jsonData = [NSString stringWithFormat:@"{'status': '%@'}", @(state)];
+    [self fireEvent:@"onVideoStatusChanged" withData:jsonData];
 }
     
 #pragma mark - Util
@@ -406,6 +435,15 @@
     str = [options objectForKey:@"videoIdIOS"];
     if(str && [str length]>0) _videoZoneId = str;
     
+    str = [options objectForKey:@"userConsent"];
+    if(str && [str length]>0) _userConsent = str;
+    
+    str = [options objectForKey:@"subjectToGdpr"];
+    if(str && [str length]>0) _subjectToGdpr = str;
+    
+    str = [options objectForKey:@"subjectToCCPA"];
+    if(str && [str length]>0) _subjectToCCPA = str;
+    
     str = [options objectForKey:@"bannerWidth"];
     if(str) _bannerWidth = [str floatValue];
     
@@ -426,12 +464,6 @@
     
     str = [options objectForKey:@"autoShowVideo"];
     if(str) _autoShowVideo = [str boolValue];
-    
-    str = [options objectForKey:@"userConsent"];
-    if(str && [str length]>0) _userConsent = str;
-    
-    str = [options objectForKey:@"subjectToGdpr"];
-    if(str && [str length]>0) _subjectToGdpr = str;
 }
     
 - (void)resizeContent {
