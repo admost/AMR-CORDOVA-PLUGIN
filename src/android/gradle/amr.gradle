@@ -40,6 +40,7 @@ dependencies{
     implementation 'com.vungle:publisher-sdk-android:6.8.1' 
     implementation 'com.admost.sdk:vungle-adapter:6.8.1.a21' 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' 
+    implementation 'com.admost.sdk:unity:3.5.0.a21' 
 
 
 
