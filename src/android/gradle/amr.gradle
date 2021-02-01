@@ -15,33 +15,33 @@ dependencies{
     //implementation 'com.android.support:multidex:1.0.3'
     
     implementation 'com.admost.sdk:cordova-plugin:1.2.8'
-    
+     
     implementation 'com.android.volley:volley:1.1.1' 
-    implementation 'com.admost.sdk:amr:2.2.3' 
-    implementation 'com.google.android.gms:play-services-base:17.1.0' 
+    implementation 'com.admost.sdk:amr:2.2.5' 
+    implementation 'com.google.android.gms:play-services-base:17.1.0'
     
-    implementation 'com.admost.sdk:admost:0.2.1.a21' 
-    implementation 'com.admost.sdk:adcolony:4.3.0.a21' 
-    implementation 'com.admost.sdk:applovin:9.14.6.a21' 
-    implementation 'com.admost.sdk:chartboost:8.1.0.a21' 
+    implementation 'com.admost.sdk:admost:0.2.2.a21' 
+    implementation 'com.admost.sdk:adcolony:4.4.0.a21' 
+    implementation 'com.admost.sdk:s2sbidding-adapter:0.0.4.a21' 
     implementation 'com.google.android.gms:play-services-ads:18.3.0' 
+    implementation 'com.admost.sdk:admob-gt-17.2.0-adapter:1.0.5.a21' 
+    implementation 'com.admost.sdk:applovin:9.15.0.a21' 
+    implementation 'com.admost.sdk:chartboost:8.2.0.a21' 
     implementation 'com.admost.sdk:facebook:6.2.0.1.a21' 
     implementation 'androidx.recyclerview:recyclerview:1.0.0' 
-    implementation 'com.admost.sdk:s2sbidding-adapter:0.0.3.a21' 
     implementation 'com.admost.sdk:huawei-ads-adapter:13.4.34.301.a21' 
     implementation 'com.huawei.hms:ads-lite:13.4.34.301' 
     implementation 'com.huawei.hms:ads-identifier:3.4.28.305' 
     implementation 'com.huawei.hms:base:5.0.0.302' 
-    implementation 'com.admost.sdk:ironsource:7.0.4.1.a21' 
-    implementation 'com.admost.sdk:kidoz:0.8.8.8.a21' 
+    implementation 'com.admost.sdk:ironsource:7.1.0.1.a21' 
+    implementation 'com.admost.sdk:kidoz:8.9.0.a21' 
     implementation 'org.greenrobot:eventbus:3.0.0' 
-    implementation 'net.pubnative:hybid.sdk:2.1.0' 
-    implementation 'com.admost.sdk:pubnative-adapter:2.1.0.a21' 
+    implementation 'net.pubnative:hybid.sdk:2.3.3' 
+    implementation 'com.admost.sdk:pubnative-adapter:2.3.3.a21' 
+    implementation 'com.admost.sdk:unity:3.6.0.1.a21' 
     implementation 'com.vungle:publisher-sdk-android:6.8.1' 
     implementation 'com.admost.sdk:vungle-adapter:6.8.1.a21' 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0' 
-    implementation 'com.admost.sdk:unity:3.5.0.a21' 
-
 
 
 
@@ -52,6 +52,10 @@ android {
     defaultConfig {
         minSdkVersion 19
         multiDexEnabled true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
   packagingOptions {
