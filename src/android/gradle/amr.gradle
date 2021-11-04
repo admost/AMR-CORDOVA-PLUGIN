@@ -1,11 +1,8 @@
 repositories {
     google()
     jcenter()
-    maven { url 'http://repo.admost.com:8081/artifactory/amr' }
-    maven { url 'http://developer.huawei.com/repo/' }
-    maven { url 'https://verve.jfrog.io/artifactory/verve-gradle-release' }
+    maven { url 'http://repo.admost.com:8081/artifactory/amr'; allowInsecureProtocol true }
     maven { url 'https://jitpack.io' }
-
 }
 
 dependencies{
