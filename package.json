@@ -1,54 +1,52 @@
 {
-  "name": "cordova-plugin-amr",
-  "version": "1.2.8",
-  "description": "Admost Mediation Router plugin.",
-  "cordova": {
+    "name": "cordova-plugin-amr",
+    "version": "1.2.10",
+    "description": "Admost Mediation Router plugin.",
+    "cordova": {
     "id": "cordova-plugin-amr",
     "platforms": [
-      "android",
-      "ios"
+        "android",
+        "ios"
     ]
-  },
-  "repository": {
+    },
+    "repository": {
     "type": "git",
-    "url": "https://github.com/admost/AMR-CORDOVA-PLUGIN.git"
-  },
-  "keywords": [
-    "admob",
-    "google",
-    "cordova-ios",
-    "cordova-android",
-    "ecosystem:cordova",
-    "android",
-    "ios",
-    "money",
-    "monetization",
-    "play",
-    "win",
-    "earn",
-    "publicity",
-    "advertisement",
-    "advertising",
-    "ads",
-    "ad",
-    "eclipse",
-    "android studio",
-    "cordova-amr",
-    "amr",
-    "ecosystem:cordova",
-    "cordova-android",
-    "cordova-ios"
-  ],
-  "engines": [
-    {
-      "name": "cordova",
-      "version": ">=8.0.0"
-    }
-  ],
-  "author": "Kokteyl",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/admost/AMR-CORDOVA-PLUGIN/issues"
-  },
-  "homepage": "https://github.com/admost/AMR-CORDOVA-PLUGIN#readme"
+    "url": "https://github.com/faytekin/AMR-CORDOVA-PLUGIN.git"
+    },
+    "keywords": [
+        "admob",
+        "google",
+        "cordova-ios",
+        "cordova-android",
+        "ecosystem:cordova",
+        "android",
+        "ios",
+        "money",
+        "monetization",
+        "play",
+        "win",
+        "earn",
+        "publicity",
+        "advertisement",
+        "advertising",
+        "ads",
+        "ad",
+        "eclipse",
+        "android studio",
+        "cordova-amr",
+        "amr",
+        "ecosystem:cordova",
+        "cordova-android",
+        "cordova-ios"
+    ],
+    "engines": {
+        "name": "cordova",
+        "version": ">=8.0.0"
+    },
+    "author": "Kokteyl",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/faytekin/AMR-CORDOVA-PLUGIN/issues"
+    },
+    "homepage": "https://github.com/faytekin/AMR-CORDOVA-PLUGIN#readme"
 }
