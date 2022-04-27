@@ -485,11 +485,10 @@
         <header-file src="src/ios/CDVAmr.h" />
         <source-file src="src/ios/CDVAmr.m" />
 
-        <framework src="AMRAdapterAdcolony" type="podspec" spec="~> 4.8" />
-        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 9.2" />
+        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 9.3" />
         <framework src="AMRAdapterAdmost" type="podspec" spec="~> 1.6.1.0" />
         <framework src="AMRAdapterApplovin" type="podspec" spec="~> 11.3" />
-        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 6.9" />
+        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 6.10" />
         <framework src="AMRAdapterIronsource" type="podspec" spec="~> 7.2" />
         <framework src="AMRAdapterUnity" type="podspec" spec="~> 4.1" />
     </platform>

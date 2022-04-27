@@ -12,21 +12,21 @@ dependencies{
     implementation 'com.admost.sdk:cordova-plugin:1.2.8'
 
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'com.admost.sdk:amr:2.5.7'
+    implementation 'com.admost.sdk:amr:2.5.9'
     implementation 'com.google.android.gms:play-services-base:17.1.0'
 
-    implementation 'com.admost.sdk:admost:1.0.7.a29'
+    implementation 'com.admost.sdk:admost:1.0.9.a30'
     implementation 'com.admost.sdk:adcolony:4.6.5.a29'
     implementation 'com.google.android.gms:play-services-ads:20.4.0'
-    implementation 'com.admost.sdk:admob-gt-19.7.0-adapter:1.0.8.a29'
-    implementation 'com.admost.sdk:applovin:11.3.1.a29'
-    implementation 'com.admost.sdk:facebook:6.8.0.a29'
+    implementation 'com.admost.sdk:admob-gt-19.7.0-adapter:1.0.8.a30'
+    implementation 'com.admost.sdk:applovin:11.3.3.a30'
+    implementation 'com.admost.sdk:facebook:6.8.0.a30'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'com.admost.sdk:ironsource:7.1.14.0.a29'
+    implementation 'com.admost.sdk:ironsource:7.2.1.1.a30'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
     implementation 'org.greenrobot:eventbus:3.0.0'
-    implementation 'com.admost.sdk:unity:4.0.0.a29'
+    implementation 'com.admost.sdk:unity:4.1.0.a30'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
