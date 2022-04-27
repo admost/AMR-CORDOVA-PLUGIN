@@ -16,7 +16,6 @@ dependencies{
     implementation 'com.google.android.gms:play-services-base:17.1.0'
 
     implementation 'com.admost.sdk:admost:1.0.9.a30'
-    implementation 'com.admost.sdk:adcolony:4.6.5.a29'
     implementation 'com.google.android.gms:play-services-ads:20.4.0'
     implementation 'com.admost.sdk:admob-gt-19.7.0-adapter:1.0.8.a30'
     implementation 'com.admost.sdk:applovin:11.3.3.a30'
