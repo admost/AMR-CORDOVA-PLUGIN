@@ -485,11 +485,18 @@
         <header-file src="src/ios/CDVAmr.h" />
         <source-file src="src/ios/CDVAmr.m" />
 
-        <framework src="AMRAdapterAdmob" type="podspec" spec="~> 9.5" />
-        <framework src="AMRAdapterAdmost" type="podspec" spec="~> 1.6" />
-        <framework src="AMRAdapterApplovin" type="podspec" spec="~> 11.4" />
-        <framework src="AMRAdapterFacebook" type="podspec" spec="~> 6.11" />
-        <framework src="AMRAdapterIronsource" type="podspec" spec="~> 7.2" />
-        <framework src="AMRAdapterUnity" type="podspec" spec="~> 4.1" />
+        <podspec>
+            <config>
+                <source url="https://cdn.cocoapods.org/"/>
+            </config>
+            <pods>
+                <pod name="AMRAdapterAdmob" spec="~> 9.5" />
+                <pod name="AMRAdapterAdmost" spec="~> 1.6" />
+                <pod name="AMRAdapterApplovin" spec="~> 11.4" />
+                <pod name="AMRAdapterFacebook" spec="~> 6.11" />
+                <pod name="AMRAdapterIronsource" spec="~> 7.2" />
+                <pod name="AMRAdapterUnity" spec="~> 4.1" />
+            </pods>
+        </podspec>
     </platform>
 </plugin>
