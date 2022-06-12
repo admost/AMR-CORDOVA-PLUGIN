@@ -3,5 +3,5 @@
 ## Install
 
 ```bash
-cordova plugin add https://github.com/faytekin/AMR-CORDOVA-PLUGIN.git
+cordova plugin add https://github.com/faytekin/amr-cordova-plugin.git
 ```
