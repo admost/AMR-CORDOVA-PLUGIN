@@ -1,9 +1,9 @@
 {
-    "name": "cordova-plugin-amr",
+    "name": "cordova-plugin-zzzamr",
     "version": "1.3.2",
     "description": "Admost Mediation Router plugin.",
     "cordova": {
-    "id": "cordova-plugin-amr",
+    "id": "cordova-plugin-zzzamr",
     "platforms": [
         "android",
         "ios"
