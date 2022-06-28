@@ -24,15 +24,14 @@ dependencies{
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'com.admost.sdk:ironsource:7.2.1.1.a30'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
-    implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.admost.sdk:unity:4.1.0.a30'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 
 }
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
     defaultConfig {
         minSdkVersion 19
         multiDexEnabled true
