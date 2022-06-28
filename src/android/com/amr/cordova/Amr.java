@@ -63,6 +63,7 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_LOAD_AND_SHOW_REWARDED_VIDEO = "loadAndShowRewardedVideo";
 
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
+    private static final String ACTION_IS_PRIVACY_CONSENT_REQUIRED = "isPrivacyConsentRequired";
 
     /**
      * config
@@ -115,6 +116,8 @@ public class Amr extends CordovaPlugin {
     private static String onBannerFail = "onBannerFail";
     private static String onBannerReady = "onBannerReady";
     private static String onBannerLoad = "onBannerLoad";
+
+    private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
 
     private ViewGroup parentView;
 
@@ -231,6 +234,8 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_LOAD_AND_SHOW_INTERSTITIAL.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeShowInterstitialWithActivity(config, callbackContext);
+        }else if (ACTION_IS_PRIVACY_CONSENT_REQUIRED.equals(action)) {
+                result = executeIsPrivacyConsentRequired();
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
             result = new PluginResult(Status.INVALID_ACTION);
@@ -359,6 +364,16 @@ public class Amr extends CordovaPlugin {
         });
 
         return null;
+    }
+
+    private PluginResult executeIsPrivacyConsentRequired(){
+        AdMost.getInstance().setPrivacyConsentListener(Layout.this, new AdMost.PrivacyConsentListener() {
+            @Override
+            public void isPrivacyConsentRequired(String s) {
+                sendResponseToListener(onPrivacyConsentRequired, s);
+
+            }
+        });
     }
 
     private PluginResult executeTestSuite(JSONObject config, final CallbackContext callbackContext) {
