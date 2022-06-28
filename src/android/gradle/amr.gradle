@@ -23,7 +23,6 @@ dependencies{
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'com.admost.sdk:ironsource-adapter:7.2.2.1.a31'
     implementation 'com.google.android.gms:play-services-appset:16.0.2'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.32'
     implementation 'com.admost.sdk:unity-adapter:4.0.0.a31'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
