@@ -40,10 +40,6 @@ amrExport.startWithConfig = function (
   ]);
 };
 
-amrExport.isGDPRRequired = function (successCallback, failureCallback) {
-  cordova.exec(successCallback, failureCallback, "Amr", "isGDPRRequired", []);
-};
-
 amrExport.startTestSuite = function (config, successCallback, failureCallback) {
   cordova.exec(successCallback, failureCallback, "Amr", "startTestSuite", [
     config,

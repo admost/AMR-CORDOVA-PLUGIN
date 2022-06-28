@@ -65,7 +65,6 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_LOAD_AND_SHOW_REWARDED_VIDEO = "loadAndShowRewardedVideo";
 
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
-    private static final String ACTION_IS_GDPR_REQUIRED = "isGDPRRequired";
 
     /**
      * config
@@ -243,8 +242,6 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_LOAD_AND_SHOW_INTERSTITIAL.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeShowInterstitialWithActivity(config, callbackContext);
-        }else if (ACTION_IS_GDPR_REQUIRED.equals(action)) {
-                result = executeIsGDPRRequired();
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
             result = new PluginResult(Status.INVALID_ACTION);
@@ -382,10 +379,6 @@ public class Amr extends CordovaPlugin {
         });
 
         return null;
-    }
-
-    private PluginResult executeIsGDPRRequired(){
-        return AdMost.getInstance().getConfiguration().isGDPRRequired();
     }
 
     private PluginResult executeTestSuite(JSONObject config, final CallbackContext callbackContext) {
@@ -532,10 +525,10 @@ public class Amr extends CordovaPlugin {
                     public void onClicked(String s) {
                         //Ad Clicked
                     }
-                    
+
                     @Override
                     public void onStatusChanged(int status) {
-                       sendResponseToListener(onVideoStatusChanged, String.format("{ 'status': %d }", status)); 
+                       sendResponseToListener(onVideoStatusChanged, String.format("{ 'status': %d }", status));
                     }
 
                 });
