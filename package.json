@@ -1,17 +1,17 @@
 {
     "name": "cordova-plugin-zzzamr",
-    "version": "1.3.2",
+    "version": "1.4.0",
     "description": "Admost Mediation Router plugin.",
     "cordova": {
-    "id": "cordova-plugin-zzzamr",
-    "platforms": [
-        "android",
-        "ios"
-    ]
+        "id": "cordova-plugin-zzzamr",
+        "platforms": [
+            "android",
+            "ios"
+        ]
     },
     "repository": {
-    "type": "git",
-    "url": "https://github.com/faytekin/AMR-CORDOVA-PLUGIN.git"
+        "type": "git",
+        "url": "https://github.com/faytekin/amr-cordova-plugin.git"
     },
     "keywords": [
         "admob",
@@ -43,10 +43,10 @@
         "name": "cordova",
         "version": ">=8.0.0"
     },
-    "author": "Kokteyl",
+    "author": "Fatih Aytekin",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/faytekin/AMR-CORDOVA-PLUGIN/issues"
-    },
-    "homepage": "https://github.com/faytekin/AMR-CORDOVA-PLUGIN#readme"
+    "homepage": "https://github.com/faytekin/amr-cordova-plugin#readme",
+    "dependencies": {
+        "prettier": "^2.7.1"
+    }
 }
