@@ -40,6 +40,19 @@ amrExport.startWithConfig = function (
   ]);
 };
 
+amrExport.isPrivacyConsentRequired = function (
+  successCallback,
+  failureCallback
+) {
+  cordova.exec(
+    successCallback,
+    failureCallback,
+    "Amr",
+    "isPrivacyConsentRequired",
+    []
+  );
+};
+
 amrExport.startTestSuite = function (config, successCallback, failureCallback) {
   cordova.exec(successCallback, failureCallback, "Amr", "startTestSuite", [
     config,

@@ -65,6 +65,7 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_LOAD_AND_SHOW_REWARDED_VIDEO = "loadAndShowRewardedVideo";
 
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
+    private static final String ACTION_IS_PRIVACY_CONSENT_REQUIRED = "isPrivacyConsentRequired";
 
     /**
      * config
@@ -93,6 +94,7 @@ public class Amr extends CordovaPlugin {
     private String subjectToGdpr = "-1";
     private String consent = "-1";
     private String subjectToCCPA = "-1";
+    private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
    /* OPT_SUBJECT_TO_GDPR
     OPT_CONSENT
 */
@@ -239,9 +241,14 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_LOAD_AND_SHOW_REWARDED_VIDEO.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeShowRewardedVideoWithActivity(config, callbackContext);
+
         } else if (ACTION_LOAD_AND_SHOW_INTERSTITIAL.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeShowInterstitialWithActivity(config, callbackContext);
+
+        } else if (ACTION_IS_PRIVACY_CONSENT_REQUIRED.equals(action)) {
+            result = executeIsPrivacyConsentRequired();
+
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
             result = new PluginResult(Status.INVALID_ACTION);
@@ -377,6 +384,24 @@ public class Amr extends CordovaPlugin {
                 callbackContext.success();
             }
         });
+
+        return null;
+    }
+
+    private PluginResult executeIsPrivacyConsentRequired() {
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Context context = cordova.getActivity().getApplicationContext();
+                AdMost.getInstance().setPrivacyConsentListener(context, new AdMost.PrivacyConsentListener() {
+                    @Override
+                    public void isPrivacyConsentRequired(String status) {
+                        sendResponseToListener(isPrivacyConsentRequired, String.format("{status: '%s'}", status));
+                    }
+                });
+            }
+        });
+
 
         return null;
     }
