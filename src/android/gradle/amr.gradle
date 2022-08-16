@@ -31,6 +31,7 @@ dependencies{
    implementation 'com.admost.sdk:ironsource-adapter:7.2.3.1.a31'
    implementation 'com.google.android.gms:play-services-appset:16.0.2'
    implementation ('com.admost.sdk:pubnative-adapter:2.13.1.a31') {exclude group: 'net.pubnative' module: 'hybid.omsdk' }
+   implementation 'com.admost.sdk:unity-adapter:4.3.0.a31' 
    implementation 'com.admost.sdk:vungle-adapter:6.11.0.a31'
    implementation 'androidx.appcompat:appcompat:1.3.0'
    implementation 'com.google.android.gms:play-services-tasks:18.0.1'
