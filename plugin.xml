@@ -34,7 +34,7 @@
             </config-file>
 
             <config-file target="AndroidManifest.xml" parent="/manifest/application">
-                <receiver android:enabled="true" android:name="com.amr.cordova.Amr$EventListener">
+                <receiver android:enabled="true" android:exported="true" android:name="com.amr.cordova.Amr$EventListener">
                     <intent-filter>
                         <action android:name="com.amr.plugin.cordova.CALLBACK" />
                     </intent-filter>
@@ -48,6 +48,7 @@
                 android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
                 android:process=":adprocess"
                 android:multiprocess="true"
+                android:exported="true"
                 android:screenOrientation="landscape"
                 android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen" >
                 <intent-filter>
