@@ -4,7 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         id="cordova-plugin-zzzamr"
-        version="1.4.0">
+        version="1.4.1">
 
     <name>Cordova AMR Plugin</name>
 	<description>Admost Mediation Router plugin.</description>
@@ -481,12 +481,12 @@
                 <source url="https://cdn.cocoapods.org/"/>
             </config>
             <pods>
-                <pod name="AMRAdapterAdmob" spec="~> 9.5" />
+                <pod name="AMRAdapterAdmob" spec="~> 9.11" />
                 <pod name="AMRAdapterAdmost" spec="~> 1.6" />
-                <pod name="AMRAdapterApplovin" spec="~> 11.4" />
+                <pod name="AMRAdapterApplovin" spec="~> 11.5" />
                 <pod name="AMRAdapterFacebook" spec="~> 6.11" />
                 <pod name="AMRAdapterIronsource" spec="~> 7.2" />
-                <pod name="AMRAdapterUnity" spec="~> 4.1" />
+                <pod name="AMRAdapterUnity" spec="~> 4.4" />
             </pods>
         </podspec>
     </platform>
