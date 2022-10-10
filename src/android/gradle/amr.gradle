@@ -4,6 +4,7 @@ repositories {
     maven { url 'http://repo.admost.com:8081/artifactory/amr'; allowInsecureProtocol true }
     maven { url 'https://verve.jfrog.io/artifactory/verve-gradle-release' }
     maven { url 'https://jitpack.io' }
+    maven { url 'https://android-sdk.is.com/' }
 }
 
 dependencies{
