@@ -25,22 +25,21 @@
 
     <!-- android -->
     <platform name="android">
-
         <framework src="src/android/gradle/amr.gradle" custom="true" type="gradleReference" />
-    		<config-file target="AndroidManifest.xml" parent="/*">
-    		    <uses-permission android:name="android.permission.INTERNET"/>
-    		    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-                <uses-permission android:name="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"/>
-            </config-file>
 
-            <config-file target="AndroidManifest.xml" parent="/manifest/application">
-                <receiver android:enabled="true" android:exported="true" android:name="com.amr.cordova.Amr$EventListener">
-                    <intent-filter>
-                        <action android:name="com.amr.plugin.cordova.CALLBACK" />
-                    </intent-filter>
-                </receiver>
-            </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"/>
+        </config-file>
 
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver android:enabled="true" android:exported="true" android:name="com.amr.cordova.Amr$EventListener">
+                <intent-filter>
+                    <action android:name="com.amr.plugin.cordova.CALLBACK" />
+                </intent-filter>
+            </receiver>
+        </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity
@@ -60,14 +59,13 @@
         </config-file>
 
         <config-file target="config.xml" parent="/*">
-    		    <feature name="Amr">
-        			<param name="android-package" value="com.amr.cordova.Amr"/>
-        			<param name="onload" value="true" />
-    		    </feature>
-    		</config-file>
+            <feature name="Amr">
+                <param name="android-package" value="com.amr.cordova.Amr"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
 
-    		<source-file src="src/android/com/amr/cordova/Amr.java" target-dir="app/src/main/java/com/amr/cordova" />
-
+    	<source-file src="src/android/com/amr/cordova/Amr.java" target-dir="app/src/main/java/com/amr/cordova" />
      </platform>
 
     <!-- ios -->
@@ -82,6 +80,21 @@
             <dict>
                 <key>NSAllowsArbitraryLoads</key>
                 <true/>
+            </dict>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSExceptionDomains</key>
+                <dict>
+                    <key>admost.com</key>
+                    <dict>
+                        <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                        <true/>
+                        <key>NSIncludesSubdomains</key>
+                        <true/>
+                    </dict>
+                </dict>
             </dict>
         </config-file>
 
@@ -482,10 +495,10 @@
                 <source url="https://cdn.cocoapods.org/"/>
             </config>
             <pods>
-                <pod name="AMRAdapterAdmob" spec="~> 9.11" />
+                <pod name="AMRAdapterAdmob" spec="~> 9.12" />
                 <pod name="AMRAdapterAdmost" spec="~> 1.6" />
                 <pod name="AMRAdapterApplovin" spec="~> 11.5" />
-                <pod name="AMRAdapterFacebook" spec="~> 6.11" />
+                <pod name="AMRAdapterFacebook" spec="~> 6.12" />
                 <pod name="AMRAdapterIronsource" spec="~> 7.2" />
                 <pod name="AMRAdapterUnity" spec="~> 4.4" />
             </pods>
