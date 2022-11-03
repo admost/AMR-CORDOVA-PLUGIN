@@ -389,19 +389,19 @@ public class Amr extends CordovaPlugin {
     }
 
     private PluginResult executeIsPrivacyConsentRequired() {
-        cordova.getActivity().runOnUiThread(new Runnable() {
+        
+        Context context = cordova.getActivity().getApplicationContext();
+        AdMost.getInstance().setPrivacyConsentListener(context, new AdMost.PrivacyConsentListener() {
             @Override
-            public void run() {
-                Context context = cordova.getActivity().getApplicationContext();
-                AdMost.getInstance().setPrivacyConsentListener(context, new AdMost.PrivacyConsentListener() {
+            public void isPrivacyConsentRequired(String status) {
+                cordova.getActivity().runOnUiThread(new Runnable() {
                     @Override
-                    public void isPrivacyConsentRequired(String status) {
+                    public void run() {
                         sendResponseToListener(isPrivacyConsentRequired, String.format("{status: '%s'}", status));
                     }
                 });
             }
         });
-
 
         return null;
     }
