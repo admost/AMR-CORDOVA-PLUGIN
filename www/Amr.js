@@ -94,4 +94,20 @@ amrExport.loadAndShowInterstitial = function (config, successCallback, failureCa
   cordova.exec(successCallback, failureCallback, "Amr", "loadAndShowInterstitial", [config]);
 };
 
+amrExport.getRemoteConfigString = function (config, successCallback, failureCallback) {
+  if (typeof config === "object" && typeof config.key === "string" && config.key.length > 0 && typeof config.value === "string") {
+    cordova.exec(successCallback,failureCallback,"Amr", "getRemoteConfigString",[config]);
+  }
+}
+
+amrExport.trackPurchaseForAndroid = function (config,successCallback, failureCallback){
+  if (typeof config === "object" || config != null){
+    cordova.exec(successCallback, failureCallback,"Amr", "trackPurchaseForAndroid", [config]);
+  }else{
+    if (typeof failureCallback === "function") {
+      failureCallback("config object");
+    }
+  }
+}
+
 module.exports = amrExport;
