@@ -29,6 +29,8 @@
 
     _interstitialIsAvaliable = NO;
     _rewardedVideoIsAvaliable = NO;
+    
+    _tag = @"";
 }
 
 - (void)dealloc {
@@ -103,7 +105,7 @@
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"invalid app id"];
     } else {
         pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        [AMRSDK startTestSuiteWithAppId:_appId];
+        [AMRSDK startTesterInfoWithAppId:_appId];
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -239,6 +241,12 @@
 -(void)showRewardedVideo:(CDVInvokedUrlCommand *)command {
     NSLog(@"<AMRSDK> showRewardedVideo");
 
+    if (command.arguments.count > 0) {
+        _tag = [command.arguments firstObject];
+
+        NSLog(@"Value of Fatih Aytekin = %@", command.arguments);
+    }
+
     CDVPluginResult *pluginResult;
 
     if (!_rewardedVideo)
@@ -319,7 +327,9 @@
     NSLog(@"AMR _showRewardedVideo");
 
     if(_rewardedVideo && _rewardedVideoIsAvaliable) {
-        [_rewardedVideo showFromViewController:self.viewController];
+        NSLog(@"Value of tag = %@", _tag);
+
+        [_rewardedVideo showFromViewController:self.viewController withTag:_tag];
     }
 }
 

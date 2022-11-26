@@ -222,7 +222,8 @@ public class Amr extends CordovaPlugin {
             result = executeLoadRewardedVideo(config, callbackContext);
 
         } else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
-            result = executeShowRewardedVideo(callbackContext);
+            String tag = inputs.optString(0);
+            result = executeShowRewardedVideo(tag, callbackContext);
 
         } else if (ACTION_DESTROY_REWARDED_VIDEO.equals(action)) {
             result = executeDestroyRewardedVideo(callbackContext);
@@ -521,7 +522,7 @@ public class Amr extends CordovaPlugin {
                     public void onReady(String network, int ecpm) {
                         sendResponseToListener(onVideoReady, null);
                         if (autoShowVideo == true) {
-                            executeShowRewardedVideo(callbackContext);
+                            executeShowRewardedVideo(null, callbackContext);
                         }
                     }
 
@@ -834,8 +835,9 @@ public class Amr extends CordovaPlugin {
     }
 
 
-    private PluginResult executeShowRewardedVideo(final CallbackContext callbackContext) {
+    private PluginResult executeShowRewardedVideo(String tag, final CallbackContext callbackContext) {
         Log.v(LOGTAG, "Show Video Ad");
+        Log.v(LOGTAG, tag);
         if (videoAd == null) {
             return new PluginResult(Status.ERROR, "VideoAd is null, call createVideoView first.");
         }
@@ -845,7 +847,7 @@ public class Amr extends CordovaPlugin {
             public void run() {
 
                 if (videoAd.isLoaded()) {
-                    videoAd.show();
+                    videoAd.show(tag);
                 } else {
                     Log.e(LOGTAG, "VideoAd is not ready yet, temporarily setting autoshow.");
                     autoShowVideoTemp = true;

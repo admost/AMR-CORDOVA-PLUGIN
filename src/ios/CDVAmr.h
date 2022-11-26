@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString *bannerZoneId;
 @property (nonatomic, retain) NSString *interstitialZoneId;
 @property (nonatomic, retain) NSString *videoZoneId;
+@property (nonatomic, retain) NSString *tag;
 
 @property (nonatomic, retain) NSString *userConsent;
 @property (nonatomic, retain) NSString *subjectToGdpr;

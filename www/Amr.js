@@ -136,16 +136,16 @@ amrExport.loadRewardedVideo = function (
 };
 
 amrExport.showRewardedVideo = function (
-  show,
+  tag,
   successCallback,
   failureCallback
 ) {
-  if (show === undefined) {
-    show = true;
+  if (tag === undefined) {
+    tag = '';
   }
 
   cordova.exec(successCallback, failureCallback, "Amr", "showRewardedVideo", [
-    show,
+    tag
   ]);
 };
 
