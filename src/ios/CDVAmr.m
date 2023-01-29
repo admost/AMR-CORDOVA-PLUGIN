@@ -243,8 +243,6 @@
 
     if (command.arguments.count > 0) {
         _tag = [command.arguments firstObject];
-
-        NSLog(@"Value of Fatih Aytekin = %@", command.arguments);
     }
 
     CDVPluginResult *pluginResult;
