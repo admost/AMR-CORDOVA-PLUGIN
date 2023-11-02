@@ -497,12 +497,12 @@
             <pods>
                 <pod name="AMRSDK" spec="~> 1.5" />
 
-                <pod name="AMRAdapterAdmob" spec="~> 10.4" />
+                <pod name="AMRAdapterAdmob" spec="~> 10.12" />
                 <pod name="AMRAdapterAdmost" spec="~> 1.6" />
-                <pod name="AMRAdapterApplovin" spec="~> 11.9" />
-                <pod name="AMRAdapterFacebook" spec="~> 6.12" />
-                <pod name="AMRAdapterIronsource" spec="~> 7.3" />
-                <pod name="AMRAdapterUnity" spec="~> 4.6" />
+                <pod name="AMRAdapterApplovin" spec="~> 11.11" />
+                <pod name="AMRAdapterFacebook" spec="6.12.0.1" />
+                <pod name="AMRAdapterIronsource" spec="~> 7.5" />
+                <pod name="AMRAdapterUnity" spec="~> 4.8" />
             </pods>
         </podspec>
     </platform>
