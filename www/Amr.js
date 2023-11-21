@@ -67,18 +67,8 @@ function(config, successCallback, failureCallback) {
 					);
 };
 
-	
-amrExport.loadBanner =
-function(config, successCallback, failureCallback) {
-	if(typeof config === 'undefined' || config == null) config = {};
-	cordova.exec(
-		successCallback,
-		failureCallback,
-		'Amr',
-		'loadBanner',
-		[ config ]
-	);
-};
+
+
 
 
 amrExport.hideBanner =
@@ -91,6 +81,26 @@ function(successCallback, failureCallback) {
 		[]
 		
 	);
+
+amrExport.setCanRequestAds =
+function (config, successCallback, failureCallback) {
+  cordova.exec(
+  		successCallback,
+	  	failureCallback,
+	  	"Amr",
+	  	"setCanRequestAds",
+	  	[config,]);
+};
+
+amrExport.loadBanner =
+function (config, successCallback, failureCallback) {
+  if (typeof config === "undefined" || config == null) config = {};
+  cordova.exec(
+  		successCallback,
+	  	failureCallback,
+	  	"Amr",
+	  	"loadBanner",
+	  	[config]);
 };
 
 

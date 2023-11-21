@@ -48,6 +48,7 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_SET_CONFIG = "AMRSdkConfig";
     private static final String ACTION_START_WITH_CONFIG = "startWithConfig";
     private static final String ACTION_START_TEST_SUITE = "startTestSuite";
+    private static final String ACTION_SET_CAN_REQUEST_ADS = "setCanRequestAds";
     private static final String ACTION_LOAD_BANNER = "loadBanner";
     private static final String ACTION_HIDE_BANNER = "hideBanner";
     private static final String ACTION_DESTROY_BANNER = "destroyBanner";
@@ -80,6 +81,7 @@ public class Amr extends CordovaPlugin {
     private static final String OPT_AUTO_SHOW_VIDEO = "autoShowVideo";
     private static final String OPT_SUBJECT_TO_GDPR = "subjectToGdpr";
     private static final String OPT_CONSENT = "userConsent";
+    private static final String OPT_CAN_REQUEST_ADS = "canRequestAds";
     private static final String OPT_AUTO_SHOW_BANNER = "autoShowBanner";
 
 
@@ -88,6 +90,9 @@ public class Amr extends CordovaPlugin {
      **/
     private String subjectToGdpr = "-1";
     private String consent = "-1";
+    private String canRequestAds = "-1";
+    private String subjectToCCPA = "-1";
+    private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
    /* OPT_SUBJECT_TO_GDPR
     OPT_CONSENT
 */
@@ -197,6 +202,10 @@ public class Amr extends CordovaPlugin {
             JSONObject config = inputs.optJSONObject(0);
             result = executeTestSuite(config, callbackContext);
 
+        } else if (ACTION_SET_CAN_REQUEST_ADS.equals(action)) {
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeSetCanRequestAds(config, callbackContext);
+
         } else if (ACTION_LOAD_INTERSTITIAL.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeLoadInterstitial(config, callbackContext);
@@ -236,6 +245,13 @@ public class Amr extends CordovaPlugin {
             result = executeShowInterstitialWithActivity(config, callbackContext);
         }else if (ACTION_IS_PRIVACY_CONSENT_REQUIRED.equals(action)) {
                 result = executeIsPrivacyConsentRequired();
+        } else if (ACTION_GET_REMOTE_CONFIG_STRING.equals(action)) {
+            AdMostLog.e("remote action");
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeGetRemoteConfigString(config, callbackContext);
+        } else if(ACTION_TRACK_PURCHASE_FOR_ANDROID.equals(action)){
+            JSONObject config = inputs.optJSONObject(0);
+            result = executeTrackPurchaseForAndroid(config, callbackContext);
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
             result = new PluginResult(Status.INVALID_ACTION);
@@ -269,6 +285,7 @@ public class Amr extends CordovaPlugin {
         if (config.has(OPT_AD_SIZE)) this.adSize = config.optInt(OPT_AD_SIZE);
 
         if (config.has(OPT_CONSENT)) this.consent = config.optString(OPT_CONSENT);
+        if (config.has(OPT_CAN_REQUEST_ADS)) this.canRequestAds = config.optString(OPT_CAN_REQUEST_ADS);
         if (config.has(OPT_SUBJECT_TO_GDPR))
             this.subjectToGdpr = config.optString(OPT_SUBJECT_TO_GDPR);
 
@@ -292,14 +309,16 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                initAmr(cordova.getActivity(), consent, subjectToGdpr, amrAppId);
+
+                initAmr(cordova.getActivity(), consent, subjectToGdpr, subjectToCCPA, amrAppId, canRequestAds);
                 callbackContext.success();
             }
         });
         return null;
     }
 
-    static void initAmr(Activity activity, String consent, String subjectToGdpr, String appId) {
+
+    static void initAmr(Activity activity, String consent, String subjectToGdpr, String subjectToCCPA, String appId, String canRequestAds) {
         if (!AdMost.getInstance().isInitStarted()) {
             AdMostConfiguration.Builder configuration = new AdMostConfiguration.Builder(activity, appId);
             if (!consent.equals("-1"))
@@ -307,6 +326,11 @@ public class Amr extends CordovaPlugin {
 
             if (!subjectToGdpr.equals("-1"))
                 configuration.setSubjectToGDPR(subjectToGdpr.equals("1"));
+            if (!subjectToCCPA.equals("-1"))
+                configuration.setSubjectToCCPA(subjectToCCPA.equals("1"));
+            if (!canRequestAds.equals("-1"))
+                configuration.canRequestAds(canRequestAds.equals("1"));
+
             Log.i(LOGTAG, "AdMost Init Called");
             AdMost.getInstance().init(configuration.build(), new AdMostInitListener() {
                 @Override
@@ -322,6 +346,20 @@ public class Amr extends CordovaPlugin {
 
         }
     }
+
+    private PluginResult executeGetRemoteConfigString(JSONObject config, final CallbackContext callbackContext) {
+        String key = "";
+        String defValue = "";
+        if (config.has("key")) key = config.optString("key");
+        if (config.has("value")) defValue = config.optString("value");
+        String value = AdMostRemoteConfig.getInstance().getString(key,defValue);
+        AdMostLog.e("VALUE:" + value);
+        PluginResult result = new PluginResult(Status.OK, value);
+        result.setKeepCallback(true);
+        callbackContext.sendPluginResult(result);
+        return result;
+    }
+
 
     private PluginResult executeLoadBanner(JSONObject config, final CallbackContext callbackContext) {
 
@@ -384,6 +422,20 @@ public class Amr extends CordovaPlugin {
             @Override
             public void run() {
                 AdMost.getInstance().startTestSuite();
+            }
+
+        });
+
+        return null;
+    }
+
+    private PluginResult executeSetCanRequestAds(JSONObject config, final CallbackContext callbackContext) {
+        this.AMRSdkConfig(config);
+
+        cordova.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AdMost.getInstance().setCanRequestAds(Amr.this.canRequestAds);
             }
 
         });
@@ -546,6 +598,7 @@ public class Amr extends CordovaPlugin {
                 i.putExtra("IS_REWARDED", true);
                 i.putExtra("APP_ID", amrAppId);
                 i.putExtra("CONSENT", consent);
+                i.putExtra("CAN_REQUEST_ADS", canRequestAds);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
                 //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // do not use this
                 cordova.startActivityForResult((CordovaPlugin) Amr.this, i, LAUNCH_AD_ACTIVITY);
@@ -574,6 +627,7 @@ public class Amr extends CordovaPlugin {
                 i.putExtra("IS_REWARDED", false);
                 i.putExtra("APP_ID", amrAppId);
                 i.putExtra("CONSENT", consent);
+                i.putExtra("CAN_REQUEST_ADS", canRequestAds);
                 i.putExtra("SUBJECT_TO_GDPR", subjectToGdpr);
                 //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // do not use this
                 activity.startActivityForResult(i, LAUNCH_AD_ACTIVITY);
