@@ -717,12 +717,15 @@
             <pods>
                 <pod name="AMRSDK" spec="~> 1.5" />
 
-                <pod name="AMRAdapterAdmob" spec="~> 10.12" />
+                <pod name="AMRAdapterAdmob" spec="~> 10.13" />
                 <pod name="AMRAdapterAdmost" spec="~> 1.6" />
                 <pod name="AMRAdapterApplovin" spec="~> 11.11" />
                 <pod name="AMRAdapterFacebook" spec="6.12.0.1" />
+                <pod name="AMRAdapterInmobi" spec="~> 10.6" />
                 <pod name="AMRAdapterIronsource" spec="~> 7.5" />
+                <pod name="AMRAdapterTiktok" spec="~> 5.6" />
                 <pod name="AMRAdapterUnity" spec="~> 4.9" />
+                <pod name="AMRAdapterVungle" spec="~> 7.2" />
             </pods>
         </podspec>
     </platform>
