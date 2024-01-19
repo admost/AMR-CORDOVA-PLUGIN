@@ -12,6 +12,7 @@
     _videoZoneId = nil;
     
     _userConsent = nil;
+    _canRequestAds = nil;
     _subjectToGdpr = nil;
     _subjectToCCPA = nil;
     
@@ -72,6 +73,11 @@
             [AMRSDK setUserConsent:consent];
         }
         
+         if (_canRequestAds != nil) {
+            BOOL canRequestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;
+            [AMRSDK canRequestAds: canRequestAds];
+        }
+
         if (_subjectToGdpr != nil) {
             BOOL gdpr = [_subjectToGdpr isEqualToString:@"1"] ? YES:NO;
             [AMRSDK subjectToGDPR:gdpr];
@@ -87,6 +93,20 @@
     }
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)setCanRequestAds:(CDVInvokedUrlCommand*)command {
+    NSLog(@"<AMRSDK> setCanRequestAds");
+    
+    if (command.arguments.count > 0) {
+            NSDictionary* params = [command argumentAtIndex:0 withDefault:[NSNull null]];
+            [self __setOptions:params.];
+
+        if (_canRequestAds != nil) {
+            BOOL canRequestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;
+            [AMRSDK canRequestAds: canRequestAds];
+        }
+    }
 }
     
 - (void)startTestSuite:(CDVInvokedUrlCommand*)command {
@@ -437,6 +457,9 @@
     
     str = [options objectForKey:@"userConsent"];
     if(str && [str length]>0) _userConsent = str;
+
+    str = [options objectForKey:@"canRequestAds"];
+    if(str && [str length]>0) _canRequestAds = str;
     
     str = [options objectForKey:@"subjectToGdpr"];
     if(str && [str length]>0) _subjectToGdpr = str;

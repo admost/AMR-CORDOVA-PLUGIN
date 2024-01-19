@@ -33,6 +33,7 @@
 
 - (void)AMRSdkConfig:(CDVInvokedUrlCommand*)command;
 - (void)startWithConfig:(CDVInvokedUrlCommand*)command;
+- (void)setCanRequestAds(CDVInvokedUrlCommand*)command;
 - (void)startTestSuite:(CDVInvokedUrlCommand*)command;
 
 - (void)loadBanner:(CDVInvokedUrlCommand*)command;
