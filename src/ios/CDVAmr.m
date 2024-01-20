@@ -12,9 +12,9 @@
     _videoZoneId = nil;
 
     _userConsent = nil;
-    _canRequestAds = nil;
     _subjectToGdpr = nil;
     _subjectToCCPA = nil;
+    _canRequestAds = nil;
 
     _bannerWidth = 0;
     _bannerAtTop = NO;
@@ -76,7 +76,7 @@
         }
         
          if (_canRequestAds != nil) {
-            BOOL canRequestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;
+             BOOL canRequestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;
             [AMRSDK canRequestAds: canRequestAds];
         }
 
@@ -102,7 +102,7 @@
     
     if (command.arguments.count > 0) {
             NSDictionary* params = [command argumentAtIndex:0 withDefault:[NSNull null]];
-            [self __setOptions:params.];
+            [self __setOptions:params];
 
         if (_canRequestAds != nil) {
             BOOL canRequestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;

@@ -22,6 +22,7 @@
 @property (nonatomic, retain) NSString *userConsent;
 @property (nonatomic, retain) NSString *subjectToGdpr;
 @property (nonatomic, retain) NSString *subjectToCCPA;
+@property (nonatomic, retain) NSString *canRequestAds;
 
 @property (assign) float bannerWidth;
 @property (assign) BOOL bannerAtTop;
@@ -34,8 +35,8 @@
 
 - (void)AMRSdkConfig:(CDVInvokedUrlCommand*)command;
 - (void)startWithConfig:(CDVInvokedUrlCommand*)command;
-- (void)setCanRequestAds(CDVInvokedUrlCommand*)command;
 - (void)startTestSuite:(CDVInvokedUrlCommand*)command;
+- (void)setCanRequestAds:(CDVInvokedUrlCommand*)command;
 
 - (void)loadBanner:(CDVInvokedUrlCommand*)command;
 - (void)hideBanner:(CDVInvokedUrlCommand*)command;
