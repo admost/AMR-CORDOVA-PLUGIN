@@ -1,6 +1,7 @@
 package com.amr.cordova;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -65,7 +66,6 @@ public class Amr extends CordovaPlugin {
 
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
     private static final String ACTION_IS_PRIVACY_CONSENT_REQUIRED = "isPrivacyConsentRequired";
-    private static final String ACTION_IS_PRIVACY_CONSENT_REQUIRED = "isPrivacyConsentRequired";
 
     /**
      * config
@@ -93,7 +93,6 @@ public class Amr extends CordovaPlugin {
     private String consent = "-1";
     private String canRequestAds = "-1";
     private String subjectToCCPA = "-1";
-    private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
     private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
    /* OPT_SUBJECT_TO_GDPR
     OPT_CONSENT
@@ -123,8 +122,6 @@ public class Amr extends CordovaPlugin {
     private static String onBannerFail = "onBannerFail";
     private static String onBannerReady = "onBannerReady";
     private static String onBannerLoad = "onBannerLoad";
-
-    private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
 
     private ViewGroup parentView;
 
@@ -249,10 +246,6 @@ public class Amr extends CordovaPlugin {
             result = executeShowInterstitialWithActivity(config, callbackContext);
         } else if (ACTION_IS_PRIVACY_CONSENT_REQUIRED.equals(action)) {
                 result = executeIsPrivacyConsentRequired();
-        } else if (ACTION_GET_REMOTE_CONFIG_STRING.equals(action)) {
-            AdMostLog.e("remote action");
-            JSONObject config = inputs.optJSONObject(0);
-            result = executeGetRemoteConfigString(config, callbackContext);
         } else {
             Log.d(LOGTAG, String.format("Invalid action passed: %s", action));
             result = new PluginResult(Status.INVALID_ACTION);
@@ -349,20 +342,6 @@ public class Amr extends CordovaPlugin {
         }
     }
 
-    private PluginResult executeGetRemoteConfigString(JSONObject config, final CallbackContext callbackContext) {
-        String key = "";
-        String defValue = "";
-        if (config.has("key")) key = config.optString("key");
-        if (config.has("value")) defValue = config.optString("value");
-        String value = AdMostRemoteConfig.getInstance().getString(key,defValue);
-        AdMostLog.e("VALUE:" + value);
-        PluginResult result = new PluginResult(Status.OK, value);
-        result.setKeepCallback(true);
-        callbackContext.sendPluginResult(result);
-        return result;
-    }
-
-
     private PluginResult executeLoadBanner(JSONObject config, final CallbackContext callbackContext) {
 
         this.AMRSdkConfig(config);
@@ -445,7 +424,7 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AdMost.getInstance().setCanRequestAds(Amr.this.canRequestAds);
+                AdMost.getInstance().setCanRequestAds(Amr.this.canRequestAds.equals("1"));
             }
 
         });
@@ -578,12 +557,6 @@ public class Amr extends CordovaPlugin {
                     public void onClicked(String s) {
                         //Ad Clicked
                     }
-
-                    @Override
-                    public void onStatusChanged(int status) {
-                       sendResponseToListener(onVideoStatusChanged, String.format("{ 'status': %d }", status));
-                    }
-
                 });
 
                 executeRequestVideoAd(config, callbackContext);
