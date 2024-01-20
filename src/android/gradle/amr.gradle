@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.admost.sdk:cordova-plugin:1.2.8'
+    implementation 'com.admost.sdk:cordova-plugin:1.2.9'
     implementation 'com.admost.sdk:amr:2.9.0'
     implementation 'com.admost.sdk:admost-adapter:1.1.8.a40'
     implementation 'com.admost.sdk:adcolony-adapter:4.8.0.a40'
@@ -30,6 +30,8 @@ dependencies {
 }
 
 android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
     defaultConfig {
         minSdkVersion 19
         multiDexEnabled true

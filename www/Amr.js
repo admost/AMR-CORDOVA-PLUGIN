@@ -53,6 +53,16 @@ amrExport.isPrivacyConsentRequired = function (
   );
 };
 
+amrExport.setCanRequestAds = function (
+  config,
+  successCallback,
+  failureCallback
+) {
+  cordova.exec(successCallback, failureCallback, "Amr", "setCanRequestAds", [
+    config,
+  ]);
+};
+
 amrExport.startTestSuite = function (config, successCallback, failureCallback) {
   cordova.exec(successCallback, failureCallback, "Amr", "startTestSuite", [
     config,
@@ -135,17 +145,13 @@ amrExport.loadRewardedVideo = function (
   ]);
 };
 
-amrExport.showRewardedVideo = function (
-  tag,
-  successCallback,
-  failureCallback
-) {
+amrExport.showRewardedVideo = function (tag, successCallback, failureCallback) {
   if (tag === undefined) {
-    tag = '';
+    tag = "";
   }
 
   cordova.exec(successCallback, failureCallback, "Amr", "showRewardedVideo", [
-    tag
+    tag,
   ]);
 };
 
