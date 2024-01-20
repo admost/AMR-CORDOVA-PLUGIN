@@ -247,7 +247,7 @@ public class Amr extends CordovaPlugin {
         } else if (ACTION_LOAD_AND_SHOW_INTERSTITIAL.equals(action)) {
             JSONObject config = inputs.optJSONObject(0);
             result = executeShowInterstitialWithActivity(config, callbackContext);
-        }else if (ACTION_IS_PRIVACY_CONSENT_REQUIRED.equals(action)) {
+        } else if (ACTION_IS_PRIVACY_CONSENT_REQUIRED.equals(action)) {
                 result = executeIsPrivacyConsentRequired();
         } else if (ACTION_GET_REMOTE_CONFIG_STRING.equals(action)) {
             AdMostLog.e("remote action");
