@@ -104,6 +104,7 @@ public class Amr extends CordovaPlugin {
     private static String onInterstitialReady = "onInterstitialReady";
     private static String onInterstitialFail = "onInterstitialFail";
     private static String onInterstitialShow = "onInterstitialShow";
+    private static String onInterstitialStatusChanged = "onInterstitialStatusChanged";
 
     /**
      * Video Responses
@@ -113,6 +114,7 @@ public class Amr extends CordovaPlugin {
     private static String onVideoFail = "onVideoFail";
     private static String onVideoShow = "onVideoShow";
     private static String onVideoComplete = "onVideoComplete";
+    private static String onVideoStatusChanged = "onVideoStatusChanged";
 
     /**
      * Banner Responses
@@ -503,6 +505,11 @@ public class Amr extends CordovaPlugin {
 
                     }
 
+                    @Override
+                    public void onStatusChanged(int status) {
+                        sendResponseToListener(onInterstitialStatusChanged, String.format("{ 'status': %d }", status));
+                    }
+
                 });
             }
         });
@@ -556,6 +563,11 @@ public class Amr extends CordovaPlugin {
                     @Override
                     public void onClicked(String s) {
                         //Ad Clicked
+                    }
+
+                    @Override
+                    public void onStatusChanged(int status) {
+                       sendResponseToListener(onVideoStatusChanged, String.format("{ 'status': %d }", status));
                     }
                 });
 
