@@ -694,15 +694,31 @@
                 </dict>
                 <dict>
                     <key>SKAdNetworkIdentifier</key>
+                    <string>z24wtl6j62.skadnetwork</string>
+                </dict>
+                <dict>
+                    <key>SKAdNetworkIdentifier</key>
                     <string>zmvfpc5aq8.skadnetwork</string>
                 </dict>
                 <dict>
                     <key>SKAdNetworkIdentifier</key>
-                    <string>9g2aggbj52.skadnetwork</string>
+                    <string>mqn7fxpca7.skadnetwork</string>
                 </dict>
                 <dict>
                     <key>SKAdNetworkIdentifier</key>
-                    <string>nu4557a4je.skadnetwork</string>
+                    <string>g6gcrrvk4p.skadnetwork</string>
+                </dict>
+                <dict>
+                    <key>SKAdNetworkIdentifier</key>
+                    <string>k6y4y55b64.skadnetwork</string>
+                </dict>
+                <dict>
+                    <key>SKAdNetworkIdentifier</key>
+                    <string>7953jerfzd.skadnetwork</string>
+                </dict>
+                <dict>
+                    <key>SKAdNetworkIdentifier</key>
+                    <string>qu637u8glc.skadnetwork</string>
                 </dict>
             </array>
         </config-file>
@@ -717,13 +733,13 @@
             <pods>
                 <pod name="AMRSDK" spec="~> 1.5" />
 
-                <pod name="AMRAdapterAdmob" spec="~> 10.13" />
+                <pod name="AMRAdapterAdmob" spec="~> 10.14" />
                 <pod name="AMRAdapterAdmost" spec="~> 1.6" />
-                <pod name="AMRAdapterApplovin" spec="~> 11.11" />
-                <pod name="AMRAdapterFacebook" spec="6.12.0.1" />
+                <pod name="AMRAdapterApplovin" spec="~> 12.0" />
+                <pod name="AMRAdapterFacebook" spec="6.14" />
                 <pod name="AMRAdapterInmobi" spec="~> 10.6" />
-                <pod name="AMRAdapterIronsource" spec="~> 7.5" />
-                <pod name="AMRAdapterTiktok" spec="~> 5.6" />
+                <pod name="AMRAdapterIronsource" spec="~> 7.7" />
+                <pod name="AMRAdapterTiktok" spec="~> 5.7" />
                 <pod name="AMRAdapterUnity" spec="~> 4.9" />
                 <pod name="AMRAdapterVungle" spec="~> 7.2" />
             </pods>
