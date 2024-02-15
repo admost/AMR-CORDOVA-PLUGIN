@@ -1,6 +1,7 @@
 package com.amr.cordova;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -103,6 +104,7 @@ public class Amr extends CordovaPlugin {
     private static String onInterstitialReady = "onInterstitialReady";
     private static String onInterstitialFail = "onInterstitialFail";
     private static String onInterstitialShow = "onInterstitialShow";
+    private static String onInterstitialStatusChanged = "onInterstitialStatusChanged";
 
     /**
      * Video Responses
@@ -112,6 +114,7 @@ public class Amr extends CordovaPlugin {
     private static String onVideoFail = "onVideoFail";
     private static String onVideoShow = "onVideoShow";
     private static String onVideoComplete = "onVideoComplete";
+    private static String onVideoStatusChanged = "onVideoStatusChanged";
 
     /**
      * Banner Responses
@@ -407,11 +410,17 @@ public class Amr extends CordovaPlugin {
     private PluginResult executeIsPrivacyConsentRequired(){
         AdMost.getInstance().setPrivacyConsentListener(Layout.this, new AdMost.PrivacyConsentListener() {
             @Override
-            public void isPrivacyConsentRequired(String s) {
-                sendResponseToListener(onPrivacyConsentRequired, s);
-
+            public void isPrivacyConsentRequired(String status) {
+                cordova.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        sendResponseToListener(isPrivacyConsentRequired, String.format("{status: '%s'}", status));
+                    }
+                });
             }
         });
+
+        return null;
     }
 
     private PluginResult executeTestSuite(JSONObject config, final CallbackContext callbackContext) {
@@ -435,7 +444,7 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AdMost.getInstance().setCanRequestAds(Amr.this.canRequestAds);
+                AdMost.getInstance().setCanRequestAds(Amr.this.canRequestAds.equals("1"));
             }
 
         });
@@ -514,6 +523,11 @@ public class Amr extends CordovaPlugin {
 
                     }
 
+                    @Override
+                    public void onStatusChanged(int status) {
+                        sendResponseToListener(onInterstitialStatusChanged, String.format("{ 'status': %d }", status));
+                    }
+
                 });
             }
         });
@@ -539,7 +553,7 @@ public class Amr extends CordovaPlugin {
                     public void onReady(String network, int ecpm) {
                         sendResponseToListener(onVideoReady, null);
                         if (autoShowVideo == true) {
-                            executeShowRewardedVideo(callbackContext);
+                            executeShowRewardedVideo(null, callbackContext);
                         }
                     }
 
@@ -569,6 +583,10 @@ public class Amr extends CordovaPlugin {
                         //Ad Clicked
                     }
 
+                    @Override
+                    public void onStatusChanged(int status) {
+                        sendResponseToListener(onVideoStatusChanged, String.format("{ 'status': %d }", status));
+                    }
                 });
 
                 executeRequestVideoAd(config, callbackContext);
@@ -869,8 +887,9 @@ public class Amr extends CordovaPlugin {
     }
 
 
-    private PluginResult executeShowRewardedVideo(final CallbackContext callbackContext) {
+    private PluginResult executeShowRewardedVideo(String tag, final CallbackContext callbackContext) {
         Log.v(LOGTAG, "Show Video Ad");
+        Log.v(LOGTAG, tag);
         if (videoAd == null) {
             return new PluginResult(Status.ERROR, "VideoAd is null, call createVideoView first.");
         }
@@ -880,7 +899,7 @@ public class Amr extends CordovaPlugin {
             public void run() {
 
                 if (videoAd.isLoaded()) {
-                    videoAd.show();
+                    videoAd.show(tag);
                 } else {
                     Log.e(LOGTAG, "VideoAd is not ready yet, temporarily setting autoshow.");
                     autoShowVideoTemp = true;
