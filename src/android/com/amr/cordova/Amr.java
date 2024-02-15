@@ -730,6 +730,9 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(adView == null || adView.getView() == null){
+                    return new PluginResult(Status.ERROR, "adView is null, call createBannerView first.");
+                }
                 if (bannerVisible == bannerShow) { // no change
 
                 } else if (bannerShow) {
