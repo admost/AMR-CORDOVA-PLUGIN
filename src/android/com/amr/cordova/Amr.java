@@ -24,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.List;
+
 
 import admost.sdk.AdMostInterstitial;
 import admost.sdk.AdMostManager;
@@ -35,6 +37,9 @@ import admost.sdk.listener.AdMostAdListener;
 import admost.sdk.listener.AdMostInitListener;
 import admost.sdk.listener.AdMostViewListener;
 import com.amr.plugin.cordova.AmrAdActivity;
+import admost.sdk.base.AdMostLog;
+import admost.sdk.base.AdMostRemoteConfig;
+
 
 public class Amr extends CordovaPlugin {
     /**
@@ -64,6 +69,7 @@ public class Amr extends CordovaPlugin {
     private static final String ACTION_DESTROY_REWARDED_VIDEO = "destroyRewardedVideo";
     private static final String ACTION_LOAD_AND_SHOW_REWARDED_VIDEO = "loadAndShowRewardedVideo";
 
+    private static final String ACTION_GET_REMOTE_CONFIG_STRING = "getRemoteConfigString";
     private static final String ACTION_TRACK_PURCHASE_FOR_ANDROID = "trackPurchaseForAndroid";
     private static final String ACTION_IS_PRIVACY_CONSENT_REQUIRED = "isPrivacyConsentRequired";
 
@@ -84,6 +90,12 @@ public class Amr extends CordovaPlugin {
     private static final String OPT_CONSENT = "userConsent";
     private static final String OPT_CAN_REQUEST_ADS = "canRequestAds";
     private static final String OPT_AUTO_SHOW_BANNER = "autoShowBanner";
+    private static final String OPT_PURCHASE_DATA = "purchaseData";
+    private static final String OPT_SIGNATURE = "signature";
+    private static final String OPT_PRICE_AMOUNT_MICROS = "priceAmountMicros";
+    private static final String OPT_CURRENCY = "currency";
+    private static final String OPT_TAGS = "tags";
+    private static final String OPT_IS_DEBUG = "isDebug";
 
 
     /**
@@ -125,7 +137,6 @@ public class Amr extends CordovaPlugin {
     private static String onBannerReady = "onBannerReady";
     private static String onBannerLoad = "onBannerLoad";
 
-    private static String isPrivacyConsentRequired = "isPrivacyConsentRequired";
 
     private ViewGroup parentView;
 
@@ -224,7 +235,8 @@ public class Amr extends CordovaPlugin {
             result = executeLoadRewardedVideo(config, callbackContext);
 
         } else if (ACTION_SHOW_REWARDED_VIDEO.equals(action)) {
-            result = executeShowRewardedVideo(callbackContext);
+            String tag = inputs.optString(0);
+            result = executeShowRewardedVideo(tag,callbackContext);
 
         } else if (ACTION_DESTROY_REWARDED_VIDEO.equals(action)) {
             result = executeDestroyRewardedVideo(callbackContext);
@@ -321,6 +333,7 @@ public class Amr extends CordovaPlugin {
     }
 
 
+
     static void initAmr(Activity activity, String consent, String subjectToGdpr, String subjectToCCPA, String appId, String canRequestAds) {
         if (!AdMost.getInstance().isInitStarted()) {
             AdMostConfiguration.Builder configuration = new AdMostConfiguration.Builder(activity, appId);
@@ -408,7 +421,8 @@ public class Amr extends CordovaPlugin {
     }
 
     private PluginResult executeIsPrivacyConsentRequired(){
-        AdMost.getInstance().setPrivacyConsentListener(Layout.this, new AdMost.PrivacyConsentListener() {
+        Context context = cordova.getActivity().getApplicationContext();
+        AdMost.getInstance().setPrivacyConsentListener(context, new AdMost.PrivacyConsentListener() {
             @Override
             public void isPrivacyConsentRequired(String status) {
                 cordova.getActivity().runOnUiThread(new Runnable() {
@@ -749,7 +763,7 @@ public class Amr extends CordovaPlugin {
             @Override
             public void run() {
                 if(adView == null || adView.getView() == null){
-                    return new PluginResult(Status.ERROR, "adView is null, call createBannerView first.");
+                    return; // new PluginResult(Status.ERROR, "adView is null, call createBannerView first.");
                 }
                 if (bannerVisible == bannerShow) { // no change
 
@@ -888,6 +902,37 @@ public class Amr extends CordovaPlugin {
 
         return null;
     }
+
+    private PluginResult executeTrackPurchaseForAndroid(JSONObject config, final CallbackContext callbackContext){
+        String purchaseData = "", signature = "", currency = "";
+        double priceAmountMicros = 0;
+        JSONArray tagsArray = new JSONArray();
+        boolean isDebug = false;
+
+        if (config == null) return null;
+        if (config.has(OPT_PURCHASE_DATA)) purchaseData = config.optString(OPT_PURCHASE_DATA);
+        if (config.has(OPT_SIGNATURE)) signature = config.optString(OPT_SIGNATURE);
+        if (config.has(OPT_PRICE_AMOUNT_MICROS)) priceAmountMicros = config.optDouble(OPT_PRICE_AMOUNT_MICROS);
+        if (config.has(OPT_CURRENCY)) currency = config.optString(OPT_CURRENCY);
+        if (config.has(OPT_TAGS)) tagsArray = config.optJSONArray(OPT_TAGS);
+        if (config.has(OPT_IS_DEBUG)) isDebug = config.optBoolean(OPT_IS_DEBUG);
+
+        String[] tags = new String[tagsArray.length()];
+        for (int i=0; i<tagsArray.length(); i++){
+            tags[i]=tagsArray.optString(i);
+        }
+
+        //var inputs = {"purchaseData" : " < PURCHASE_DATA > ","signature" : " < SIGNATURE > ", "priceAmountMicros" : " < PRICE_AMOUNT_MICROS >", "currency" : " < CURRENCY > " , "tags": " < TAGS >" , "isDebug" : " < IS_DEBUG > "};
+        //var inputs = {"purchaseData" : " {"receiptId": CdvPurchase.Transaction.purchaseId } ","signature" : " < SIGNATURE > ", "priceAmountMicros" : CdvPurchase.Transaction.amountMicros , "currency" : CdvPurchase.Transaction.currency , "tags": " < TAGS >" , "isDebug" : " < IS_DEBUG > "};
+
+
+
+        AdMost.getInstance().trackIAP(purchaseData, signature, priceAmountMicros, currency, tags, isDebug);
+
+
+        return null;
+    }
+
 
 
     private PluginResult executeShowRewardedVideo(String tag, final CallbackContext callbackContext) {
