@@ -356,8 +356,6 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
                 adView = new AdMostView(cordova.getActivity(), Amr.this.amrBannerZoneId, adSize, new AdMostViewListener() {
                     @Override
                     public void onReady(String network, int ecpm, View adView) {
@@ -730,9 +728,6 @@ public class Amr extends CordovaPlugin {
         cordova.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(adView == null || adView.getView() == null){
-                    return new PluginResult(Status.ERROR, "adView is null, call createBannerView first.");
-                }
                 if (bannerVisible == bannerShow) { // no change
 
                 } else if (bannerShow) {
