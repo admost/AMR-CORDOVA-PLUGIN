@@ -743,17 +743,17 @@
                 <source url="https://cdn.cocoapods.org/"/>
             </config>
             <pods>
+                <!--  Admost - Admob - AppLovin - IronSouce - LiftOff - Meta - Unity Ads -->
+
                 <pod name="AMRSDK" spec="~> 1.5" />
 
-                <pod name="AMRAdapterAdmob" spec="~> 10.14" />
+                <pod name="AMRAdapterAdmob" spec="~> 11.4" />
                 <pod name="AMRAdapterAdmost" spec="~> 1.6" />
-                <pod name="AMRAdapterApplovin" spec="~> 12.0" />
-                <pod name="AMRAdapterFacebook" spec="6.14" />
-                <pod name="AMRAdapterInmobi" spec="~> 10.6" />
-                <pod name="AMRAdapterIronsource" spec="~> 7.7" />
-                <pod name="AMRAdapterTiktok" spec="~> 5.7" />
-                <pod name="AMRAdapterUnity" spec="~> 4.9" />
-                <pod name="AMRAdapterVungle" spec="~> 7.2" />
+                <pod name="AMRAdapterApplovin" spec="~> 12.5" />
+                <pod name="AMRAdapterFacebook" spec="~> 6.15" />
+                <pod name="AMRAdapterIronsource" spec="~> 8.0" />
+                <pod name="AMRAdapterUnity" spec="~> 4.11" />
+                <pod name="AMRAdapterLiftoff" spec="~> 7.3" />
             </pods>
         </podspec>
     </platform>
