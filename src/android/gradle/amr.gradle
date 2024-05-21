@@ -10,7 +10,7 @@ repositories {
 dependencies {
     implementation 'com.admost.sdk:cordova-plugin:1.2.9'
     implementation 'com.google.android.gms:play-services-base:17.1.0'
-    implementation 'com.admost.sdk:amr:2.9.2'
+    implementation 'com.admost.sdk:amr:3.0.0'
     implementation 'com.admost.sdk:admost-adapter:1.1.8.a47'
     implementation 'com.google.android.gms:play-services-ads:23.0.0'
     implementation 'com.admost.sdk:admob-adapter:23.0.0.a47'

@@ -149,7 +149,7 @@ public class Amr extends CordovaPlugin {
     private String amrInterstitialZoneId = "";
     private String amrBannerZoneId = "";
     private String amrVideoZoneId = "";
-    private int adSize = AdMostManager.getInstance().AD_BANNER;
+    private int adSize = 0;
 
 
     /**
