@@ -13,6 +13,7 @@
 @property (assign) BOOL interstitialIsAvaliable;
 @property (assign) BOOL rewardedVideoIsAvaliable;
 
+
 @property (nonatomic, retain) NSString *appId;
 @property (nonatomic, retain) NSString *bannerZoneId;
 @property (nonatomic, retain) NSString *interstitialZoneId;
@@ -21,6 +22,8 @@
 @property (nonatomic, retain) NSString *userConsent;
 @property (nonatomic, retain) NSString *subjectToGdpr;
 @property (nonatomic, retain) NSString *subjectToCCPA;
+@property (nonatomic, retain) NSString *canRequestAds;
+
 
 @property (assign) float bannerWidth;
 @property (assign) BOOL bannerAtTop;
@@ -33,7 +36,7 @@
 
 - (void)AMRSdkConfig:(CDVInvokedUrlCommand*)command;
 - (void)startWithConfig:(CDVInvokedUrlCommand*)command;
-- (void)setCanRequestAds(CDVInvokedUrlCommand*)command;
+- (void)setCanRequestAds:(CDVInvokedUrlCommand*)command;
 - (void)startTestSuite:(CDVInvokedUrlCommand*)command;
 
 - (void)loadBanner:(CDVInvokedUrlCommand*)command;
