@@ -76,8 +76,8 @@
         }
         
          if (_canRequestAds != nil) {
-             BOOL canRequestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;
-            [AMRSDK canRequestAds: canRequestAds];
+            BOOL requestAds = [_canRequestAds isEqualToString:@"1"] ? YES:NO;
+            [AMRSDK canRequestAds: requestAds];
         }
 
         if (_subjectToGdpr != nil) {
