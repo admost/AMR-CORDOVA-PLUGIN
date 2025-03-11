@@ -17,9 +17,7 @@ amrExport.AD_SIZE = {
 
 amrExport.AMRSdkConfig =
 	function(config, successCallback, failureCallback) {
-		if(typeof config === 'object' 
-			&& typeof config.amrAppId === 'string'
-			&& config.amrAppId.length > 0) {
+		if(typeof config == 'object' && typeof config.amrAppId == 'string' && config.amrAppId.length > 0) {
 			cordova.exec(
 					successCallback,
 					failureCallback,
@@ -29,7 +27,7 @@ amrExport.AMRSdkConfig =
 				);
 		} else {
 			if(typeof failureCallback === 'function') {
-				failureCallback('config.amrAppId should be specified.')
+				failureCallback('config.amrAppId should be specified.');
 			}
 		}
 	};
@@ -68,8 +66,16 @@ function(config, successCallback, failureCallback) {
 };
 
 
-
-
+amrExport.trackIAPForAndroid =
+function(config, successCallback, failureCallback) {
+	cordova.exec(
+					successCallback,
+					failureCallback,
+					'Amr',
+					'trackIAPForAndroid',
+					[ config ]
+					);
+};
 
 amrExport.hideBanner =
 function(successCallback, failureCallback) {
@@ -79,8 +85,8 @@ function(successCallback, failureCallback) {
 		'Amr', 
 		'hideBanner', 
 		[]
-		
 	);
+};
 
 amrExport.setCanRequestAds =
 function (config, successCallback, failureCallback) {
@@ -219,9 +225,4 @@ amrExport.loadAndShowInterstitial =
 	);
 };
 
-
 module.exports = amrExport;
-
-	
-
-

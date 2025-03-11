@@ -11,17 +11,17 @@ repositories {
 dependencies {
     implementation 'com.admost.sdk:cordova-plugin:1.2.9'
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
-    implementation 'com.admost.sdk:amr:3.0.8'
-    implementation 'com.google.android.gms:play-services-base:17.1.0'
+    implementation 'com.admost.sdk:amr:3.1.6' 
+    implementation 'com.google.android.gms:play-services-base:18.5.0' 
     implementation 'com.google.android.gms:play-services-ads:23.0.0'
-    implementation 'com.admost.sdk:admob-adapter:23.0.2.a47'
-    implementation 'com.admost.sdk:applovin-adapter:12.5.0.a47'
-    implementation 'com.admost.sdk:ironsource-adapter:8.0.0.a47'
-    implementation 'com.google.android.gms:play-services-appset:16.0.2'
-    implementation 'com.admost.sdk:facebook-adapter:6.17.0.1.a47'
-    implementation 'androidx.annotation:annotation:1.2.0'
-    implementation 'com.admost.sdk:mintegral-adapter:16.7.31.a47'
-    implementation 'com.admost.sdk:tiktok-adapter:5.9.0.6.a47'
+    implementation 'com.admost.sdk:admob-adapter:23.0.3.a47' 
+    implementation 'com.admost.sdk:applovin-adapter:13.1.0.a47' 
+    implementation 'com.admost.sdk:ironsource-adapter:8.6.1.a47' 
+    implementation 'com.google.android.gms:play-services-appset:16.0.2' 
+    implementation 'com.admost.sdk:facebook-adapter:6.18.0.a47' 
+    implementation 'androidx.annotation:annotation:1.2.0' 
+    implementation 'com.admost.sdk:mintegral-adapter:16.9.31.a47' 
+    implementation 'com.admost.sdk:tiktok-adapter:6.5.0.3.a47' 
 }
 
 android {
